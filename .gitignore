@@ -1,15 +1,38 @@
-*.iml
+# Build cache and artifacts
 .gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
 /build
-/captures
+
+# IntelliJ
+.idea/workspace.xml
+.idea/misc.xml
+.idea/libraries
+.idea/caches
+.idea/navEditor.xml
+.idea/tasks.xml
+.idea/modules.xml
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/deploymentTargetDropDown.xml
+.idea/assetWizardSettings.xml
+.idea/inspectionProfiles
+.idea/ktlint.xml
+gradle.xml
+*.iml
+
+# MacOS
+.DS_Store
+
+# Layout inspector captures
+captures
+
+# JNI
 .externalNativeBuild
 .cxx
+
+# Secrets
+google-services.json
+release.jks
+release.keystore
+release.properties
+secrets.properties
 local.properties
