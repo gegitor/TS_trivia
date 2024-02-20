@@ -1,0 +1,11 @@
+CREATE TABLE Question (
+    id INTEGER PRIMARY KEY,
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    enabled INTEGER DEFAULT 1,
+    difficultyId INTEGER,
+    categoryId INTEGER,
+    FOREIGN KEY (categoryId) REFERENCES Category(id) ON DELETE CASCADE,
+    FOREIGN KEY (difficultyId) REFERENCES Difficulty(id) ON DELETE CASCADE
+);
+

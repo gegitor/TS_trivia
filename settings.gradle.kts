@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "TS Trivia"
 include(":app")
 include(":core")
+include(":ui-common")

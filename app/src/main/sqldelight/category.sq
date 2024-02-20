@@ -1,0 +1,12 @@
+CREATE TABLE Category (
+    id INTEGER PRIMARY KEY,
+    short_desc TEXT,
+    long_desc TEXT
+);
+
+INSERT INTO Category (short_desc, long_desc) VALUES ('Map','Questions about the map of the game');
+INSERT INTO Category (short_desc, long_desc) VALUES ('Cards - history', 'Questions about historical context of cards');
+INSERT INTO Category (short_desc, long_desc) VALUES ('Cards - mechanics', 'Questions about how cards work');
+INSERT INTO Category (short_desc, long_desc) VALUES ('Players', 'Current and past famous players');
+INSERT INTO Category (short_desc, long_desc) VALUES ('Tournaments', 'The history of TS online competitions');
+INSERT INTO Category (short_desc, long_desc) VALUES ('Bugs', 'Current and past Playdek bugs :-)');

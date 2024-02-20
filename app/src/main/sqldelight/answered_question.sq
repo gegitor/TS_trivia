@@ -1,0 +1,7 @@
+CREATE TABLE AnsweredQuestion (
+    id INTEGER PRIMARY KEY,
+    questionId INTEGER,
+    attempts INTEGER,
+    correctAttempts INTEGER,
+    FOREIGN KEY (questionId) REFERENCES Question(id) ON DELETE CASCADE
+);

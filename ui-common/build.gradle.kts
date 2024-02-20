@@ -2,12 +2,10 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.sqlDelight)
 }
 
 android {
-    namespace = "com.ziemowit.ts.core"
+    namespace = "com.ziemowit.ts.ui_common"
     compileSdk = 33
 
     defaultConfig {
@@ -36,15 +34,19 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
 
-    api(libs.core.ktx)
+    api(libs.ui)
+    api(libs.ui.graphics)
+    api(libs.ui.tooling.preview)
+    api(libs.material3)
+
     api(libs.appcompat)
-    api(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    api(libs.ksp)
-    ksp(libs.kotlin.inject.ksp)
+    api(libs.activity.compose)
+    api(platform(libs.compose.bom))
 
-    api(libs.sqlDelight.android)
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.ui.test.manifest)
+    androidTestImplementation(platform(libs.compose.bom))
 }
