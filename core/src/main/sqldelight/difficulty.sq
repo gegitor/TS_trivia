@@ -1,0 +1,15 @@
+CREATE TABLE Difficulty (
+    id INTEGER PRIMARY KEY,
+    secret INTEGER NOT NULL DEFAULT 0,
+    name TEXT
+);
+
+INSERT INTO Difficulty (id, name) VALUES (1, 'easy');
+INSERT INTO Difficulty (id, name) VALUES (2,'medium');
+INSERT INTO Difficulty (id, name) VALUES (3,'hard');
+INSERT INTO Difficulty (id, name, secret) VALUES (4,1, 'Wojtek');
+
+
+selectAll:
+SELECT *
+FROM Difficulty;

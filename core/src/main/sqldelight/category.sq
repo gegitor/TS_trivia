@@ -1,0 +1,17 @@
+CREATE TABLE Category (
+    id INTEGER PRIMARY KEY,
+    short_desc TEXT,
+    long_desc TEXT
+);
+
+INSERT INTO Category (id, short_desc, long_desc) VALUES (1,'Board','Questions about the board');
+INSERT INTO Category (id, short_desc, long_desc) VALUES (2,'Cards - history', 'Questions about the historical context of cards');
+INSERT INTO Category (id, short_desc, long_desc) VALUES (3,'Cards - mechanics', 'Questions about how cards work');
+INSERT INTO Category (id, short_desc, long_desc) VALUES (4,'Players', 'Current and past famous players & their exploits');
+INSERT INTO Category (id, short_desc, long_desc) VALUES (5,'Tournaments', 'The history of TS online competitions');
+INSERT INTO Category (id, short_desc, long_desc) VALUES (6,'Bugs', 'Current and past Playdek bugs :-)');
+
+
+selectAll:
+SELECT *
+FROM Category;

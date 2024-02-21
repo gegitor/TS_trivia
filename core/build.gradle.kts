@@ -35,6 +35,15 @@ android {
     }
 }
 
+sqldelight {
+    databases {
+        create("TS_Trivia") {
+            packageName.set("com.ziemowit.ts.core.db")
+            srcDirs.setFrom("core/src/main/sqldelight")
+        }
+    }
+}
+
 dependencies {
 
     api(libs.core.ktx)
@@ -45,6 +54,8 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     api(libs.ksp)
     ksp(libs.kotlin.inject.ksp)
+    api(libs.kotlin.inject.runtime)
 
     api(libs.sqlDelight.android)
+    api(libs.sqlDelight.coroutines)
 }

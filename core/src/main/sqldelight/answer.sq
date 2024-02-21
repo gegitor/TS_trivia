@@ -1,0 +1,23 @@
+CREATE TABLE Answer (
+    id INTEGER PRIMARY KEY,
+    answer TEXT NOT NULL
+);
+
+CREATE TABLE QuestionAnswerJunction (
+    questionId INTEGER,
+    answerId INTEGER,
+    FOREIGN KEY (questionId) REFERENCES Question(id) ON DELETE CASCADE,
+    FOREIGN KEY (answerId) REFERENCES Answer(id) ON DELETE CASCADE
+);
+
+-- Zamiast junctionTable - listy
+-- https://cashapp.github.io/sqldelight/2.0.1/android_sqlite/types/
+
+-- bigInsert {
+--     INSERT INTO Question (id, question, difficultyId, categoryId)
+--     VALUES (?, ?, ?, ?);
+--
+--     INSERT INTO Answer (id, answer) VALUES (1,'United Kingdom');
+--     INSERT INTO QuestionAnswerJunction (questionId, answerId) VALUES (1,1);
+--
+-- }
