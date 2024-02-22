@@ -18,8 +18,12 @@ google-services = "4.4.1"
 appcompat = "1.6.1"
 material = "1.11.0"
 
+timber = "5.0.1"
+splashScreen = "1.0.1"
+
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
@@ -34,8 +38,11 @@ ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+#coroutines-core = { module = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+#coroutines-android = { module = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+#coroutines-test = { module = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewmodel" }
 
 sqlDelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
@@ -44,12 +51,24 @@ sqlDelight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "
 sqlDelight-coroutinesExt = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
 sqlDelight-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 
+
+#sqlDelight-android = { module = "app.cash.sqldelight", name = "android-driver", version.ref = "sqlDelight" }
+#sqlDelight-coroutines = { module = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqlDelight" }
+##sqlDelight-jvm = { module = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqlDelight" }
+##sqlDelight-coroutinesExt = { module = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqlDelight" }
+##sqlDelight-native = { module = "app.cash.sqldelight", name = "native-driver", version.ref = "sqlDelight" }
+
 kotlin-inject-ksp = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "kotlin-inject" }
+#kotlin-inject-ksp = { module = "me.tatarka.inject", name = "kotlin-inject-compiler-ksp", version.ref = "kotlin-inject" }
 #kotlin-inject-kapt = { module = "me.tatarka.inject:kotlin-inject-compiler-kapt", version.ref = "kotlin-inject" }
 kotlin-inject-runtime = { module = "me.tatarka.inject:kotlin-inject-runtime", version.ref = "kotlin-inject" }
+#kotlin-inject-runtime = { module = "me.tatarka.inject", name = "kotlin-inject-runtime", version.ref = "kotlin-inject" }
 ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
+#ksp = { module = "com.google.devtools.ksp", name = "symbol-processing-api", version.ref = "ksp" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

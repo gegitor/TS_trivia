@@ -22,12 +22,20 @@ android {
     }
 
     buildTypes {
+        val CRASHLYTICS_ENABLED = "CRASHLYTICS_ENABLED"
+
         release {
             isMinifyEnabled = false
+            buildConfigField( "boolean", CRASHLYTICS_ENABLED, "true")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+
+        debug {
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
         }
     }
     compileOptions {
@@ -39,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.9"
@@ -55,7 +64,9 @@ dependencies {
     implementation(project(":ui-common"))
 
     implementation(libs.coroutines.core)
+    implementation(libs.core.splashscreen)
     implementation(libs.coroutines.android)
+    implementation(libs.viewmodel.compose)
     implementation(libs.lifecycle.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

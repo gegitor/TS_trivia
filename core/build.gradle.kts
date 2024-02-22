@@ -58,4 +58,5 @@ dependencies {
 
     api(libs.sqlDelight.android)
     api(libs.sqlDelight.coroutines)
+    api(libs.timber)
 }
