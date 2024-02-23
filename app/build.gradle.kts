@@ -2,7 +2,9 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
- }
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kapt)
+}
 
 android {
     namespace = "com.ziemowit.ts.trivia"
@@ -68,6 +70,8 @@ dependencies {
     implementation(libs.coroutines.android)
     implementation(libs.viewmodel.compose)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

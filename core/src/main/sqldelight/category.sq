@@ -15,3 +15,6 @@ INSERT INTO Category (id, short_desc, long_desc) VALUES (6,'Bugs', 'Current and 
 selectAll:
 SELECT *
 FROM Category;
+
+deleteAll:
+DELETE FROM Category;

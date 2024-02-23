@@ -46,6 +46,8 @@ insertFullQuestionObject:
 INSERT INTO Question (id, question, difficultyId, categoryId)
 VALUES ?;
 
+deleteAll:
+DELETE FROM Question;
 
 -- INSERT INTO Question (id, question, difficultyId, categoryId) VALUES (3,'To how many countries is UK connected?',  3, 1);
 -- INSERT INTO Question (id, question, difficultyId, categoryId) VALUES (4,'To how many countries is Colombia connected?', 3, 1);

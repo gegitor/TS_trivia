@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -53,8 +55,10 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     api(libs.ksp)
-    ksp(libs.kotlin.inject.ksp)
-    api(libs.kotlin.inject.runtime)
+//    ksp(libs.kotlin.inject.ksp)
+//    api(libs.kotlin.inject.runtime)
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
 
     api(libs.sqlDelight.android)
     api(libs.sqlDelight.coroutines)

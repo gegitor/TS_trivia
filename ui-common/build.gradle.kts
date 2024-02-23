@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -44,6 +46,8 @@ dependencies {
     api(libs.appcompat)
     api(libs.activity.compose)
     api(platform(libs.compose.bom))
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
 
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)

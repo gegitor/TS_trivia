@@ -25,3 +25,6 @@ selectNew:
 SELECT *
 FROM AnsweredQuestion
 WHERE attempts = 0;
+
+deleteAll:
+DELETE FROM AnsweredQuestion;

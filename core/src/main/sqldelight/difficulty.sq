@@ -13,3 +13,6 @@ INSERT INTO Difficulty (id, name, secret) VALUES (4,1, 'Wojtek');
 selectAll:
 SELECT *
 FROM Difficulty;
+
+deleteAll:
+DELETE FROM Difficulty;
