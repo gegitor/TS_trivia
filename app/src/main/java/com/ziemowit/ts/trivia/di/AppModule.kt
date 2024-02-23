@@ -15,7 +15,6 @@ import javax.inject.Singleton
 
 const val SHARED_PREFS_NAME = "TS_TRIVIA_SHARED_PREFS"
 
-//@Module(includes = [AppModuleInternalBinds::class])
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {

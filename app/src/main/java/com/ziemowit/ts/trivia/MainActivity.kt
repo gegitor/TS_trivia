@@ -3,6 +3,7 @@ package com.ziemowit.ts.trivia
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -11,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.ziemowit.ts.trivia.app.screens.splash.SplashViewModel
 import com.ziemowit.ts.trivia.audio.Sound
 import com.ziemowit.ts.trivia.audio.SoundRepository
 import com.ziemowit.ts.trivia.ui.theme.TSTriviaTheme
@@ -20,11 +23,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    val splashViewModel: SplashViewModel by viewModels()
+
     @Inject
     lateinit var soundRepository: SoundRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        installSplashScreen()
+
         setContent {
             TSTriviaTheme {
                 // A surface container using the 'background' color from the theme
