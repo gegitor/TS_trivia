@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.screens.main
+package com.ziemowit.ts.trivia.app.screens.main
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -19,14 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.ziemowit.ts.trivia.screens.home.HomeScreen
-import com.ziemowit.ts.trivia.screens.quiz.QuizScreen
-import com.ziemowit.ts.trivia.screens.quiz.quizScreen
+import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
+import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
+//import com.ziemowit.ts.trivia.app.screens.quiz_init.quizScreenHierarchy1
 import timber.log.Timber
 
 
@@ -43,19 +41,18 @@ fun MainScreen() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(Screen.Home.route) { HomeScreen() }
-            composable(Screen.Search.route) { SearchScreen() }
-            composable(Screen.Profile.route) { ProfileScreen() }
-            quizScreen()
-//            composable(
-//                route = Screen.Quiz.route,
-//                arguments = listOf(navArgument("difficulty") {
-//                    type = NavType.StringType
-//                    defaultValue = "todo"
-//                }),
-//            ) { backStackEntry ->
-//                QuizScreen(backStackEntry.arguments?.getString("difficulty") ?: "todo")
-//            }
+            QuizInitRoute.composable(this, navController)
+            QuizRoute.composable(this, navController)
+//            quizScreenHierarchy1()
+            composable(Screen.Home.route) {
+                HomeScreen()
+            }
+            composable(Screen.Search.route) {
+                SearchScreen()
+            }
+            composable(Screen.Profile.route) {
+                ProfileScreen()
+            }
         }
     }
 }
@@ -81,9 +78,13 @@ sealed class Screen(val route: String) {
     data object Home : Screen("home")
     data object Search : Screen("search")
     data object Profile : Screen("profile")
-    data object Quiz : Screen("quiz?difficulty={difficulty}")
 }
 
+
+@Composable
+fun HomeScreen() {
+    Text("HomeScreen")
+}
 
 @Composable
 fun SearchScreen() {
@@ -105,12 +106,12 @@ fun NavigationItem(
 ) {
     IconButton(
         onClick = {
-            Timber.d("ZZZ navigate: ${screen.route}")
+            Timber.d("ZZZ NavigationItem navigate: ${screen.route}")
             navController.navigate(
                 route = screen.route,
                 navOptions = NavOptions.Builder()
                     .setLaunchSingleTop(true)
-                    .setPopUpTo(Screen.Home.route, false) //will ruin current backstack
+                    .setPopUpTo(Screen.Home.route, false) //will ruin current backstack?
                     .build()
             )
         }
