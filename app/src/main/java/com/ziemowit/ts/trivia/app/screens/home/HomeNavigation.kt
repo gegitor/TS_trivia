@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.app.screens.quiz_init
+package com.ziemowit.ts.trivia.app.screens.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -50,14 +50,14 @@ import com.ziemowit.ts.trivia.nav.NavRoute
 
 
 
-object QuizInitRoute : NavRoute<QuizInitViewModel> {
+object QuizInitRoute : NavRoute<HomeViewModel> {
 
     override val route = "quizInit/"
 
     @Composable
-    override fun viewModel(): QuizInitViewModel = hiltViewModel()
+    override fun viewModel(): HomeViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: QuizInitViewModel) =
+    override fun Content(viewModel: HomeViewModel) =
         QuizInitScreen(Modifier, viewModel.state, viewModel.interactions)
 }

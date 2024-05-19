@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.app.screens.quiz_init
+package com.ziemowit.ts.trivia.app.screens.home
 
 import androidx.compose.runtime.mutableStateOf
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
@@ -10,7 +10,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class QuizInitViewModel @Inject constructor(private val routeNavigator: RouteNavigator) :
+class HomeViewModel @Inject constructor(private val routeNavigator: RouteNavigator) :
     ParentViewModel(routeNavigator) {
 
     init {
@@ -20,12 +20,12 @@ class QuizInitViewModel @Inject constructor(private val routeNavigator: RouteNav
     private val email = mutableStateOf("kkl")
     private val isSecretDifficultyVisible = mutableStateOf(false)
 
-    internal val interactions = QuizInitScreenInteractions(
+    internal val interactions = HomeScreenInteractions(
         onBackClicked = ::onBackClicked,
         onNavigateToQuiz = ::onNavigateToQuiz,
     )
 
-    internal val state = QuizInitState(
+    internal val state = HomeState(
         email = email,
         isSecretDifficultyVisible = isSecretDifficultyVisible,
     )

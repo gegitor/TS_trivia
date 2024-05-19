@@ -1,29 +1,37 @@
-package com.ziemowit.ts.trivia.app.screens.quiz
+package com.ziemowit.ts.trivia.app.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import timber.log.Timber
 
 @Composable
-internal fun QuizScreen(
+internal fun QuizInitScreen(
     modifier: Modifier = Modifier,
-    state: QuizState = QuizState.stub(),
-    interactions: QuizScreenInteractions = QuizScreenInteractions.STUB,
+    state: HomeState = HomeState.stub(),
+    interactions: HomeScreenInteractions = HomeScreenInteractions.STUB,
 ) {
-    Timber.d("ZZZ difficulty: ${state.difficulty.value}")
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.BottomCenter,
     ) {
-        Text(text = "Quiz ${state.difficulty.value}", fontSize = 100.sp)
+        TextButton(onClick = { interactions.onNavigateToQuiz() }) {
+            Text(text = "quiz init: ${state.email}", fontSize = 20.sp)
+        }
     }
+}
+
+@Preview
+@Composable
+private fun QuizInitScreenPreview() {
+    QuizInitScreen()
 }
