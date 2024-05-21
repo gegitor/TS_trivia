@@ -44,7 +44,7 @@ internal class QuizArgs(val difficulty: Difficulty) {
 
 object QuizRoute : NavRoute<QuizViewModel> {
 
-    override val route = "quiz/$difficultyArg/"
+    override val route = "quiz?$difficultyArg={$difficultyArg}"
 
     @Composable
     override fun viewModel(): QuizViewModel = hiltViewModel()
@@ -56,5 +56,5 @@ object QuizRoute : NavRoute<QuizViewModel> {
     override fun getArguments(): List<NamedNavArgument> = listOf(
         navArgument(difficultyArg) { type = NavType.IntType })
 
-    fun getRoute(difficulty: Difficulty) = "quiz/${difficulty.ordinal}/"
+    fun getRoute(difficulty: Difficulty) = route.replace("{$difficultyArg}", "${difficulty.ordinal}")
 }

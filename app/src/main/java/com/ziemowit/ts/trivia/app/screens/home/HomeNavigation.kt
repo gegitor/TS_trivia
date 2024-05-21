@@ -3,6 +3,8 @@ package com.ziemowit.ts.trivia.app.screens.home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.navigation
 import com.ziemowit.ts.trivia.app.screens.main.Screen
 import com.ziemowit.ts.trivia.nav.NavRoute
 

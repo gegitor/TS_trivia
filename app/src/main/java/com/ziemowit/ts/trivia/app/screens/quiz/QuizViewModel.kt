@@ -18,7 +18,6 @@ class QuizViewModel @Inject constructor(savedStateHandle: SavedStateHandle, priv
 
     init {
         Timber.d("ZZZ QuizViewModel init diff: ${difficulty.value}")
-
     }
 
 
