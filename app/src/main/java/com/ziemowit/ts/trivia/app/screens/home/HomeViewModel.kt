@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quiz.Difficulty
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
+import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
@@ -14,32 +15,23 @@ class HomeViewModel @Inject constructor(private val routeNavigator: RouteNavigat
     ParentViewModel(routeNavigator) {
 
     init {
-        Timber.d("ZZZ", "ZZZ QuizInitViewModel init")
+        Timber.d("ZZZ HomeViewModel init")
     }
 
-    private val email = mutableStateOf("kkl")
-    private val isSecretDifficultyVisible = mutableStateOf(false)
+    private val email = mutableStateOf("home@email")
 
     internal val interactions = HomeScreenInteractions(
         onBackClicked = ::onBackClicked,
-        onNavigateToQuiz = ::onNavigateToQuiz,
+        onNavigateToQuizInit = ::onNavigateToQuizInit,
     )
 
     internal val state = HomeState(
         email = email,
-        isSecretDifficultyVisible = isSecretDifficultyVisible,
     )
 
-
-    private fun onBackClicked() {
-        Timber.d("ZZZ", "ZZZ onBackClicked")
-        navigateUp()
-    }
-
-
-    private fun onNavigateToQuiz() {
-        Timber.d("ZZZ", "ZZZ onNavigateToQuiz")
-        navigateToRoute(QuizRoute.getRoute(Difficulty.EASY))
+    private fun onNavigateToQuizInit() {
+        Timber.d("ZZZ onNavigateToQuizInit")
+        navigateToRoute(QuizInitRoute.route)
     }
 }
 

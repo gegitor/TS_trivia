@@ -13,7 +13,7 @@ class SoundRepositoryImpl @Inject constructor(@ApplicationContext private val co
         val mediaPlayer = MediaPlayer.create(context, sound.path)
         mediaPlayer.start()
         mediaPlayer.setOnCompletionListener {
-            Timber.d("Released media player.")
+            Timber.d("ZZZ Released media player.")
             mediaPlayer.release()
         }
     }

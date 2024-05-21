@@ -17,7 +17,7 @@ class QuizViewModel @Inject constructor(savedStateHandle: SavedStateHandle, priv
     private val difficulty: State<Difficulty> = mutableStateOf(QuizArgs(savedStateHandle).difficulty)
 
     init {
-        Timber.d("ZZZ", "ZZZ QuizViewModel init diff: ${difficulty.value}")
+        Timber.d("ZZZ QuizViewModel init diff: ${difficulty.value}")
 
     }
 
@@ -29,10 +29,4 @@ class QuizViewModel @Inject constructor(savedStateHandle: SavedStateHandle, priv
     internal val state = QuizState(
         difficulty = difficulty,
     )
-
-
-    private fun onBackClicked() {
-        Timber.d("ZZZ", "ZZZ onBackClicked")
-        routeNavigator.navigateUp()
-    }
 }

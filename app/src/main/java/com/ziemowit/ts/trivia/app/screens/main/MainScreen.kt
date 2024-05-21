@@ -29,6 +29,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ziemowit.ts.trivia.app.screens.home.HomeRoute
+import com.ziemowit.ts.trivia.app.screens.home.HomeScreen
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitScreen
@@ -49,13 +51,14 @@ fun MainScreen() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
+            HomeRoute.composable(this, navController)
             QuizInitRoute.composable(this, navController)
             QuizRoute.composable(this, navController)
 //            quizScreenHierarchy1()
-            composable(Screen.Home.route) {
-                QuizInitScreen()
+//            composable(Screen.Home.route) {
+//                HomeRoute.composable(this, navController)
 //                HomeScreen()
-            }
+//            }
             composable(Screen.Search.route) {
                 SearchScreen()
             }
@@ -99,7 +102,7 @@ fun HomeScreen() {
             .background(MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.BottomCenter,
     ) {
-        TextButton(onClick = { interactions.onNavigateToQuiz() }) {
+        TextButton(onClick = { interactions.onNavigateToQuizInit() }) {
             Text(text = "quiz init: ${state.email}", fontSize = 20.sp)
         }
     }

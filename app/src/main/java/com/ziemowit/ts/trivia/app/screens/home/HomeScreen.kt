@@ -11,9 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import timber.log.Timber
 
 @Composable
-internal fun QuizInitScreen(
+internal fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeState = HomeState.stub(),
     interactions: HomeScreenInteractions = HomeScreenInteractions.STUB,
@@ -24,14 +25,16 @@ internal fun QuizInitScreen(
             .background(MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.BottomCenter,
     ) {
-        TextButton(onClick = { interactions.onNavigateToQuiz() }) {
-            Text(text = "quiz init: ${state.email}", fontSize = 20.sp)
+        TextButton(
+            onClick = { interactions.onNavigateToQuizInit() }
+        ) {
+            Text(text = "home screen: ${state.email}", fontSize = 20.sp)
         }
     }
 }
 
 @Preview
 @Composable
-private fun QuizInitScreenPreview() {
-    QuizInitScreen()
+private fun HomeScreenPreview() {
+    HomeScreen()
 }

@@ -51,7 +51,6 @@ interface NavRoute<T : RouteNavigator> {
             val viewStateAsState by viewModel.navigationState.collectAsState()
 
             LaunchedEffect(viewStateAsState) {
-                Timber.d("Nav", "ZZZ ${this@NavRoute} updateNavigationState to $viewStateAsState")
                 updateNavigationState(navHostController, viewStateAsState, viewModel::onNavigated)
             }
 
@@ -87,16 +86,24 @@ interface NavRoute<T : RouteNavigator> {
         navigationState: NavigationState,
         onNavigated: (navState: NavigationState) -> Unit,
     ) {
+        Timber.d("ZZZ updateNavigationState navigationState: $navigationState")
+
         when (navigationState) {
             is NavigationState.NavigateToRoute -> {
+                Timber.d(
+                    "ZZZ updateNavigationState navigationState route: ${navigationState.route}"
+                )
                 navHostController.navigate(navigationState.route)
-             }
+            }
+
             is NavigationState.PopToRoute -> {
                 navHostController.popBackStack(navigationState.staticRoute, false)
             }
+
             is NavigationState.NavigateUp -> {
                 navHostController.navigateUp()
             }
+
             is NavigationState.Idle -> {
             }
         }

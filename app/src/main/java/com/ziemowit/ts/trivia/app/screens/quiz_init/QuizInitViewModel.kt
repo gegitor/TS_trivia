@@ -14,10 +14,10 @@ class QuizInitViewModel @Inject constructor(private val routeNavigator: RouteNav
     ParentViewModel(routeNavigator) {
 
     init {
-        Timber.d("ZZZ", "ZZZ QuizInitViewModel init")
+        Timber.d("ZZZ QuizInitViewModel init")
     }
 
-    private val email = mutableStateOf("kkl")
+    private val email = mutableStateOf("qinit@email")
     private val isSecretDifficultyVisible = mutableStateOf(false)
 
     internal val interactions = QuizInitScreenInteractions(
@@ -30,15 +30,8 @@ class QuizInitViewModel @Inject constructor(private val routeNavigator: RouteNav
         isSecretDifficultyVisible = isSecretDifficultyVisible,
     )
 
-
-    private fun onBackClicked() {
-        Timber.d("ZZZ", "ZZZ onBackClicked")
-        navigateUp()
-    }
-
-
     private fun onNavigateToQuiz() {
-        Timber.d("ZZZ", "ZZZ onNavigateToQuiz")
+        Timber.d("ZZZ onNavigateToQuiz")
         navigateToRoute(QuizRoute.getRoute(Difficulty.EASY))
     }
 }
