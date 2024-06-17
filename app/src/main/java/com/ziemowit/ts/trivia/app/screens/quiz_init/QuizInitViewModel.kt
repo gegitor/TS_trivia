@@ -30,9 +30,9 @@ class QuizInitViewModel @Inject constructor(private val routeNavigator: RouteNav
         isSecretDifficultyVisible = isSecretDifficultyVisible,
     )
 
-    private fun onNavigateToQuiz() {
+    private fun onNavigateToQuiz(difficulty: Difficulty) {
         Timber.d("ZZZ onNavigateToQuiz")
-        navigateToRoute(QuizRoute.getRoute(Difficulty.EASY))
+        navigateToRoute(QuizRoute.getRoute(difficulty))
     }
 }
 

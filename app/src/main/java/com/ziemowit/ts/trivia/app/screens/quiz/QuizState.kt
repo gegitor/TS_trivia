@@ -18,7 +18,7 @@ internal data class QuizState(
 }
 
 
-enum class Difficulty(@StringRes val diff: Int) {
+enum class Difficulty(@StringRes val diffText: Int) {
     EASY(R.string.diff_easy), MEDIUM(R.string.diff_medium), HARD(R.string.diff_hard), WOJTEK(R.string.diff_wojtek);
 
     companion object {
