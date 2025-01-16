@@ -5,5 +5,7 @@
     <string name="diff_easy">Easy</string>
     <string name="diff_medium">Medium</string>
     <string name="diff_hard">Hard</string>
-    <string name="diff_wojtek">Wojtek</string>
+	<string name="diff_wojtek">Wojtek</string>
+
+	<string name="acc_hide_secret_difficulty">Hide secret difficulty</string>
 </resources>

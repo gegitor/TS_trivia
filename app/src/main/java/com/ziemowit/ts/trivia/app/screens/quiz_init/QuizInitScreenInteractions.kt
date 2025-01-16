@@ -5,12 +5,14 @@ import com.ziemowit.ts.trivia.app.screens.quiz.Difficulty
 internal data class QuizInitScreenInteractions(
     val onBackClicked: () -> Unit,
     val onNavigateToQuiz: (difficulty: Difficulty) -> Unit,
+    val setHiddenDifficultyVisibility: (visible: Boolean) -> Unit,
 //    val onDifficultySelected: () -> Unit, //TODO
 ) {
     companion object {
         val STUB = QuizInitScreenInteractions(
             onBackClicked = {},
             onNavigateToQuiz = {},
+            setHiddenDifficultyVisibility = {},
         )
     }
 }

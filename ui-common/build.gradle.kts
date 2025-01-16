@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.ziemowit.ts.ui_common"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -44,11 +44,13 @@ dependencies {
     api(libs.material3)
 
     api(libs.appcompat)
-    api(libs.activity.compose)
+    api(libs.compose.animation)
+    api(libs.compose.activity)
     api(platform(libs.compose.bom))
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
 
+    testImplementation(libs.junit)
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)

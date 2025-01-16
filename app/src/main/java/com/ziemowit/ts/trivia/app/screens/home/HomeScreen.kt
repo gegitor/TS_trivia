@@ -28,7 +28,7 @@ internal fun HomeScreen(
         TextButton(
             onClick = { interactions.onNavigateToQuizInit() }
         ) {
-            Text(text = "home screen: ${state.email}", fontSize = 20.sp)
+            Text(text = "home screen: ${state.email}", fontSize = 20.sp) //TODO - change to some greeting
         }
     }
 }

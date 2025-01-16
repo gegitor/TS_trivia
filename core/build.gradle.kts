@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.ziemowit.ts.core"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24

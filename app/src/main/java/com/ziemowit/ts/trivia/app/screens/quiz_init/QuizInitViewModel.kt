@@ -23,6 +23,7 @@ class QuizInitViewModel @Inject constructor(private val routeNavigator: RouteNav
     internal val interactions = QuizInitScreenInteractions(
         onBackClicked = ::onBackClicked,
         onNavigateToQuiz = ::onNavigateToQuiz,
+        setHiddenDifficultyVisibility = ::setHiddenDifficultyVisibility,
     )
 
     internal val state = QuizInitState(
@@ -33,6 +34,11 @@ class QuizInitViewModel @Inject constructor(private val routeNavigator: RouteNav
     private fun onNavigateToQuiz(difficulty: Difficulty) {
         Timber.d("ZZZ onNavigateToQuiz")
         navigateToRoute(QuizRoute.getRoute(difficulty))
+    }
+
+    private fun setHiddenDifficultyVisibility(visible: Boolean) {
+        Timber.d("ZZZ setHiddenDifficultyVisibility: $visible")
+        isSecretDifficultyVisible.value = visible
     }
 }
 
