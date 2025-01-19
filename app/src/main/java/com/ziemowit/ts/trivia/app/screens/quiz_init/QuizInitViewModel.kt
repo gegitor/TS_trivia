@@ -10,12 +10,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
-private const val PREF_HIDDEN_DIFFICULTY = "PREF_HIDDEN_DIFFICULTY"
 
 @HiltViewModel
 class QuizInitViewModel @Inject constructor(routeNavigator: RouteNavigator, private val sharedPreferences: SharedPreferences) :
     ParentViewModel(routeNavigator) {
 
+    val PREF_HIDDEN_DIFFICULTY = "PREF_HIDDEN_DIFFICULTY"
     private val email = mutableStateOf("qinit@email")
     private val isSecretDifficultyVisible = mutableStateOf(false)
 
@@ -37,7 +37,7 @@ class QuizInitViewModel @Inject constructor(routeNavigator: RouteNavigator, priv
     )
 
     private fun onNavigateToQuiz(difficulty: Difficulty) {
-        Timber.d("ZZZ onNavigateToQuiz")
+        Timber.d("ZZZ onNavigateToQuiz, route: ${QuizRoute.getRoute(difficulty)}")
         navigateToRoute(QuizRoute.getRoute(difficulty))
     }
 

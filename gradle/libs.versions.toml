@@ -24,8 +24,10 @@ splashScreen = "1.0.1"
 hilt = "2.49"
 hiltCompose = "1.2.0"
 navigationCompose = "2.8.5"
+mockk = "1.13.10"
 
 [libraries]
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

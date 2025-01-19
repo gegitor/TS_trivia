@@ -37,3 +37,4 @@ release.properties
 secrets.properties
 local.properties
 .idea/
+.aider*
