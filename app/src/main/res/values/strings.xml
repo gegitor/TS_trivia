@@ -8,4 +8,12 @@
 	<string name="diff_wojtek">Wojtek</string>
 
 	<string name="acc_hide_secret_difficulty">Hide secret difficulty</string>
+
+    <string name="category_game_mechanics">Game Mechanics</string>
+    <string name="category_cards_operation">Cards Operation</string>
+    <string name="category_cards_history">Cards History</string>
+    <string name="category_creators">Creators</string>
+    <string name="category_players">Players</string>
+    <string name="category_game_history">Game History</string>
+    <string name="category_board">Board</string>
 </resources>
