@@ -3,21 +3,30 @@ package com.ziemowit.ts.trivia.audio
 import android.content.Context
 import android.media.MediaPlayer
 import dagger.hilt.android.qualifiers.ApplicationContext
-import timber.log.Timber
 import javax.inject.Inject
 
-//import me.tatarka.inject.annotations.Inject
-
 class SoundRepositoryImpl @Inject constructor(@ApplicationContext private val context: Context) : SoundRepository {
+    private var currentMediaPlayer: MediaPlayer? = null
+
     override fun play(sound: Sound) {
+        stopAll() // Stop any currently playing sound before starting a new one
+
         val mediaPlayer = MediaPlayer.create(context, sound.path)
+        currentMediaPlayer = mediaPlayer
         mediaPlayer.start()
         mediaPlayer.setOnCompletionListener {
-            Timber.d("ZZZ Released media player.")
             mediaPlayer.release()
+            currentMediaPlayer = null
         }
     }
 
     override fun stopAll() {
+        currentMediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+            }
+            it.release()
+            currentMediaPlayer = null
+        }
     }
 }

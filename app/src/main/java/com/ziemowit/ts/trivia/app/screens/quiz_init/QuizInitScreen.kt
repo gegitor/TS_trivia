@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ziemowit.ts.trivia.R
-import com.ziemowit.ts.trivia.app.screens.quiz.Difficulty
+import com.ziemowit.ts.trivia.data.Difficulty
 import com.ziemowit.ts.trivia.ui.theme.Red40
 
 

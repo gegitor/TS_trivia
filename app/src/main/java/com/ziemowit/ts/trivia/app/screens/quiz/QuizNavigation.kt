@@ -5,12 +5,9 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.ziemowit.ts.trivia.app.screens.main.Screen
+import com.ziemowit.ts.trivia.data.Difficulty
 import com.ziemowit.ts.trivia.nav.NavRoute
 
 private const val difficultyArg = "difficulty"

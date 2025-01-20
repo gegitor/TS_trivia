@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import com.ziemowit.ts.trivia.audio.SoundRepository
 import com.ziemowit.ts.trivia.audio.SoundRepositoryImpl
+import com.ziemowit.ts.trivia.data.QuestionRepository
+import com.ziemowit.ts.trivia.data.QuestionRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,4 +37,8 @@ class AppModule {
     @Provides
     @Singleton
     fun getSoundRepository(context: Context): SoundRepository = SoundRepositoryImpl(context)
+
+    @Provides
+    @Singleton
+    fun geQuestionRepository(context: Context): QuestionRepository = QuestionRepositoryImpl(context)
 }

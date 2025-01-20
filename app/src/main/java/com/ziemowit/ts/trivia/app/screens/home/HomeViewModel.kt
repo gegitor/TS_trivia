@@ -2,8 +2,6 @@ package com.ziemowit.ts.trivia.app.screens.home
 
 import androidx.compose.runtime.mutableStateOf
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
-import com.ziemowit.ts.trivia.app.screens.quiz.Difficulty
-import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel

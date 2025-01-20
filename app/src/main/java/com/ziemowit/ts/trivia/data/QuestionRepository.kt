@@ -20,13 +20,13 @@ class QuestionRepositoryImpl @Inject constructor(
 ) : QuestionRepository {
 
     private var allQuestions: List<Question>? = null
-    private val tokenCount: Int = 9
+    private val tokenCount: Int = 8
 
-   override suspend fun getQuestions(difficulty: Difficulty): List<Question> {
-       if (allQuestions == null) {
-           allQuestions = readQuestionsFromFile()
-       }
-       return allQuestions.orEmpty().filter { it.difficulty.index == difficulty.index }
+    override suspend fun getQuestions(difficulty: Difficulty): List<Question> {
+        if (allQuestions == null) {
+            allQuestions = readQuestionsFromFile()
+        }
+        return allQuestions.orEmpty().filter { it.difficulty.index == difficulty.index }
     }
 
     override suspend fun getQuestionsWithMaxDiff(difficulty: Difficulty): List<Question> {
@@ -53,15 +53,15 @@ class QuestionRepositoryImpl @Inject constructor(
                         try {
                             val index = tokens[0].toInt()
                             val category = Category.valueOf(tokens[1])
-                            val diff = Difficulty.entries[tokens[3].toInt()]
-                            val answer = tokens[4]
-                            val wrongAnswers = listOf(tokens[5], tokens[6]) + tokens.drop(7)
+                            val diff = Difficulty.entries[tokens[2].toInt()]
+                            val answer = tokens[3]
+                            val wrongAnswers = tokens.drop(4)
                             questions.add(Question(index, category, diff, answer, wrongAnswers))
                         } catch (e: Exception) {
-                            Timber.w("QuestionRepositoryImpl", "Error parsing line: $it", e)
+                            Timber.e(e, "Error parsing line: $it")
                         }
                     } else {
-                        Timber.w("QuestionRepositoryImpl", "Invalid line: $it")
+                        Timber.w("Invalid token count: $it")
                     }
                 }
             }
