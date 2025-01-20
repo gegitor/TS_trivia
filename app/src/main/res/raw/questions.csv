@@ -1,8 +1,8 @@
-category,index,difficulty,answer,wrong1,wrong2,wrong3,wrong4
-GAME_MECHANICS,0,2,Cuba Libre,Domino,Chess,Go,Poker
-CARDS_OPERATION,1,1,Marshall Plan,Truman Doctrine,Monroe Doctrine,Roosevelt Corollary,Open Door Policy
-CARDS_HISTORY,2,3,Bay of Pigs,Gulf of Tonkin,Tet Offensive,Cuban Missile Crisis,Watergate
-CREATORS,3,0,Detente,Perestroika,Realpolitik,Brinkmanship,Containment
-PLAYERS,4,4,Glasnost,Perestroika,Solidarity,Velvet Revolution,Tiananmen Square Protests
-GAME_HISTORY,5,2,Iron Curtain,Berlin Wall,Maginot Line,38th Parallel,Yalta Conference
-BOARD,6,1,Space Race,Moon Landing,Sputnik,Apollo 11,Hubble Telescope
+index,category,difficulty,answer,wrong1,wrong2,wrong3,wrong4
+0,GAME_MECHANICS,2,Cuba Libre,Domino,Chess,Go,Poker
+1,CARDS_OPERATION,1,Marshall Plan,Truman Doctrine,Monroe Doctrine,Roosevelt Corollary,Open Door Policy
+2,CARDS_HISTORY,3,Bay of Pigs,Gulf of Tonkin,Tet Offensive,Cuban Missile Crisis,Watergate
+3,CREATORS,0,Detente,Perestroika,Realpolitik,Brinkmanship,Containment
+4,PLAYERS,4,Glasnost,Perestroika,Solidarity,Velvet Revolution,Tiananmen Square Protests
+5,GAME_HISTORY,2,Iron Curtain,Berlin Wall,Maginot Line,38th Parallel,Yalta Conference
+6,BOARD,1,Space Race,Moon Landing,Sputnik,Apollo 11,Hubble Telescope

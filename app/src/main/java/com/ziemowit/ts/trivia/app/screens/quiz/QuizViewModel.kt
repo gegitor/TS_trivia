@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
+import com.ziemowit.ts.trivia.data.Difficulty
 import com.ziemowit.ts.trivia.data.QuestionRepository
 import kotlinx.coroutines.launch
 import com.ziemowit.ts.trivia.nav.RouteNavigator
@@ -19,7 +20,8 @@ class QuizViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator,
     private val questionRepository: QuestionRepository
 ) : ParentViewModel(routeNavigator) {
-
+    //    private val difficulty: String = checkNotNull(savedStateHandle["difficultyId"])
+//    private val diffArgs = QuizArgs(savedStateHandle)
     private val difficulty: State<Difficulty> = mutableStateOf(QuizArgs(savedStateHandle).difficulty)
 
     init {

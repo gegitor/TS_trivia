@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.sp
 import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.app.screens.quiz.Difficulty
 import com.ziemowit.ts.trivia.ui.theme.Red40
-import timber.log.Timber
 
 
 // choose difficulty
@@ -89,7 +88,7 @@ private fun DifficultyOption(
         })
     {
         Text(
-            text = stringResource(id = difficulty.diffText),
+            text = stringResource(id = difficulty.displayName),
             fontSize = 24.sp
         )
     }
