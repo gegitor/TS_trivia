@@ -15,8 +15,8 @@ class SoundRepositoryImpl @Inject constructor(@ApplicationContext private val co
         currentMediaPlayer = mediaPlayer
         mediaPlayer.start()
         mediaPlayer.setOnCompletionListener {
-            mediaPlayer.release()
             currentMediaPlayer = null
+            mediaPlayer.release()
         }
     }
 
@@ -25,8 +25,8 @@ class SoundRepositoryImpl @Inject constructor(@ApplicationContext private val co
             if (it.isPlaying) {
                 it.stop()
             }
-            it.release()
             currentMediaPlayer = null
+            it.release()
         }
     }
 }

@@ -11,33 +11,33 @@ import java.io.InputStreamReader
 import javax.inject.Inject
 
 interface QuestionRepository {
-    suspend fun getQuestions(difficulty: Difficulty): List<Question>
-    suspend fun getQuestionsWithMaxDiff(difficulty: Difficulty): List<Question>
+    suspend fun getQuestions(difficulty: Difficulty): List<QuestionEntry>
+    suspend fun getQuestionsWithMaxDiff(difficulty: Difficulty): List<QuestionEntry>
 }
 
 class QuestionRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : QuestionRepository {
 
-    private var allQuestions: List<Question>? = null
-    private val tokenCount: Int = 8
+    private var allQuestionEntries: List<QuestionEntry>? = null
+    private val tokenCount: Int = 9
 
-    override suspend fun getQuestions(difficulty: Difficulty): List<Question> {
-        if (allQuestions == null) {
-            allQuestions = readQuestionsFromFile()
+    override suspend fun getQuestions(difficulty: Difficulty): List<QuestionEntry> {
+        if (allQuestionEntries == null) {
+            allQuestionEntries = readQuestionsFromFile()
         }
-        return allQuestions.orEmpty().filter { it.difficulty.index == difficulty.index }
+        return allQuestionEntries.orEmpty().filter { it.difficulty.index == difficulty.index }
     }
 
-    override suspend fun getQuestionsWithMaxDiff(difficulty: Difficulty): List<Question> {
-        if (allQuestions == null) {
-            allQuestions = readQuestionsFromFile()
+    override suspend fun getQuestionsWithMaxDiff(difficulty: Difficulty): List<QuestionEntry> {
+        if (allQuestionEntries == null) {
+            allQuestionEntries = readQuestionsFromFile()
         }
-        return allQuestions.orEmpty().filter { it.difficulty.index <= difficulty.index }
+        return allQuestionEntries.orEmpty().filter { it.difficulty.index <= difficulty.index }
     }
 
-    private suspend fun readQuestionsFromFile(): List<Question> {
-        val questions = mutableListOf<Question>()
+    private suspend fun readQuestionsFromFile(): List<QuestionEntry> {
+        val questionEntries = mutableListOf<QuestionEntry>()
         val inputStream = context.resources.openRawResource(R.raw.questions)
         val reader = BufferedReader(InputStreamReader(inputStream))
 
@@ -48,15 +48,16 @@ class QuestionRepositoryImpl @Inject constructor(
             while (reader.readLine().also { line = it } != null) {
                 line?.let {
                     val tokens = it.split(",", ignoreCase = false)
-                    Timber.w("Tokens size: ${tokens.size}")
+                    Timber.d("Tokens size: ${tokens.size}")
                     if (tokens.size == tokenCount) {
                         try {
                             val index = tokens[0].toInt()
                             val category = Category.valueOf(tokens[1])
                             val diff = Difficulty.entries[tokens[2].toInt()]
-                            val answer = tokens[3]
-                            val wrongAnswers = tokens.drop(4)
-                            questions.add(Question(index, category, diff, answer, wrongAnswers))
+                            val question = tokens[3]
+                            val answer = tokens[4]
+                            val wrongAnswers = tokens.drop(5)
+                            questionEntries.add(QuestionEntry(index, category, diff, question, answer, wrongAnswers))
                         } catch (e: Exception) {
                             Timber.e(e, "Error parsing line: $it")
                         }
@@ -67,6 +68,6 @@ class QuestionRepositoryImpl @Inject constructor(
             }
             reader.close()
         }
-        return questions
+        return questionEntries
     }
 }

@@ -1,8 +1,8 @@
-index,category,difficulty,answer,wrong1,wrong2,wrong3,wrong4
-0,GAME_MECHANICS,2,Cuba Libre,Domino,Chess,Go,Poker
-1,CARDS_OPERATION,1,Marshall Plan,Truman Doctrine,Monroe Doctrine,Roosevelt Corollary,Open Door Policy
-2,CARDS_HISTORY,3,Bay of Pigs,Gulf of Tonkin,Tet Offensive,Cuban Missile Crisis,Watergate
-3,CREATORS,0,Detente,Perestroika,Realpolitik,Brinkmanship,Containment
-4,PLAYERS,4,Glasnost,Perestroika,Solidarity,Velvet Revolution,Tiananmen Square Protests
-5,GAME_HISTORY,2,Iron Curtain,Berlin Wall,Maginot Line,38th Parallel,Yalta Conference
-6,BOARD,1,Space Race,Moon Landing,Sputnik,Apollo 11,Hubble Telescope
+index,category,difficulty,question,answer,wrong1,wrong2,wrong3,wrong4
+0,GAME_MECHANICS,2,Which drink does the "Cuba" card represent?,Cuba Libre,Domino,Chess,Go,Poker
+1,CARDS_OPERATION,1,Which of these is a US Cold War foreign policy?,Marshall Plan,Truman Doctrine,Monroe Doctrine,Roosevelt Corollary,Open Door Policy
+2,CARDS_HISTORY,3,Which of these is an event from the Cold War?,Bay of Pigs,Gulf of Tonkin,Tet Offensive,Cuban Missile Crisis,Watergate
+3,CREATORS,0,Which of these is a concept related to diplomacy and statecraft?,Detente,Perestroika,Realpolitik,Brinkmanship,Containment
+4,PLAYERS,4,Which of these is a social or political movement?,Glasnost,Perestroika,Solidarity,Velvet Revolution,Tiananmen Square Protests
+5,GAME_HISTORY,2,Which of these is a term or location associated with the Cold War?,Iron Curtain,Berlin Wall,Maginot Line,38th Parallel,Yalta Conference
+6,BOARD,1,Which of these is related to advancements in space exploration?,Space Race,Moon Landing,Sputnik,Apollo 11,Hubble Telescope
