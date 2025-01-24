@@ -8,7 +8,7 @@ import com.ziemowit.ts.trivia.data.emptyQuestionInfo
 
 internal data class QuizState(
     val difficulty: State<Difficulty>,
-    val isAnswerSelected: State<Boolean>,
+    val isAnswerChosen: State<Boolean>,
     val isAnswerEnabled: State<Boolean>,
     val questionCount: State<String>,
     val question: State<QuestionInfo>,
@@ -16,13 +16,13 @@ internal data class QuizState(
     companion object {
         fun stub(
             difficulty: Difficulty = Difficulty.EASY,
-            isAnswerSelected: Boolean = false,
+            isAnswerChosen: Boolean = false,
             isAnswerEnabled: Boolean = true,
             questionCount: String = "Question 3/4",
             question: QuestionInfo = emptyQuestionInfo,
         ) = QuizState(
             difficulty = mutableStateOf(difficulty),
-            isAnswerSelected = mutableStateOf(isAnswerSelected),
+            isAnswerChosen = mutableStateOf(isAnswerChosen),
             isAnswerEnabled = mutableStateOf(isAnswerEnabled),
             questionCount = mutableStateOf(questionCount),
             question = mutableStateOf(question),
