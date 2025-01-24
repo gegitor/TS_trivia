@@ -1,25 +1,31 @@
 package com.ziemowit.ts.trivia.app.screens.quiz
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import com.ziemowit.ts.trivia.data.Difficulty
 import com.ziemowit.ts.trivia.data.QuestionInfo
+import com.ziemowit.ts.trivia.data.emptyQuestionInfo
 
 internal data class QuizState(
     val difficulty: State<Difficulty>,
-    val currentQuestionIndex: State<Int>,
-    val questions: State<List<QuestionInfo>>,
+    val isAnswerSelected: State<Boolean>,
+    val isAnswerEnabled: State<Boolean>,
+    val questionCount: State<String>,
+    val question: State<QuestionInfo>,
 ) {
     companion object {
         fun stub(
             difficulty: Difficulty = Difficulty.EASY,
-            currentQuestionIndex: Int = 0,
-            questions: List<QuestionInfo> = emptyList(),
+            isAnswerSelected: Boolean = false,
+            isAnswerEnabled: Boolean = true,
+            questionCount: String = "Question 3/4",
+            question: QuestionInfo = emptyQuestionInfo,
         ) = QuizState(
             difficulty = mutableStateOf(difficulty),
-            currentQuestionIndex = mutableIntStateOf(currentQuestionIndex),
-            questions = mutableStateOf(questions),
+            isAnswerSelected = mutableStateOf(isAnswerSelected),
+            isAnswerEnabled = mutableStateOf(isAnswerEnabled),
+            questionCount = mutableStateOf(questionCount),
+            question = mutableStateOf(question),
         )
     }
 }

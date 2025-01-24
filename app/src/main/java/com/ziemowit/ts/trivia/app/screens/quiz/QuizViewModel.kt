@@ -27,7 +27,8 @@ class QuizViewModel @Inject constructor(
     private val quizArgs = QuizArgs(savedStateHandle)
     private val difficulty = mutableStateOf(quizArgs.difficulty)
     private val questions = mutableStateOf<List<QuestionInfo>>(emptyList())
-    private val currentQuestionIndex = mutableIntStateOf(0)
+    private val currentQuestionIndex = mutableIntStateOf(0)    
+    private val isAnswerSelected = mutableStateOf(false)
 
     private val userAnswers = mutableListOf<GivenAnswer>()
 
@@ -39,6 +40,7 @@ class QuizViewModel @Inject constructor(
     internal val state = QuizState(
         difficulty = difficulty,
         currentQuestionIndex = currentQuestionIndex,
+        isAnswerSelected = isAnswerSelected,
         questions = questions,
     )
 
@@ -61,13 +63,15 @@ class QuizViewModel @Inject constructor(
     private fun onAnswerSelected(questionIndex: Int, potentialAnswer: PotentialAnswer) {
         viewModelScope.launch {
             delay(1000L)
-            Timber.d("ZZZ onAnswerSelected, questionIndex: $questionIndex, potentialAnswer: $potentialAnswer")
+            Timber.d("ZZZ onAnswerSelected, questionIndex: $questionIndex, potentialAnswer: $potentialAnswer")            
+            isAnswerSelected.value = true
             userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
-            currentQuestionIndex.intValue += 1
         }
     }
 
-    private fun onNextQuestion() {
+    private fun onNextQuestion() = viewModelScope.launch {
+        isAnswerSelected.value = false
+        delay(500L)
         if (currentQuestionIndex.intValue < questions.value.lastIndex) {
             currentQuestionIndex.intValue += 1
         } else {

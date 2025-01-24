@@ -68,7 +68,8 @@ private fun QuestionContent(
                     itemsIndexed(question.potentialAnswers) { index, answer ->
                         AnswerItem(
                             potentialAnswer = answer,
-                            isSelected = true, // Update this based on your state logic
+                            isAnswered = state.isAnswerSelected.value,
+                            isSelected = true,
                             onAnswerSelected = { potentialAnswer ->
                                 interactions.onAnswerSelected(currentQuestionIndex, potentialAnswer)
                             }
@@ -101,12 +102,13 @@ private fun QuestionContent(
 private fun AnswerItem(
     potentialAnswer: PotentialAnswer,
     isSelected: Boolean,
+    isAnswered: Boolean,
     onAnswerSelected: (PotentialAnswer) -> Unit,
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onAnswerSelected(potentialAnswer) },
+            .clickable(enabled = !isAnswered) { onAnswerSelected(potentialAnswer) },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,

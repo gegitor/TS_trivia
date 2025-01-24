@@ -8,3 +8,10 @@ data class QuestionInfo(
     val question: String,
     val potentialAnswers: List<PotentialAnswer>,
 )
+
+val emptyQuestionInfo = QuestionInfo(
+    0,
+    Difficulty.EASY,
+    "q",
+    listOf(emptyPotentialAnswer, emptyPotentialAnswer, emptyPotentialAnswer, emptyPotentialAnswer, emptyPotentialAnswer)
+)
