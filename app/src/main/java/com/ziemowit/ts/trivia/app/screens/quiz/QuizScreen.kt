@@ -1,5 +1,6 @@
 package com.ziemowit.ts.trivia.app.screens.quiz
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -19,47 +20,78 @@ internal fun QuizScreen(
     state: QuizState,
     interactions: QuizScreenInteractions,
 ) {
-    QuestionContent(state, interactions, modifier)
+    QuestionContent(modifier, state, interactions)
 }
 
 @Composable
 private fun QuestionContent(
+    modifier: Modifier = Modifier,
     state: QuizState = QuizState.stub(),
     interactions: QuizScreenInteractions = QuizScreenInteractions.STUB,
-    modifier: Modifier,
 ) {
     val currentQuestionIndex = state.currentQuestionIndex.value
     val question = state.questions.value.getOrNull(currentQuestionIndex)
+
     if (question != null) {
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // Display the question number and total questions
             Text(
-                text = "Question ${currentQuestionIndex + 1} / ${state.questions.value.size}",
+                text = "Question ${currentQuestionIndex + 1} of ${state.questions.value.size}",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
-            Spacer(modifier = Modifier.height(8.dp))
+
+            // Display the question text
+            Text(
+                text = question.question,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Display the potential answers
             Card(
                 modifier = Modifier.fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
-                Column(
+                LazyColumn(
                     modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    LazyColumn {
-                        itemsIndexed(question.potentialAnswers) { index, answer ->
-                            AnswerItem(
-                                potentialAnswer = answer,
-//                                isSelected = state.userAnswers.value.getOrNull(currentQuestionIndex) == index,
-                                onAnswerSelected = { potentialAnswer ->
-                                    interactions.onAnswerSelected(currentQuestionIndex, potentialAnswer)
-                                },
-                            )
-                        }
+                    itemsIndexed(question.potentialAnswers) { index, answer ->
+                        AnswerItem(
+                            potentialAnswer = answer,
+                            isSelected = true, // Update this based on your state logic
+                            onAnswerSelected = { potentialAnswer ->
+                                interactions.onAnswerSelected(currentQuestionIndex, potentialAnswer)
+                            }
+                        )
                     }
                 }
+            }
+
+            // Next Question Button
+            Button(
+                onClick = { interactions.onNextQuestion() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            ) {
+                Text(
+                    text = if (currentQuestionIndex < state.questions.value.size - 1) "Next Question" else "Finish Quiz",
+                    fontSize = 16.sp
+                )
             }
         }
     }
@@ -68,18 +100,23 @@ private fun QuestionContent(
 @Composable
 private fun AnswerItem(
     potentialAnswer: PotentialAnswer,
-    isSelected: Boolean = true,
+    isSelected: Boolean,
     onAnswerSelected: (PotentialAnswer) -> Unit,
 ) {
-    Button(
-        onClick = { onAnswerSelected(potentialAnswer) },
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.LightGray,
-        ),
+            .clickable { onAnswerSelected(potentialAnswer) },
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
+        )
     ) {
-        Text(potentialAnswer.answerText)
+        Text(
+            text = potentialAnswer.answerText,
+            modifier = Modifier.padding(16.dp),
+            fontSize = 16.sp
+        )
     }
 }

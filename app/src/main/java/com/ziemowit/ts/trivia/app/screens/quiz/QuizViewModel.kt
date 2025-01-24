@@ -12,6 +12,7 @@ import com.ziemowit.ts.trivia.data.QuestionRepository
 import com.ziemowit.ts.trivia.data.toQuestionInfo
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -58,7 +59,12 @@ class QuizViewModel @Inject constructor(
 
 
     private fun onAnswerSelected(questionIndex: Int, potentialAnswer: PotentialAnswer) {
-        userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
+        viewModelScope.launch {
+            delay(1000L)
+            Timber.d("ZZZ onAnswerSelected, questionIndex: $questionIndex, potentialAnswer: $potentialAnswer")
+            userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
+            currentQuestionIndex.intValue += 1
+        }
     }
 
     private fun onNextQuestion() {
