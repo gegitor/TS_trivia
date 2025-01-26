@@ -27,10 +27,31 @@ import timber.log.Timber
 @Composable
 internal fun QuizScreen(
     modifier: Modifier = Modifier,
-    state: QuizState,
-    interactions: QuizScreenInteractions,
+    state: QuizState = QuizState.stub(),
+    interactions: QuizScreenInteractions = QuizScreenInteractions.STUB
 ) {
-    QuestionContent(modifier, state, interactions)
+    if (state.isLoading.value) {
+        LoadingContent(modifier, state, interactions)
+    } else {
+        QuestionContent(modifier, state, interactions)
+    }
+}
+
+@Composable
+private fun LoadingContent(
+    modifier: Modifier = Modifier,
+//    state: QuizState,
+//    interactions: QuizScreenInteractions,
+) {
+    Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+        Text(
+            modifier = Modifier.padding(8.dp),
+            text = "Loading...",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+    }
 }
 
 @Composable
@@ -50,7 +71,7 @@ private fun QuestionContent(
             text = state.questionCount.value,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         // Display the question text

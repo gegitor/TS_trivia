@@ -40,10 +40,10 @@ class QuizViewModel @Inject constructor(
 
     // State objects
     private val difficulty = mutableStateOf(quizArgs.difficulty)
+    private val isLoading = mutableStateOf(true)
     private val question = mutableStateOf(emptyQuestionInfo)
     private val isAnswerEnabled = mutableStateOf(true)
-    private val questionCount: MutableState<String>
-        get() = mutableStateOf(context.getString(R.string.question_count, currentQuestionIndex.intValue + 1, questions.size))
+    private val questionCount: MutableState<String> = mutableStateOf("")
 
 
     init {
@@ -55,6 +55,7 @@ class QuizViewModel @Inject constructor(
         difficulty = difficulty,
         isAnswerEnabled = isAnswerEnabled,
         questionCount = questionCount,
+        isLoading = isLoading,
         question = question,
     )
 
@@ -80,20 +81,26 @@ class QuizViewModel @Inject constructor(
             delay(1000L)
             if (currentQuestionIndex.intValue < questions.lastIndex) {
                 currentQuestionIndex.intValue++
-                question.value = questions[currentQuestionIndex.intValue]
-            } else {
+                nextQuestion()
+             } else {
                 onQuizFinished()
             }
         }
     }
 
+    private fun nextQuestion() {
+        question.value = questions[currentQuestionIndex.intValue]
+        questionCount.value =
+            context.getString(R.string.question_count, currentQuestionIndex.intValue + 1, questions.size)
+    }
+
     private fun loadQuestions() = viewModelScope.launch {
         val dbQuestions = questionRepository.getQuestions(difficulty.value)
         Timber.d("Loaded questions: $dbQuestions")
-         //TODO - choose a subset of questions from the full list
+        //TODO - choose a subset of questions from the full list
         questions = dbQuestions.map { it.toQuestionInfo() }
-        Timber.d("Questions size: ${questions.size}")
-        question.value = questions[currentQuestionIndex.intValue]
+        nextQuestion()
+        isLoading.value = false
     }
 
     private fun calculateScore(): Int {
