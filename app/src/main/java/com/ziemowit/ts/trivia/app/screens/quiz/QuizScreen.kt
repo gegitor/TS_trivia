@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ziemowit.ts.trivia.data.PotentialAnswer
+import com.ziemowit.ts.ui_common.components.LoadingContent
 import timber.log.Timber
 
 //TODO - confirmation dialog for back arrow
@@ -31,26 +32,9 @@ internal fun QuizScreen(
     interactions: QuizScreenInteractions = QuizScreenInteractions.STUB
 ) {
     if (state.isLoading.value) {
-        LoadingContent(modifier, state, interactions)
+        LoadingContent(modifier)
     } else {
         QuestionContent(modifier, state, interactions)
-    }
-}
-
-@Composable
-private fun LoadingContent(
-    modifier: Modifier = Modifier,
-//    state: QuizState,
-//    interactions: QuizScreenInteractions,
-) {
-    Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
-        Text(
-            modifier = Modifier.padding(8.dp),
-            text = "Loading...",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
     }
 }
 
@@ -134,3 +118,5 @@ private fun AnswerItem(
         )
     }
 }
+
+

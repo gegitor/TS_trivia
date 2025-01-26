@@ -100,6 +100,7 @@ class QuizViewModel @Inject constructor(
         //TODO - choose a subset of questions from the full list
         questions = dbQuestions.map { it.toQuestionInfo() }
         nextQuestion()
+        delay(2500)
         isLoading.value = false
     }
 

@@ -1,6 +1,7 @@
 package com.ziemowit.ts.trivia.app.screens.quiz_init
 
 import android.content.SharedPreferences
+import com.ziemowit.ts.trivia.audio.SoundRepository
 import com.ziemowit.ts.trivia.data.Difficulty
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import io.mockk.MockKAnnotations
@@ -24,6 +25,9 @@ class QuizInitViewModelTest {
     lateinit var mockRouteNavigator: RouteNavigator
 
     @MockK
+    lateinit var mockSoundRepository: SoundRepository
+
+    @MockK
     lateinit var mockSharedPreferences: SharedPreferences
 
     @MockK
@@ -44,7 +48,7 @@ class QuizInitViewModelTest {
         every { mockSharedPreferencesEditor.apply() } returns Unit
         every { mockRouteNavigator.navigateToRoute(any()) } returns Unit
 
-        viewModel = QuizInitViewModel(mockRouteNavigator, mockSharedPreferences)
+        viewModel = QuizInitViewModel(mockRouteNavigator, mockSharedPreferences, mockSoundRepository)
     }
 
     @After

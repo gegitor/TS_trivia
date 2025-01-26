@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kapt)
 }
 
@@ -30,6 +31,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -47,8 +51,17 @@ dependencies {
     api(libs.compose.animation)
     api(libs.compose.activity)
     api(platform(libs.compose.bom))
+    api(libs.lottie)
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
+
+//    implementation(libs.coroutines.core)
+//    implementation(libs.core.splashscreen)
+//    implementation(libs.coroutines.android)
+//    implementation(libs.viewmodel.compose)
+//    implementation(libs.lifecycle.runtime.ktx)
+//    implementation(libs.hilt.navigation.compose)
+//    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ui.test.junit4)
