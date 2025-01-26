@@ -48,7 +48,6 @@ class QuestionRepositoryImpl @Inject constructor(
             while (reader.readLine().also { line = it } != null) {
                 line?.let {
                     val tokens = it.split(",", ignoreCase = false)
-                    Timber.d("Tokens size: ${tokens.size}")
                     if (tokens.size == tokenCount) {
                         try {
                             val index = tokens[0].toInt()

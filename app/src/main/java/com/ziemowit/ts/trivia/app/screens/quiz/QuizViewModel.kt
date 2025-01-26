@@ -1,8 +1,12 @@
 package com.ziemowit.ts.trivia.app.screens.quiz
 
+import android.content.Context
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
 import com.ziemowit.ts.trivia.data.GivenAnswer
 import com.ziemowit.ts.trivia.data.PotentialAnswer
@@ -12,29 +16,34 @@ import com.ziemowit.ts.trivia.data.emptyQuestionInfo
 import com.ziemowit.ts.trivia.data.toQuestionInfo
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+
+//TODO add loading screen
+
 @HiltViewModel
 class QuizViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     savedStateHandle: SavedStateHandle,
     routeNavigator: RouteNavigator,
     private val questionRepository: QuestionRepository,
 ) : ParentViewModel(routeNavigator) {
 
     private val quizArgs = QuizArgs(savedStateHandle)
-    private lateinit var questions: List<QuestionInfo>
-    private var currentQuestionIndex = 0
+    private var questions: List<QuestionInfo> = emptyList()
+    private val currentQuestionIndex = mutableIntStateOf(0)
     private val userAnswers = mutableListOf<GivenAnswer>()
 
     // State objects
     private val difficulty = mutableStateOf(quizArgs.difficulty)
-    private val questionCount = mutableStateOf("")
     private val question = mutableStateOf(emptyQuestionInfo)
-    private val isAnswerSelected = mutableStateOf(false)
     private val isAnswerEnabled = mutableStateOf(true)
+    private val questionCount: MutableState<String>
+        get() = mutableStateOf(context.getString(R.string.question_count, currentQuestionIndex.intValue + 1, questions.size))
 
 
     init {
@@ -44,7 +53,6 @@ class QuizViewModel @Inject constructor(
 
     internal val state = QuizState(
         difficulty = difficulty,
-        isAnswerChosen = isAnswerSelected,
         isAnswerEnabled = isAnswerEnabled,
         questionCount = questionCount,
         question = question,
@@ -69,26 +77,23 @@ class QuizViewModel @Inject constructor(
             isAnswerEnabled.value = false
             Timber.d("ZZZ onAnswerSelected, questionIndex: $questionIndex, potentialAnswer: $potentialAnswer")
             userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
-            isAnswerSelected.value = true
             delay(1000L)
-            if (currentQuestionIndex < questions.lastIndex) {
-                currentQuestionIndex++
-                question.value = questions[currentQuestionIndex]
-                questionCount.value = "Question ${currentQuestionIndex}/${questions.size}"
+            if (currentQuestionIndex.intValue < questions.lastIndex) {
+                currentQuestionIndex.intValue++
+                question.value = questions[currentQuestionIndex.intValue]
             } else {
                 onQuizFinished()
             }
-         }
+        }
     }
-
 
     private fun loadQuestions() = viewModelScope.launch {
         val dbQuestions = questionRepository.getQuestions(difficulty.value)
         Timber.d("Loaded questions: $dbQuestions")
-        //TODO - choose a subset of questions from the full list
+         //TODO - choose a subset of questions from the full list
         questions = dbQuestions.map { it.toQuestionInfo() }
-        question.value = questions[currentQuestionIndex]
-        questionCount.value = "Question 1/${questions.size}"
+        Timber.d("Questions size: ${questions.size}")
+        question.value = questions[currentQuestionIndex.intValue]
     }
 
     private fun calculateScore(): Int {

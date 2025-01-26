@@ -13,10 +13,10 @@ data class QuestionEntry(
 fun QuestionEntry.toQuestionInfo(): QuestionInfo {
 
     val answers: MutableList<PotentialAnswer> = wrongAnswers.map { answerText ->
-        PotentialAnswer(answerText, false)
+        PotentialAnswer(answerText, false, false)
     }.toMutableList()
 
-    answers.add(PotentialAnswer(correctAnswer, true))
+    answers.add(PotentialAnswer(correctAnswer, true, false))
     answers.shuffle()
     return QuestionInfo(index, difficulty, question, answers.toList())
 }

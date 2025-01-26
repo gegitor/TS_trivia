@@ -13,11 +13,16 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ziemowit.ts.trivia.data.PotentialAnswer
+import timber.log.Timber
+
+//TODO - confirmation dialog for back arrow
 
 @Composable
 internal fun QuizScreen(
@@ -67,11 +72,13 @@ private fun QuestionContent(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(state.question.value.potentialAnswers) { answer ->
+                    val selected = remember { mutableStateOf(answer.selected) }
                     AnswerItem(
                         potentialAnswer = answer,
-                        isAnswered = state.isAnswerEnabled.value,
-                        isSelected = state.isAnswerChosen.value,
+                        isEnabled = state.isAnswerEnabled.value,
+                        isSelected = selected.value,
                         onAnswerSelected = { potentialAnswer ->
+                            selected.value = true
                             interactions.onAnswerSelected(state.question.value.index, potentialAnswer)
                         }
                     )
@@ -84,14 +91,15 @@ private fun QuestionContent(
 @Composable
 private fun AnswerItem(
     potentialAnswer: PotentialAnswer,
+    isEnabled: Boolean,
     isSelected: Boolean,
-    isAnswered: Boolean,
     onAnswerSelected: (PotentialAnswer) -> Unit,
 ) {
+    Timber.w("ZZZ AnswerItem isSelected: $isSelected, potentialAnswer: ${potentialAnswer.answerText}")
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(enabled = !isAnswered) { onAnswerSelected(potentialAnswer) },
+            .clickable(enabled = isEnabled && !isSelected) { onAnswerSelected(potentialAnswer) },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
