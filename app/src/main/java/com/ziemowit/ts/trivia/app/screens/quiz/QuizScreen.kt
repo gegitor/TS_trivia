@@ -32,7 +32,7 @@ internal fun QuizScreen(
     interactions: QuizScreenInteractions = QuizScreenInteractions.STUB
 ) {
     if (state.isLoading.value) {
-        LoadingContent(modifier)
+        LoadingContent()
     } else {
         QuestionContent(modifier, state, interactions)
     }
