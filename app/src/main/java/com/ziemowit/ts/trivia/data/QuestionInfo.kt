@@ -5,7 +5,7 @@ data class QuestionInfo(
     val index: Int,
 //    val category: Category,
     val difficulty: Difficulty,
-    val question: String,
+    val questionText: String,
     val potentialAnswers: List<PotentialAnswer>,
 )
 

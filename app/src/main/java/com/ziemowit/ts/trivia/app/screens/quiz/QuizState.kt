@@ -10,7 +10,6 @@ internal data class QuizState(
     val difficulty: State<Difficulty>,
     val isAnswerEnabled: State<Boolean>,
     val questionCount: State<String>,
-    val isLoading: State<Boolean>,
     val question: State<QuestionInfo>,
 ) {
     companion object {
@@ -18,14 +17,27 @@ internal data class QuizState(
             difficulty: Difficulty = Difficulty.EASY,
             isAnswerEnabled: Boolean = false,
             questionCount: String = "Question 3/4",
-            isLoading: Boolean = false,
             question: QuestionInfo = emptyQuestionInfo,
         ) = QuizState(
             difficulty = mutableStateOf(difficulty),
             isAnswerEnabled = mutableStateOf(isAnswerEnabled),
             questionCount = mutableStateOf(questionCount),
-            isLoading = mutableStateOf(isLoading),
             question = mutableStateOf(question),
         )
     }
 }
+
+
+sealed interface QuizLoadingState {
+    companion object {
+        internal fun stub(
+            quizState: QuizState = QuizState.stub(),
+        ) = QuizReady(
+            quizState = quizState
+        )
+    }
+}
+
+internal data object QuizLoading: QuizLoadingState
+internal class QuizReady(val quizState: QuizState): QuizLoadingState
+internal class QuizLoadError(val error: Throwable): QuizLoadingState //TODO

@@ -48,7 +48,7 @@ object QuizRoute : NavRoute<QuizViewModel> {
 
     @Composable
     override fun Content(viewModel: QuizViewModel) =
-        QuizScreen(Modifier, viewModel.state, viewModel.interactions)
+        QuizScreen(Modifier, viewModel.loadingState.value, viewModel.interactions)
 
     override fun getArguments(): List<NamedNavArgument> = listOf(
         navArgument(difficultyArg) { type = NavType.IntType })

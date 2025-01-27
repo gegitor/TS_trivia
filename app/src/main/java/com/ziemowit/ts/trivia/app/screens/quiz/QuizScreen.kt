@@ -13,36 +13,73 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ziemowit.ts.trivia.data.PotentialAnswer
+import com.ziemowit.ts.trivia.data.QuestionInfo
 import com.ziemowit.ts.ui_common.components.LoadingContent
-import timber.log.Timber
 
 //TODO - confirmation dialog for back arrow
 
 @Composable
 internal fun QuizScreen(
     modifier: Modifier = Modifier,
-    state: QuizState = QuizState.stub(),
-    interactions: QuizScreenInteractions = QuizScreenInteractions.STUB
+    state: QuizLoadingState = QuizLoadingState.stub(),
+    interactions: QuizScreenInteractions = QuizScreenInteractions.STUB,
 ) {
-    if (state.isLoading.value) {
-        LoadingContent()
-    } else {
-        QuestionContent(modifier, state, interactions)
+    when (state) {
+        is QuizLoading -> {
+            LoadingContent()
+        }
+
+        is QuizReady -> {
+            val quizState = state.quizState
+            AnimatedContent(
+                targetState = quizState.question.value,
+                transitionSpec = {
+                    (slideInHorizontally(
+                        initialOffsetX = { fullWidth -> fullWidth },
+                        animationSpec = tween(300)
+                    ) + fadeIn()).togetherWith(
+                        slideOutHorizontally(
+                            targetOffsetX = { fullWidth -> -fullWidth },
+                            animationSpec = tween(300)
+                        ) + fadeOut()
+                    )
+                }
+            ) { targetState ->
+                QuestionContent(
+                    modifier,
+                    targetState,
+                    quizState.questionCount.value,
+                    quizState.isAnswerEnabled.value,
+                    interactions
+                )
+            }
+        }
+
+        is QuizLoadError -> {
+            //TODO - add error screen
+        }
     }
 }
 
 @Composable
 private fun QuestionContent(
     modifier: Modifier = Modifier,
-    state: QuizState = QuizState.stub(),
-    interactions: QuizScreenInteractions = QuizScreenInteractions.STUB,
+    question: QuestionInfo,
+    questionCount: String,
+    isAnswerEnabled: Boolean,
+    interactions: QuizScreenInteractions,
 ) {
     Column(
         modifier = modifier
@@ -52,7 +89,7 @@ private fun QuestionContent(
     ) {
         // Display the question number and total questions
         Text(
-            text = state.questionCount.value,
+            text = questionCount,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface,
@@ -60,7 +97,7 @@ private fun QuestionContent(
 
         // Display the question text
         Text(
-            text = state.question.value.question,
+            text = question.questionText,
             fontSize = 20.sp,
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onSurface,
@@ -76,15 +113,13 @@ private fun QuestionContent(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(state.question.value.potentialAnswers) { answer ->
-                    val selected = remember { mutableStateOf(answer.selected) }
+                items(question.potentialAnswers) { answer ->
                     AnswerItem(
                         potentialAnswer = answer,
-                        isEnabled = state.isAnswerEnabled.value,
-                        isSelected = selected.value,
+                        isEnabled = isAnswerEnabled,
+                        isSelected = answer.selected,
                         onAnswerSelected = { potentialAnswer ->
-                            selected.value = true
-                            interactions.onAnswerSelected(state.question.value.index, potentialAnswer)
+                            interactions.onAnswerSelected(question.index, potentialAnswer)
                         }
                     )
                 }
@@ -100,7 +135,6 @@ private fun AnswerItem(
     isSelected: Boolean,
     onAnswerSelected: (PotentialAnswer) -> Unit,
 ) {
-    Timber.w("ZZZ AnswerItem isSelected: $isSelected, potentialAnswer: ${potentialAnswer.answerText}")
     Card(
         modifier = Modifier
             .fillMaxWidth()

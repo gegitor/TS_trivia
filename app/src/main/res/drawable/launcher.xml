@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="48dp"
+	android:height="48dp"
+	android:viewportHeight="48"
+	android:viewportWidth="48">
+
+	<!-- Background Circle -->
+	<path
+		android:fillColor="#2C3E50"
+		android:pathData="M24,4a20,20 0,1 1,-0.001,40.001A20,20 0,0 1,24,4z" />
+
+	<!-- Globe Hemispheres -->
+	<path
+		android:fillColor="@color/ts_red"
+		android:pathData="M24,4a20,20 0,0 0,-20,20H24z" />
+	<path
+		android:fillColor="@color/ts_blue"
+		android:pathData="M24,4a20,20 0,0 1,20,20H24z" />
+
+	<!-- Globe Grid Lines -->
+	<path
+		android:pathData="M10,18h28M12,24h24M10,30h28M18,10v28M24,12v24M30,10v28"
+		android:strokeColor="#ECF0F1"
+		android:strokeWidth="1" />
+
+	<!-- Star (Trivia and Strategy) -->
+	<path
+		android:fillColor="#FFD700"
+		android:pathData="M24,18l1.47,4.265h4.592l-3.714,2.696l1.47,4.265l-3.714,-2.696l-3.714,2.696l1.47,-4.265l-3.714,-2.696h4.592z" />
+</vector>
