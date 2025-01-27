@@ -8,11 +8,11 @@ import androidx.navigation.navigation
 import com.ziemowit.ts.trivia.app.screens.main.Screen
 import com.ziemowit.ts.trivia.nav.NavRoute
 
-//import androidx.navigation.navigation
+import androidx.navigation.navigation
 
 //private const val homeRoute: String = "home"
-//
-//
+////
+////
 //fun NavGraphBuilder.quizScreenHierarchy1() {
 //    navigation(
 ////        navController = navHostController,
@@ -20,7 +20,7 @@ import com.ziemowit.ts.trivia.nav.NavRoute
 //        startDestination = homeRoute,
 ////        modifier = Modifier.padding(paddingValues)
 //    ) {
-//        homeScreen()
+////        homeScreen()
 //    }
 //}
 //

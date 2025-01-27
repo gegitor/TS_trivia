@@ -1,10 +1,9 @@
 package com.ziemowit.ts.trivia.app.screens.main
 
-import androidx.compose.foundation.background
+//import com.ziemowit.ts.trivia.app.screens.quiz_init.quizScreenHierarchy1
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -14,28 +13,21 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ziemowit.ts.trivia.app.screens.home.HomeRoute
-import com.ziemowit.ts.trivia.app.screens.home.HomeScreen
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
-import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitScreen
-//import com.ziemowit.ts.trivia.app.screens.quiz_init.quizScreenHierarchy1
-import timber.log.Timber
 
 
 @Composable
@@ -51,14 +43,9 @@ fun MainScreen() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-            HomeRoute.composable(this, navController)
-            QuizInitRoute.composable(this, navController)
-            QuizRoute.composable(this, navController)
-//            quizScreenHierarchy1()
-//            composable(Screen.Home.route) {
-//                HomeRoute.composable(this, navController)
-//                HomeScreen()
-//            }
+            composable(Screen.Home.route) {
+                HomeScreen(this@NavHost, navController)
+            }
             composable(Screen.Search.route) {
                 SearchScreen()
             }
@@ -79,11 +66,34 @@ fun BottomTriviaBar(navController: NavHostController) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            NavigationItem(navController, Screen.Home, Icons.Default.Home, "Home")
-            NavigationItem(navController, Screen.Search, Icons.Default.Search, "Search")
-            NavigationItem(navController, Screen.Profile, Icons.Default.AccountCircle, "Profile")
+            NavigationItem(onClick = { onHomeClick(navController) }, icon = Icons.Default.Home, label = "Home")
+            NavigationItem(onClick = { onSearchClick(navController) }, icon = Icons.Default.Search, label = "Search")
+            NavigationItem(onClick = { onProfileClick(navController) }, icon = Icons.Default.AccountCircle, label = "Profile")
         }
     }
+}
+
+private fun navigateToScreen(navController: NavHostController, screen: Screen) {
+    navController.navigate(
+        route = screen.route,
+        navOptions = NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setPopUpTo(Screen.Home.route, inclusive = false, saveState = true)
+            .setRestoreState(true)
+            .build()
+    )
+}
+
+fun onHomeClick(navController: NavHostController) {
+    navigateToScreen(navController, Screen.Home)
+}
+
+fun onSearchClick(navController: NavHostController) {
+    navigateToScreen(navController, Screen.Search)
+}
+
+fun onProfileClick(navController: NavHostController) {
+    navigateToScreen(navController, Screen.Profile)
 }
 
 sealed class Screen(val route: String) {
@@ -93,20 +103,17 @@ sealed class Screen(val route: String) {
 }
 
 
-/*Composable
-fun HomeScreen() {
-    Text("HomeScreen")
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface),
-        contentAlignment = Alignment.BottomCenter,
-    ) {
-        TextButton(onClick = { interactions.onNavigateToQuizInit() }) {
-            Text(text = "quiz init: ${state.email}", fontSize = 20.sp)
-        }
-    }
-}*/
+@Composable
+fun HomeScreen(builder: NavGraphBuilder, navController: NavHostController) {
+    HomeRoute.composable(builder, navController)
+    QuizInitRoute.composable(builder, navController)
+    QuizRoute.composable(builder, navController)
+//            quizScreenHierarchy1()
+//            composable(Screen.Home.route) {
+//                HomeRoute.composable(this, navController)
+//                HomeScreen()
+//            }
+}
 
 @Composable
 fun SearchScreen() {
@@ -121,23 +128,11 @@ fun ProfileScreen() {
 
 @Composable
 fun NavigationItem(
-    navController: NavHostController, //TODO - move out of composable?
-    screen: Screen,
+    onClick: () -> Unit,
     icon: ImageVector,
     label: String
 ) {
-    IconButton(
-        onClick = {
-            Timber.d("ZZZ NavigationItem navigate: ${screen.route}")
-            navController.navigate(
-                route = screen.route,
-                navOptions = NavOptions.Builder()
-                    .setLaunchSingleTop(true)
-                    .setPopUpTo(Screen.Home.route, false) //will ruin current backstack?
-                    .build()
-            )
-        }
-    ) {
+    IconButton(onClick = onClick) {
         Icon(imageVector = icon, contentDescription = label)
     }
 }

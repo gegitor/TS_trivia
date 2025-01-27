@@ -46,7 +46,7 @@ interface NavRoute<T : RouteNavigator> {
         builder: NavGraphBuilder,
         navHostController: NavHostController
     ) {
-        Timber.d("ZZZ composable route: $route")
+        Timber.d("composable route: $route")
         builder.composable(route, getArguments()) {
             val viewModel = viewModel()
             val viewStateAsState by viewModel.navigationState.collectAsState()
