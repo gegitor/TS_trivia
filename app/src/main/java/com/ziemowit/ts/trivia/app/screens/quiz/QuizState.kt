@@ -11,6 +11,7 @@ internal data class QuizState(
     val isAnswerEnabled: State<Boolean>,
     val questionCount: State<String>,
     val question: State<QuestionInfo>,
+    val showConfirmationDialog: State<Boolean>,
 ) {
     companion object {
         fun stub(
@@ -18,11 +19,13 @@ internal data class QuizState(
             isAnswerEnabled: Boolean = false,
             questionCount: String = "Question 3/4",
             question: QuestionInfo = emptyQuestionInfo,
+            showConfirmationDialog: Boolean = false
         ) = QuizState(
             difficulty = mutableStateOf(difficulty),
             isAnswerEnabled = mutableStateOf(isAnswerEnabled),
             questionCount = mutableStateOf(questionCount),
             question = mutableStateOf(question),
+            showConfirmationDialog = mutableStateOf(showConfirmationDialog),
         )
     }
 }

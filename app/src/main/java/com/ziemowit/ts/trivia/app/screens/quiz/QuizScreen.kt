@@ -1,5 +1,13 @@
 package com.ziemowit.ts.trivia.app.screens.quiz
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,22 +21,15 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ziemowit.ts.trivia.data.PotentialAnswer
 import com.ziemowit.ts.trivia.data.QuestionInfo
+import com.ziemowit.ts.ui_common.components.ConfirmationDialog
 import com.ziemowit.ts.ui_common.components.LoadingContent
-
-//TODO - confirmation dialog for back arrow
+import timber.log.Timber
 
 @Composable
 internal fun QuizScreen(
@@ -42,6 +43,9 @@ internal fun QuizScreen(
         }
 
         is QuizReady -> {
+            BackHandler {
+                interactions.onBackClicked()
+            }
             val quizState = state.quizState
             AnimatedContent(
                 targetState = quizState.question.value,
@@ -62,7 +66,16 @@ internal fun QuizScreen(
                     targetState,
                     quizState.questionCount.value,
                     quizState.isAnswerEnabled.value,
-                    interactions
+                    interactions,
+                )
+            }
+
+            if (quizState.showConfirmationDialog.value) {
+                ConfirmationDialog(
+                    title = "Confirm Exit",
+                    message = "Are you sure you want to abandon the quiz?",
+                    onConfirm = { interactions.onConfirmBack() },
+                    onDismiss = { interactions.onDismissDialog() }
                 )
             }
         }

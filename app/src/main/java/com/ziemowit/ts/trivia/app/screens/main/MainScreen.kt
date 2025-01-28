@@ -43,9 +43,7 @@ fun MainScreen() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(Screen.Home.route) {
-                HomeScreen(this@NavHost, navController)
-            }
+            homeScreen(this@NavHost, navController)
             composable(Screen.Search.route) {
                 SearchScreen()
             }
@@ -103,8 +101,7 @@ sealed class Screen(val route: String) {
 }
 
 
-@Composable
-fun HomeScreen(builder: NavGraphBuilder, navController: NavHostController) {
+fun homeScreen(builder: NavGraphBuilder, navController: NavHostController) {
     HomeRoute.composable(builder, navController)
     QuizInitRoute.composable(builder, navController)
     QuizRoute.composable(builder, navController)

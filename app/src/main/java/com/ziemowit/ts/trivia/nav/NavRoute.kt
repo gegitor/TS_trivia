@@ -87,12 +87,12 @@ interface NavRoute<T : RouteNavigator> {
         navigationState: NavigationState,
         onNavigated: (navState: NavigationState) -> Unit,
     ) {
-        Timber.d("ZZZ updateNavigationState navigationState: $navigationState")
+        Timber.d("updateNavigationState navigationState: $navigationState")
 
         when (navigationState) {
             is NavigationState.NavigateToRoute -> {
                 Timber.d(
-                    "ZZZ updateNavigationState navigationState route: ${navigationState.route}"
+                    "updateNavigationState navigationState route: ${navigationState.route}"
                 )
                 navHostController.navigate(navigationState.route)
             }

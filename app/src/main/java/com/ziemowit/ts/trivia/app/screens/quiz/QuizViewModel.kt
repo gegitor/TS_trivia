@@ -2,7 +2,6 @@ package com.ziemowit.ts.trivia.app.screens.quiz
 
 import android.content.Context
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -16,6 +15,8 @@ import com.ziemowit.ts.trivia.data.QuestionRepository
 import com.ziemowit.ts.trivia.data.emptyQuestionInfo
 import com.ziemowit.ts.trivia.data.toQuestionInfo
 import com.ziemowit.ts.trivia.nav.RouteNavigator
+import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwner
+import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwnerImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -24,15 +25,14 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-//TODO add loading screen
-
 @HiltViewModel
 class QuizViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     savedStateHandle: SavedStateHandle,
     routeNavigator: RouteNavigator,
     private val questionRepository: QuestionRepository,
-) : ParentViewModel(routeNavigator) {
+) : ParentViewModel(routeNavigator),
+    ConfirmationDialogOwner by ConfirmationDialogOwnerImpl() {
 
     private val quizArgs = QuizArgs(savedStateHandle)
     private var questions: List<QuestionInfo> = emptyList()
@@ -56,6 +56,7 @@ class QuizViewModel @Inject constructor(
         isAnswerEnabled = isAnswerEnabled,
         questionCount = questionCount,
         question = question,
+        showConfirmationDialog = showConfirmationDialog
     )
 
     internal val loadingState: MutableState<QuizLoadingState> = mutableStateOf(QuizLoading)
@@ -64,10 +65,18 @@ class QuizViewModel @Inject constructor(
         onBackClicked = ::onBackClicked,
         onAnswerSelected = ::onAnswerSelected,
         onQuizFinished = ::onQuizFinished,
+        onConfirmBack = ::onConfirmBackFromInterface,
+        onDismissDialog = ::onDismissDialog,
     )
 
+    private fun onConfirmBackFromInterface() {
+        Timber.d("ZZZ onConfirmBackFromInterface")
+        onConfirmBack()
+        onBack()
+    }
+
     private fun onQuizFinished() {
-        Timber.d("ZZZ onQuizFinished")
+        Timber.d("onQuizFinished")
         //TODO
         // Send the score (only) to the next screen
         // Store the answers in the database (later) on the go maybe?
@@ -95,7 +104,7 @@ class QuizViewModel @Inject constructor(
             if (currentQuestionIndex.intValue < questions.lastIndex) {
                 currentQuestionIndex.intValue++
                 nextQuestion()
-             } else {
+            } else {
                 onQuizFinished()
             }
         }

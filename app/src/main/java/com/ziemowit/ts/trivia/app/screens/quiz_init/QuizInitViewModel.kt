@@ -28,11 +28,11 @@ class QuizInitViewModel @Inject constructor(
 
     init {
         isSecretDifficultyVisible.value = sharedPreferences.getBoolean(PREF_HIDDEN_DIFFICULTY, false)
-        Timber.d("ZZZ QuizInitViewModel init, isSecretDifficultyVisible: ${isSecretDifficultyVisible.value}")
+        Timber.d("QuizInitViewModel init, isSecretDifficultyVisible: ${isSecretDifficultyVisible.value}")
     }
 
     internal val interactions = QuizInitScreenInteractions(
-        onBackClicked = ::onBackClicked,
+        onBackClicked = ::onBack,
         onNavigateToQuiz = ::onNavigateToQuiz,
         setHiddenDifficultyVisibility = ::setHiddenDifficultyVisibility,
     )
@@ -43,7 +43,7 @@ class QuizInitViewModel @Inject constructor(
     )
 
     private fun onNavigateToQuiz(difficulty: Difficulty) {
-        Timber.d("ZZZ onNavigateToQuiz, route: ${QuizRoute.getRoute(difficulty)}")
+        Timber.d("onNavigateToQuiz, route: ${QuizRoute.getRoute(difficulty)}")
         navigateToRoute(QuizRoute.getRoute(difficulty))
     }
 
@@ -51,7 +51,7 @@ class QuizInitViewModel @Inject constructor(
         if (visible) {
             soundRepository.play(Sound.HiWojtek)
         }
-        Timber.d("ZZZ setHiddenDifficultyVisibility: $visible")
+        Timber.d("setHiddenDifficultyVisibility: $visible")
         isSecretDifficultyVisible.value = visible
         sharedPreferences.edit().putBoolean(PREF_HIDDEN_DIFFICULTY, visible).apply()
     }

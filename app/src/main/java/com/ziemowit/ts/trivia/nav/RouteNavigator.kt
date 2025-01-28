@@ -3,6 +3,7 @@ package com.ziemowit.ts.trivia.nav
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.annotations.VisibleForTesting
+import timber.log.Timber
 
 interface RouteNavigator {
     fun onNavigated(state: NavigationState)
@@ -30,12 +31,16 @@ class RouteNavigatorImpl : RouteNavigator {
 
     override fun popToRoute(route: String) = navigate(NavigationState.PopToRoute(route))
 
-    override fun navigateUp() = navigate(NavigationState.NavigateUp())
+    override fun navigateUp() {
+        Timber.w("navigateUp")
+        return navigate(NavigationState.NavigateUp())
+    }
 
     override fun navigateToRoute(route: String) = navigate(NavigationState.NavigateToRoute(route))
 
     @VisibleForTesting
     fun navigate(state: NavigationState) {
+        Exception("navigate, state: $state").printStackTrace()
         navigationState.value = state
     }
 }

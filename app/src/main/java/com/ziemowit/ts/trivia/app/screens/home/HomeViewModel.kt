@@ -13,13 +13,13 @@ class HomeViewModel @Inject constructor(private val routeNavigator: RouteNavigat
     ParentViewModel(routeNavigator) {
 
     init {
-        Timber.d("ZZZ HomeViewModel init")
+        Timber.d("HomeViewModel init")
     }
 
     private val email = mutableStateOf("home@email")
 
     internal val interactions = HomeScreenInteractions(
-        onBackClicked = ::onBackClicked,
+        onBackClicked = ::onBack,
         onNavigateToQuizInit = ::onNavigateToQuizInit,
     )
 

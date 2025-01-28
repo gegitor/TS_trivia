@@ -4,12 +4,17 @@ import androidx.lifecycle.ViewModel
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import timber.log.Timber
 
-abstract class ParentViewModel(private val routeNavigator: RouteNavigator/*savedStateHandle: SavedStateHandle*/) : ViewModel(),
+abstract class ParentViewModel(private val routeNavigator: RouteNavigator) : ViewModel(),
     RouteNavigator by routeNavigator {
 
+    override fun navigateUp() {
+        Timber.w("ParentViewModel navigateUp")
+        routeNavigator.navigateUp()
 
-    open fun onBackClicked() {
-        Timber.d("ZZZ onBackClicked")
+    }
+
+    open fun onBack() {
+        Timber.w("ParentViewModel onBack")
         navigateUp()
     }
 }
