@@ -1,13 +1,6 @@
 package com.ziemowit.ts.trivia.app.screens.quiz
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,7 +22,6 @@ import com.ziemowit.ts.trivia.data.PotentialAnswer
 import com.ziemowit.ts.trivia.data.QuestionInfo
 import com.ziemowit.ts.ui_common.components.ConfirmationDialog
 import com.ziemowit.ts.ui_common.components.LoadingContent
-import timber.log.Timber
 
 @Composable
 internal fun QuizScreen(
@@ -46,29 +38,15 @@ internal fun QuizScreen(
             BackHandler {
                 interactions.onBackClicked()
             }
+
             val quizState = state.quizState
-            AnimatedContent(
-                targetState = quizState.question.value,
-                transitionSpec = {
-                    (slideInHorizontally(
-                        initialOffsetX = { fullWidth -> fullWidth },
-                        animationSpec = tween(300)
-                    ) + fadeIn()).togetherWith(
-                        slideOutHorizontally(
-                            targetOffsetX = { fullWidth -> -fullWidth },
-                            animationSpec = tween(300)
-                        ) + fadeOut()
-                    )
-                }
-            ) { targetState ->
-                QuestionContent(
-                    modifier,
-                    targetState,
-                    quizState.questionCount.value,
-                    quizState.isAnswerEnabled.value,
-                    interactions,
-                )
-            }
+            QuestionContent(
+                modifier.padding(24.dp),
+                quizState.question.value,
+                quizState.questionCount.value,
+                quizState.isAnswerEnabled.value,
+                interactions,
+            )
 
             if (quizState.showConfirmationDialog.value) {
                 ConfirmationDialog(

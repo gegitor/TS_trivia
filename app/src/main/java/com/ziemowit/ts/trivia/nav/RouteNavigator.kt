@@ -40,7 +40,6 @@ class RouteNavigatorImpl : RouteNavigator {
 
     @VisibleForTesting
     fun navigate(state: NavigationState) {
-        Exception("navigate, state: $state").printStackTrace()
         navigationState.value = state
     }
 }

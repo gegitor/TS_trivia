@@ -46,11 +46,6 @@ class QuizViewModel @Inject constructor(
     private val questionCount: MutableState<String> = mutableStateOf("")
 
 
-    init {
-        Timber.d("QuizViewModel init diff: ${difficulty.value}")
-        loadQuestions()
-    }
-
     private val state = QuizState(
         difficulty = difficulty,
         isAnswerEnabled = isAnswerEnabled,
@@ -69,8 +64,13 @@ class QuizViewModel @Inject constructor(
         onDismissDialog = ::onDismissDialog,
     )
 
+    init {
+        Timber.d("QuizViewModel init diff: ${difficulty.value} currentQuestionIndex: ${currentQuestionIndex.value}")
+        loadQuestions()
+    }
+
     private fun onConfirmBackFromInterface() {
-        Timber.d("ZZZ onConfirmBackFromInterface")
+        Timber.d("onConfirmBackFromInterface")
         onConfirmBack()
         onBack()
     }
@@ -100,7 +100,7 @@ class QuizViewModel @Inject constructor(
                 }
             )
 
-            delay(1000L)
+//            delay(1000L)
             if (currentQuestionIndex.intValue < questions.lastIndex) {
                 currentQuestionIndex.intValue++
                 nextQuestion()
@@ -120,10 +120,11 @@ class QuizViewModel @Inject constructor(
     private fun loadQuestions() = viewModelScope.launch {
         val dbQuestions = questionRepository.getQuestions(difficulty.value)
         Timber.d("Loaded questions: $dbQuestions")
+        Timber.d("loadQuestions state: $state")
         //TODO - choose a subset of questions from the full list
         questions = dbQuestions.map { it.toQuestionInfo() }
         nextQuestion()
-        delay(1000) // just so it would look nice
+//        delay(1000) // just so it would look nice
         loadingState.value = QuizReady(state)
     }
 
