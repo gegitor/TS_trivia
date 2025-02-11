@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ziemowit.ts.trivia.data.PotentialAnswer
-import com.ziemowit.ts.trivia.data.QuestionInfo
+import com.ziemowit.ts.trivia.data.model.PotentialAnswer
+import com.ziemowit.ts.trivia.data.model.QuestionInfo
 import com.ziemowit.ts.ui_common.components.ConfirmationDialog
 import com.ziemowit.ts.ui_common.components.LoadingContent
 

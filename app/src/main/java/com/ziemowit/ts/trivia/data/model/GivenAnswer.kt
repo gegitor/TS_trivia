@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.data
+package com.ziemowit.ts.trivia.data.model
 
 data class GivenAnswer(
     val questionIndex: Int,

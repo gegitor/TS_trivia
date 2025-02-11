@@ -1,6 +1,6 @@
 package com.ziemowit.ts.trivia.app.screens.quiz
 
-import com.ziemowit.ts.trivia.data.PotentialAnswer
+import com.ziemowit.ts.trivia.data.model.PotentialAnswer
 
 internal data class QuizScreenInteractions(
     val onBackClicked: () -> Unit,

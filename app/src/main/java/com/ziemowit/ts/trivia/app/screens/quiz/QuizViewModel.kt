@@ -8,12 +8,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
-import com.ziemowit.ts.trivia.data.GivenAnswer
-import com.ziemowit.ts.trivia.data.PotentialAnswer
-import com.ziemowit.ts.trivia.data.QuestionInfo
+import com.ziemowit.ts.trivia.data.model.GivenAnswer
+import com.ziemowit.ts.trivia.data.model.PotentialAnswer
+import com.ziemowit.ts.trivia.data.model.QuestionInfo
 import com.ziemowit.ts.trivia.data.QuestionRepository
-import com.ziemowit.ts.trivia.data.emptyQuestionInfo
-import com.ziemowit.ts.trivia.data.toQuestionInfo
+import com.ziemowit.ts.trivia.data.model.emptyQuestionInfo
+import com.ziemowit.ts.trivia.data.model.toQuestionInfo
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwner
 import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwnerImpl
@@ -100,7 +100,7 @@ class QuizViewModel @Inject constructor(
                 }
             )
 
-//            delay(1000L)
+            delay(500L)
             if (currentQuestionIndex.intValue < questions.lastIndex) {
                 currentQuestionIndex.intValue++
                 nextQuestion()
@@ -124,7 +124,7 @@ class QuizViewModel @Inject constructor(
         //TODO - choose a subset of questions from the full list
         questions = dbQuestions.map { it.toQuestionInfo() }
         nextQuestion()
-//        delay(1000) // just so it would look nice
+        delay(1000) // just so it would look nice
         loadingState.value = QuizReady(state)
     }
 

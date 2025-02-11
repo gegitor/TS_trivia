@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.data
+package com.ziemowit.ts.trivia.data.model
 
 //Question data used to display it
 data class QuestionInfo(

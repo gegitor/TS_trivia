@@ -2,6 +2,9 @@ package com.ziemowit.ts.trivia.data
 
 import android.content.Context
 import com.ziemowit.ts.trivia.R
+import com.ziemowit.ts.trivia.data.model.Category
+import com.ziemowit.ts.trivia.data.model.Difficulty
+import com.ziemowit.ts.trivia.data.model.QuestionEntry
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -47,7 +50,7 @@ class QuestionRepositoryImpl @Inject constructor(
             var line: String?
             while (reader.readLine().also { line = it } != null) {
                 line?.let {
-                    val tokens = it.split(",", ignoreCase = false)
+                    val tokens = it.split(",")
                     if (tokens.size == tokenCount) {
                         try {
                             val index = tokens[0].toInt()

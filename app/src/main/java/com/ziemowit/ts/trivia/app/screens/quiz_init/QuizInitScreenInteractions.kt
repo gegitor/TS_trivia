@@ -1,6 +1,6 @@
 package com.ziemowit.ts.trivia.app.screens.quiz_init
 
-import com.ziemowit.ts.trivia.data.Difficulty
+import com.ziemowit.ts.trivia.data.model.Difficulty
 
 
 internal data class QuizInitScreenInteractions(

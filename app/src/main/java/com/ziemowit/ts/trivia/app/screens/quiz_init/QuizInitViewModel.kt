@@ -6,7 +6,7 @@ import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.audio.Sound
 import com.ziemowit.ts.trivia.audio.SoundRepository
-import com.ziemowit.ts.trivia.data.Difficulty
+import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber

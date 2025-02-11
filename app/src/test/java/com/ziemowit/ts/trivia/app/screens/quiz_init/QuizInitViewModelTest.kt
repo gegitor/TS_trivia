@@ -2,12 +2,11 @@ package com.ziemowit.ts.trivia.app.screens.quiz_init
 
 import android.content.SharedPreferences
 import com.ziemowit.ts.trivia.audio.SoundRepository
-import com.ziemowit.ts.trivia.data.Difficulty
+import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
