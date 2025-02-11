@@ -34,6 +34,6 @@ class LeaderRepositoryImpl(private val context: Context) : LeaderRepository {
             }
         }
         reader.close()
-        return leaderboard.sortedByDescending { it.score }
+        return leaderboard.sortedByDescending { it.scoreUpThreshold }
     }
 }

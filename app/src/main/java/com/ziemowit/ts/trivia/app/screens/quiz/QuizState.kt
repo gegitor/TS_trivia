@@ -2,12 +2,11 @@ package com.ziemowit.ts.trivia.app.screens.quiz
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.data.model.QuestionInfo
 import com.ziemowit.ts.trivia.data.model.emptyQuestionInfo
 
 internal data class QuizState(
-    val difficulty: State<Difficulty>,
+    val difficulty: State<String>,
     val isAnswerEnabled: State<Boolean>,
     val questionCount: State<String>,
     val question: State<QuestionInfo>,
@@ -15,7 +14,7 @@ internal data class QuizState(
 ) {
     companion object {
         fun stub(
-            difficulty: Difficulty = Difficulty.EASY,
+            difficulty: String = "Easy",
             isAnswerEnabled: Boolean = false,
             questionCount: String = "Question 3/4",
             question: QuestionInfo = emptyQuestionInfo,

@@ -8,10 +8,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
+import com.ziemowit.ts.trivia.app.screens.quiz_summary.QuizSummaryRoute
+import com.ziemowit.ts.trivia.data.QuestionRepository
 import com.ziemowit.ts.trivia.data.model.GivenAnswer
 import com.ziemowit.ts.trivia.data.model.PotentialAnswer
 import com.ziemowit.ts.trivia.data.model.QuestionInfo
-import com.ziemowit.ts.trivia.data.QuestionRepository
 import com.ziemowit.ts.trivia.data.model.emptyQuestionInfo
 import com.ziemowit.ts.trivia.data.model.toQuestionInfo
 import com.ziemowit.ts.trivia.nav.RouteNavigator
@@ -38,9 +39,10 @@ class QuizViewModel @Inject constructor(
     private var questions: List<QuestionInfo> = emptyList()
     private val currentQuestionIndex = mutableIntStateOf(0)
     private val userAnswers = mutableListOf<GivenAnswer>()
+    private var correctAnswers = 0
 
     // State objects
-    private val difficulty = mutableStateOf(quizArgs.difficulty)
+    private val difficulty = mutableStateOf(context.getString(quizArgs.difficulty.displayName))
     private val question = mutableStateOf(emptyQuestionInfo)
     private val isAnswerEnabled = mutableStateOf(true)
     private val questionCount: MutableState<String> = mutableStateOf("")
@@ -77,17 +79,22 @@ class QuizViewModel @Inject constructor(
 
     private fun onQuizFinished() {
         Timber.d("onQuizFinished")
-        //TODO
-        // Send the score (only) to the next screen
-        // Store the answers in the database (later) on the go maybe?
-//        navigateToRoute(QuizRoute.getRoute(difficulty))
+        // TODO - store the answers in the database on the go ?
+        navigateToRoute(
+            QuizSummaryRoute.getRoute(
+                difficulty = quizArgs.difficulty,
+                correctQuestions = correctAnswers,
+                totalQuestions = questions.size
+            )
+        )
     }
 
     private fun onAnswerSelected(questionIndex: Int, potentialAnswer: PotentialAnswer) {
         viewModelScope.launch {
             isAnswerEnabled.value = false
-            Timber.d("onAnswerSelected, questionIndex: $questionIndex, potentialAnswer: $potentialAnswer")
             userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
+            if (potentialAnswer.correct) correctAnswers++
+            Timber.d("onAnswerSelected, questionIndex: $questionIndex, potentialAnswer: $potentialAnswer correctAnswers: $correctAnswers")
 
             // Update the question object with the selected answer
             question.value = question.value.copy(
@@ -118,7 +125,7 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun loadQuestions() = viewModelScope.launch {
-        val dbQuestions = questionRepository.getQuestions(difficulty.value)
+        val dbQuestions = questionRepository.getQuestions(quizArgs.difficulty)
         Timber.d("Loaded questions: $dbQuestions")
         Timber.d("loadQuestions state: $state")
         //TODO - choose a subset of questions from the full list
@@ -126,13 +133,5 @@ class QuizViewModel @Inject constructor(
         nextQuestion()
         delay(1000) // just so it would look nice
         loadingState.value = QuizReady(state)
-    }
-
-    private fun calculateScore(): Int {
-        var score = 0
-        userAnswers.forEach { answer ->
-            if (answer.correct) score++
-        }
-        return score
     }
 }

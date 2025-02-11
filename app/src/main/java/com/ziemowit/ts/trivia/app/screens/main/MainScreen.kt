@@ -1,7 +1,6 @@
 package com.ziemowit.ts.trivia.app.screens.main
 
 //import com.ziemowit.ts.trivia.app.screens.quiz_init.quizScreenHierarchy1
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ziemowit.ts.trivia.app.screens.home.HomeRoute
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
+import com.ziemowit.ts.trivia.app.screens.quiz_summary.QuizSummaryRoute
 
 
 @Composable
@@ -105,6 +105,7 @@ fun homeScreen(builder: NavGraphBuilder, navController: NavHostController) {
     HomeRoute.composable(builder, navController)
     QuizInitRoute.composable(builder, navController)
     QuizRoute.composable(builder, navController)
+    QuizSummaryRoute.composable(builder, navController)
 //            quizScreenHierarchy1()
 //            composable(Screen.Home.route) {
 //                HomeRoute.composable(this, navController)
