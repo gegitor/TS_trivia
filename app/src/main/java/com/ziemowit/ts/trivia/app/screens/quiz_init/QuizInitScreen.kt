@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.data.model.Difficulty
-import com.ziemowit.ts.trivia.ui.theme.Red40
+import com.ziemowit.ts.trivia.ui.theme.TSColor
 
 
 // choose difficulty
@@ -125,7 +125,7 @@ fun HideSecretDifficultyButton(
             painter = painterResource(id = R.drawable.baseline_close_24),
             contentDescription = stringResource(R.string.acc_hide_secret_difficulty),
             modifier = Modifier.fillMaxSize(),
-            tint = Red40
+            tint = TSColor.Red40
         )
     }
 }

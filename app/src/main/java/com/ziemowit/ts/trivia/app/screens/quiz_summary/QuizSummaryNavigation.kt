@@ -34,6 +34,7 @@ object QuizSummaryRoute : NavRoute<QuizSummaryViewModel> {
 
     @Composable
     override fun Content(viewModel: QuizSummaryViewModel) =
+//        SummaryContent(viewModel.state, viewModel.interactions)
         QuizSummaryScreen(viewModel.state, viewModel.interactions)
 
     override fun getArguments(): List<NamedNavArgument> = listOf(

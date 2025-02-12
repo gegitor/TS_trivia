@@ -1,18 +1,19 @@
 package com.ziemowit.ts.trivia.app.screens.quiz_summary
 
-import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
+import com.ziemowit.ts.trivia.data.LeaderRepository
+import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizSummaryViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+//    @ApplicationContext private val context: Context,
+    leaderRepository: LeaderRepository,
     routeNavigator: RouteNavigator,
     savedStateHandle: SavedStateHandle,
 ) :
@@ -20,24 +21,23 @@ class QuizSummaryViewModel @Inject constructor(
 
     private val quizArgs = QuizArgs(savedStateHandle)
 
-    private val difficulty = mutableStateOf(context.getString(quizArgs.difficulty.displayName))
-    private val score = mutableStateOf("3 / 10")
+    private val difficulty = mutableStateOf(quizArgs.difficulty)
+    private val score = mutableStateOf("${quizArgs.correctQuestions} / ${quizArgs.totalQuestions}")
 
-    private val leaderRankings = listOf(
-        "Nikita Khrushchev",
-        "François Mitterrand",
-        "Gustáv Husák",
-        "Erich Honecker"
-    )
+    private val leaderRankings =
+        mutableStateOf(
+            leaderRepository.getLeaderboard(quizArgs.difficulty.scoreMultiplier() * quizArgs.correctQuestions.toFloat() / quizArgs.totalQuestions)
+                .map { it.leaderName })
 
-    private val userRank = leaderRankings.first()
+
+    private val userRank = mutableStateOf(leaderRankings.value.first())
 
     // UI State
     val state = QuizSummaryState(
         difficulty = difficulty,
         score = score,
-        leaderRankings = mutableStateOf(leaderRankings),
-        userRank = mutableStateOf(userRank)
+        leaderRankings = leaderRankings,
+        userRank = userRank,
     )
 
     // UI Interactions
@@ -48,6 +48,15 @@ class QuizSummaryViewModel @Inject constructor(
 
     init {
         Timber.d("QuizSummaryViewModel init diff: ${difficulty.value} correctQuestions: ${quizArgs.correctQuestions} totalQuestions: ${quizArgs.totalQuestions}")
+        Timber.d("QuizSummaryViewModel init leaderRankings: ${leaderRankings.value}")
 
     }
 }
+
+private fun Difficulty.scoreMultiplier() =
+    when (this) {
+        Difficulty.EASY -> 0.4f
+        Difficulty.MEDIUM -> 0.6f
+        Difficulty.HARD -> 0.8f
+        Difficulty.WOJTEK -> 1.0f
+    }

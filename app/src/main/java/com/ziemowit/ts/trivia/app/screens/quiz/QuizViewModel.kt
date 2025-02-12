@@ -126,12 +126,12 @@ class QuizViewModel @Inject constructor(
 
     private fun loadQuestions() = viewModelScope.launch {
         val dbQuestions = questionRepository.getQuestions(quizArgs.difficulty)
-        Timber.d("Loaded questions: $dbQuestions")
+        Timber.w("Loaded questions: $dbQuestions")
         Timber.d("loadQuestions state: $state")
         //TODO - choose a subset of questions from the full list
         questions = dbQuestions.map { it.toQuestionInfo() }
         nextQuestion()
-        delay(1000) // just so it would look nice
+        delay(500L) // just so it would look nice
         loadingState.value = QuizReady(state)
     }
 }

@@ -1,11 +1,11 @@
 package com.ziemowit.ts.trivia.app.screens.quiz_summary
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,18 +13,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ziemowit.ts.trivia.data.model.Difficulty
+import com.ziemowit.ts.trivia.ui.theme.TSColor
+import timber.log.Timber
 
 @Composable
 fun QuizSummaryScreen(
@@ -38,53 +45,62 @@ fun QuizSummaryScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "🎖 Twilight Struggle Quiz 🎖",
-            color = Color.White,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
-        )
+//        Text(
+//            text = "🎖 Twilight Struggle Quiz 🎖",
+//            fontSize = 24.sp,
+//            fontWeight = FontWeight.Bold
+//        )
+//
+//        Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Difficulty: ${state.difficulty.value}",
-            color = Color.White,
-            fontSize = 18.sp
-        )
+        DifficultyChip(Modifier.padding(12.dp), state.difficulty.value)
 
         Text(
             text = "Score: ${state.score.value}",
-            color = Color.White,
             fontSize = 18.sp
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Column(
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            LeaderRankingsContent(state)
 
-        // Player's Cold War Standing
-        LeaderRankingCard(leaderName = state.userRank.value, isPlayer = true)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Animated Leader Rankings Below
-        state.leaderRankings.value.drop(1).forEachIndexed { index, leader ->
-            AnimatedVisibility(
-                visible = true,
-                enter = androidx.compose.animation.fadeIn(animationSpec = tween(500 * (index + 1)))
+            // Buttons
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                LeaderRankingCard(leaderName = leader, isPlayer = false)
+                ActionButton(text = "🔄 Play Again", color = TSColor.Red40, onClick = interactions.onPlayAgain)
+                ActionButton(text = "📚 Main Menu", color = TSColor.Blue40, onClick = interactions.onReviewAnswers)
             }
         }
+    }
+}
 
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Buttons
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            ActionButton(text = "🔄 Play Again", color = Color.Red, onClick = interactions.onPlayAgain)
-            ActionButton(text = "📚 Review Answers", color = Color.Blue, onClick = interactions.onReviewAnswers)
+@Composable
+fun ColumnScope.LeaderRankingsContent(state: QuizSummaryState) {
+    LazyColumn(
+        modifier = Modifier
+            .padding(8.dp)
+            .weight(1.0f),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        item {
+            Text(
+                text = "You have achieved the level of",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        item {
+            // Player's Cold War Standing
+            LeaderRankingCard(leaderName = state.userRank.value, isPlayer = true)
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        state.leaderRankings.value.drop(1).let {leaderList ->
+            items(leaderList.size) { index ->
+                LeaderRankingCard(leaderName = leaderList[index], isPlayer = false)
+            }
         }
     }
 }
@@ -104,10 +120,34 @@ fun LeaderRankingCard(leaderName: String, isPlayer: Boolean) {
             .padding(16.dp)
     ) {
         Text(
-            text = if (isPlayer) "⭐ $leaderName (You)" else leaderName,
+            text = if (isPlayer) "\u2763 $leaderName" else leaderName,
             color = textColor,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+private fun DifficultyChip(modifier: Modifier = Modifier, difficulty: Difficulty) {
+    Timber.d("DifficultyChip difficulty: $difficulty!")
+
+    val color = when (difficulty) {
+        Difficulty.EASY -> Color.Green
+        Difficulty.MEDIUM -> Color.Yellow
+        Difficulty.HARD -> Color.Blue
+        Difficulty.WOJTEK -> Color.Red
+    }
+
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(1.dp, color),
+    ) {
+        Text(
+            text = "Difficulty: ${stringResource(difficulty.displayName)}",
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            color = color,
         )
     }
 }
@@ -124,4 +164,11 @@ fun ActionButton(text: String, color: Color, onClick: () -> Unit) {
     ) {
         Text(text = text, fontSize = 16.sp)
     }
+}
+
+
+@Preview
+@Composable
+private fun QuizSummaryScreenPreview() {
+    QuizSummaryScreen()
 }

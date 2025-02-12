@@ -15,6 +15,20 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.Blue40
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.Blue80
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.BlueGrey40
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.BlueGrey80
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.DarkBackground
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.DarkOnBackground
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.DarkOnSurface
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.DarkSurface
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.LightBackground
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.LightOnBackground
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.LightOnSurface
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.LightSurface
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.Red40
+import com.ziemowit.ts.trivia.ui.theme.TSColor.Companion.Red80
 
 
 private val DarkColorScheme = darkColorScheme(
