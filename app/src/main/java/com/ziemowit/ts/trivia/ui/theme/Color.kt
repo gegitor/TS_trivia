@@ -21,5 +21,13 @@ class TSColor {
         val DarkSurface = Color(0xFF1E1E1E)
         val DarkOnBackground = Color(0xFFEDEDED)
         val DarkOnSurface = Color(0xFFEDEDED)
+
+        val DarkBlueBackground = Color(0xFF1E2A47)
+        val Yellow = Color(0xFFFFC107)
+        val DarkGrey = Color(0xFF2C3E50)
+        val Green = Color.Green
+        val Yellow = Color.Yellow
+        val Blue = Color.Blue
+        val Red = Color.Red
     }
 }

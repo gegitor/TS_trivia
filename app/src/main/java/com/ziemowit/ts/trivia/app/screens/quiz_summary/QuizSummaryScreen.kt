@@ -42,7 +42,7 @@ fun QuizSummaryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF1E2A47)) // Dark blue background
+            .background(TSColor.DarkBlueBackground) // Dark blue background
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -117,7 +117,7 @@ fun ColumnScope.LeaderRankingsContent(state: QuizSummaryState) {
 // Reusable Card for Leader Rankings
 @Composable
 fun LeaderRankingCard(leaderName: String, isPlayer: Boolean) {
-    val backgroundColor = if (isPlayer) Color(0xFFFFC107) else Color(0xFF2C3E50)
+    val backgroundColor = if (isPlayer) TSColor.Yellow else TSColor.DarkGrey
     val textColor = if (isPlayer) Color.Black else Color.White
 
     Box(
@@ -142,10 +142,10 @@ private fun DifficultyChip(modifier: Modifier = Modifier, difficulty: Difficulty
     Timber.d("DifficultyChip difficulty: $difficulty!")
 
     val color = when (difficulty) {
-        Difficulty.EASY -> Color.Green
-        Difficulty.MEDIUM -> Color.Yellow
-        Difficulty.HARD -> Color.Blue
-        Difficulty.WOJTEK -> Color.Red
+        Difficulty.EASY -> TSColor.Green
+        Difficulty.MEDIUM -> TSColor.Yellow
+        Difficulty.HARD -> TSColor.Blue
+        Difficulty.WOJTEK -> TSColor.Red
     }
 
     Card(
