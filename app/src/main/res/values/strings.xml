@@ -17,4 +17,12 @@
     <string name="question_count">Question %1$d/%2$d</string>
     <string name="category_game_history">Game History</string>
     <string name="category_board">Board</string>
+
+    <string name="quiz_summary_title">Twilight Struggle Quiz</string>
+    <string name="quiz_summary_difficulty">Difficulty: %s</string>
+    <string name="quiz_summary_score">Score: %d</string>
+    <string name="quiz_summary_achieved_level">You have achieved the level of</string>
+    <string name="quiz_summary_player_rank">\u2763 %s</string>
+    <string name="quiz_summary_play_again">Play Again</string>
+    <string name="quiz_summary_main_menu">Main Menu</string>
 </resources>

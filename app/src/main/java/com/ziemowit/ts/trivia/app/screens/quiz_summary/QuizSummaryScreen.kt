@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.ui.theme.TSColor
 import timber.log.Timber
@@ -56,8 +57,8 @@ fun QuizSummaryScreen(
         DifficultyChip(Modifier.padding(12.dp), state.difficulty.value)
 
         Text(
-            text = "Score: ${state.score.value}",
-            fontSize = 18.sp
+            text = stringResource(R.string.quiz_summary_score, state.score.value),
+            fontSize = 18.sp,
         )
 
         Column(
@@ -70,8 +71,16 @@ fun QuizSummaryScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                ActionButton(text = "🔄 Play Again", color = TSColor.Red40, onClick = interactions.onPlayAgain)
-                ActionButton(text = "📚 Main Menu", color = TSColor.Blue40, onClick = interactions.onReviewAnswers)
+                ActionButton(
+                    text = stringResource(R.string.quiz_summary_play_again),
+                    color = TSColor.Red40,
+                    onClick = interactions.onPlayAgain
+                )
+                ActionButton(
+                    text = stringResource(R.string.quiz_summary_main_menu),
+                    color = TSColor.Blue40,
+                    onClick = interactions.onReviewAnswers
+                )
             }
         }
     }
@@ -87,7 +96,7 @@ fun ColumnScope.LeaderRankingsContent(state: QuizSummaryState) {
     ) {
         item {
             Text(
-                text = "You have achieved the level of",
+                text = stringResource(R.string.quiz_summary_achieved_level),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
             )
@@ -120,10 +129,10 @@ fun LeaderRankingCard(leaderName: String, isPlayer: Boolean) {
             .padding(16.dp)
     ) {
         Text(
-            text = if (isPlayer) "\u2763 $leaderName" else leaderName,
+            text = if (isPlayer) stringResource(R.string.quiz_summary_player_rank, leaderName) else leaderName,
             color = textColor,
             fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
     }
 }
@@ -145,7 +154,7 @@ private fun DifficultyChip(modifier: Modifier = Modifier, difficulty: Difficulty
         border = BorderStroke(1.dp, color),
     ) {
         Text(
-            text = "Difficulty: ${stringResource(difficulty.displayName)}",
+            text = stringResource(R.string.quiz_summary_difficulty, stringResource(difficulty.displayName)),
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             color = color,
         )
@@ -165,7 +174,6 @@ fun ActionButton(text: String, color: Color, onClick: () -> Unit) {
         Text(text = text, fontSize = 16.sp)
     }
 }
-
 
 @Preview
 @Composable

@@ -76,7 +76,7 @@ private fun SummaryTopBar(state: QuizSummaryState) {
     ) {
 //        AnimatedScoreStars(state)
         Spacer(modifier = Modifier.height(8.dp))
-        DifficultyChip(state.difficulty.value)
+        DifficultyChip(state.difficulty.value.name)
     }
 }
 
