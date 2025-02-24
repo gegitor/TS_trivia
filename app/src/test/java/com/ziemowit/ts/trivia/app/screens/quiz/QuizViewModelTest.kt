@@ -8,6 +8,7 @@ import com.ziemowit.ts.trivia.data.model.Category
 import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.data.model.PotentialAnswer
 import com.ziemowit.ts.trivia.data.model.QuestionEntry
+import com.ziemowit.ts.trivia.dispatchers.TestDispatcherProvider
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -16,7 +17,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -36,7 +37,8 @@ class QuizViewModelTest {
     private val savedStateHandle = mockk<SavedStateHandle>()
     private val routeNavigator = mockk<RouteNavigator>()
     private val questionRepository = mockk<QuestionRepository>()
-    private val testDispatcher = StandardTestDispatcher()
+    private val testDispatcher = UnconfinedTestDispatcher()
+    private val testDispatcherProvider = TestDispatcherProvider(testDispatcher)
 
     private lateinit var viewModel: QuizViewModel
 
@@ -53,7 +55,7 @@ class QuizViewModelTest {
             QuestionEntry(2, Category.GAME_MECHANICS, Difficulty.EASY, "Question 2", "Answer 2", listOf("Wrong 3", "Wrong 4"))
         )
         every { routeNavigator.navigateToRoute(any()) } returns Unit
-        viewModel = QuizViewModel(context, savedStateHandle, routeNavigator, questionRepository)
+        viewModel = QuizViewModel(context, savedStateHandle, routeNavigator, questionRepository, testDispatcherProvider)
     }
 
     @After
@@ -71,12 +73,22 @@ class QuizViewModelTest {
     }
 
     @Test
-    fun `onAnswerSelected should update userAnswers and correctAnswers`() = runTest {
+    fun `onAnswerSelected with correct answer should update userAnswers and correctAnswers`() = runTest {
         val correctAnswer = PotentialAnswer("answer", true, false)
         viewModel.onAnswerSelected(0, correctAnswer)
         advanceUntilIdle()
 
         assert(viewModel.correctAnswers == 1)
+        assert(viewModel.userAnswers.size == 1)
+    }
+
+    @Test
+    fun `onAnswerSelected with wrong answer should update userAnswers and correctAnswers`() = runTest {
+        val wrongAnswer = PotentialAnswer("answer", false, false)
+        viewModel.onAnswerSelected(0, wrongAnswer)
+        advanceUntilIdle()
+
+        assert(viewModel.correctAnswers == 0)
         assert(viewModel.userAnswers.size == 1)
     }
 

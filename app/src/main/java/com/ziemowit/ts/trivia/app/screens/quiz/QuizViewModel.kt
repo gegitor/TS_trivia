@@ -16,6 +16,7 @@ import com.ziemowit.ts.trivia.data.model.PotentialAnswer
 import com.ziemowit.ts.trivia.data.model.QuestionInfo
 import com.ziemowit.ts.trivia.data.model.emptyQuestionInfo
 import com.ziemowit.ts.trivia.data.model.toQuestionInfo
+import com.ziemowit.ts.trivia.di.DispatcherProvider
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwner
 import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwnerImpl
@@ -26,14 +27,13 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-
 @HiltViewModel
 class QuizViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     savedStateHandle: SavedStateHandle,
     routeNavigator: RouteNavigator,
     private val questionRepository: QuestionRepository,
-//    private val dispatchers: DispatcherProvider,
+    private val dispatchers: DispatcherProvider,
 ) : ParentViewModel(routeNavigator),
     ConfirmationDialogOwner by ConfirmationDialogOwnerImpl() {
 
@@ -52,7 +52,6 @@ class QuizViewModel @Inject constructor(
     private val question = mutableStateOf(emptyQuestionInfo)
     private val isAnswerEnabled = mutableStateOf(true)
     private val questionCount: MutableState<String> = mutableStateOf("")
-
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal val state = QuizState(
@@ -99,7 +98,7 @@ class QuizViewModel @Inject constructor(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun onAnswerSelected(questionIndex: Int, potentialAnswer: PotentialAnswer) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.main) {
             isAnswerEnabled.value = false
             userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
             if (potentialAnswer.correct) correctAnswers++
@@ -134,7 +133,7 @@ class QuizViewModel @Inject constructor(
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal fun loadQuestions() = viewModelScope.launch/*(Dispatchers.IO)*/ {
+    internal fun loadQuestions() = viewModelScope.launch(dispatchers.io) {
         val dbQuestions = questionRepository.getQuestions(quizArgs.difficulty)
         Timber.w("Loaded questions: $dbQuestions")
         Timber.d("loadQuestions state: $state")
