@@ -1,6 +1,7 @@
 package com.ziemowit.ts.trivia.app.screens.quiz
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -32,14 +33,19 @@ class QuizViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     routeNavigator: RouteNavigator,
     private val questionRepository: QuestionRepository,
+//    private val dispatchers: DispatcherProvider,
 ) : ParentViewModel(routeNavigator),
     ConfirmationDialogOwner by ConfirmationDialogOwnerImpl() {
 
     private val quizArgs = QuizArgs(savedStateHandle)
     private var questions: List<QuestionInfo> = emptyList()
     private val currentQuestionIndex = mutableIntStateOf(0)
-    private val userAnswers = mutableListOf<GivenAnswer>()
-    private var correctAnswers = 0
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal val userAnswers = mutableListOf<GivenAnswer>()
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal var correctAnswers = 0
 
     // State objects
     private val difficulty = mutableStateOf(context.getString(quizArgs.difficulty.displayName))
@@ -48,7 +54,8 @@ class QuizViewModel @Inject constructor(
     private val questionCount: MutableState<String> = mutableStateOf("")
 
 
-    private val state = QuizState(
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal val state = QuizState(
         difficulty = difficulty,
         isAnswerEnabled = isAnswerEnabled,
         questionCount = questionCount,
@@ -67,7 +74,7 @@ class QuizViewModel @Inject constructor(
     )
 
     init {
-        Timber.d("QuizViewModel init diff: ${difficulty.value} currentQuestionIndex: ${currentQuestionIndex.value}")
+        Timber.d("QuizViewModel init diff: ${difficulty.value} currentQuestionIndex: ${currentQuestionIndex.intValue}")
         loadQuestions()
     }
 
@@ -77,7 +84,8 @@ class QuizViewModel @Inject constructor(
         onBack()
     }
 
-    private fun onQuizFinished() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun onQuizFinished() {
         Timber.d("onQuizFinished")
         // TODO - store the answers in the database on the go ?
         navigateToRoute(
@@ -89,7 +97,8 @@ class QuizViewModel @Inject constructor(
         )
     }
 
-    private fun onAnswerSelected(questionIndex: Int, potentialAnswer: PotentialAnswer) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun onAnswerSelected(questionIndex: Int, potentialAnswer: PotentialAnswer) {
         viewModelScope.launch {
             isAnswerEnabled.value = false
             userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
@@ -124,7 +133,8 @@ class QuizViewModel @Inject constructor(
             context.getString(R.string.question_count, currentQuestionIndex.intValue + 1, questions.size)
     }
 
-    private fun loadQuestions() = viewModelScope.launch {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun loadQuestions() = viewModelScope.launch/*(Dispatchers.IO)*/ {
         val dbQuestions = questionRepository.getQuestions(quizArgs.difficulty)
         Timber.w("Loaded questions: $dbQuestions")
         Timber.d("loadQuestions state: $state")

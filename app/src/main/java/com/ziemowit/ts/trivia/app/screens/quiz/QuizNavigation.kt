@@ -35,7 +35,7 @@ private const val difficultyArg = "difficulty"
 
 internal class QuizArgs(val difficulty: Difficulty) {
     constructor(savedStateHandle: SavedStateHandle) :
-            this(Difficulty.fromOrdinal(checkNotNull(savedStateHandle[difficultyArg])))
+    this(Difficulty.fromOrdinal(checkNotNull(savedStateHandle[difficultyArg])))
 }
 
 

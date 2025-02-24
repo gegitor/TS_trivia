@@ -26,6 +26,7 @@ hiltCompose = "1.2.0"
 navigationCompose = "2.8.5"
 mockk = "1.13.10"
 lottie = "6.6.2"
+arch-core-testing = "2.2.0"
 
 [libraries]
 lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
@@ -67,6 +68,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "arch-core-testing" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
