@@ -2,7 +2,9 @@ package com.ziemowit.ts.trivia.app.screens.quiz_summary
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
+import com.ziemowit.ts.trivia.app.screens.home.HomeRoute
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
+import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.data.LeaderRepository
 import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.nav.RouteNavigator
@@ -42,8 +44,8 @@ class QuizSummaryViewModel @Inject constructor(
 
     // UI Interactions
     val interactions = QuizSummaryInteractions(
-        onPlayAgain = { /* TODO: Handle navigation */ },
-        onReviewAnswers = { /* TODO: Handle review */ }
+        onPlayAgain = { popToRoute(QuizRoute.getRoute(difficulty.value)) },
+        onMainMenu = { popToRoute(HomeRoute.route) }
     )
 
     init {

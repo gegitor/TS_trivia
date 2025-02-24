@@ -1,6 +1,7 @@
 package com.ziemowit.ts.trivia.app.screens.quiz_init
 
 import android.content.SharedPreferences
+import com.ziemowit.ts.trivia.audio.Sound
 import com.ziemowit.ts.trivia.audio.SoundRepository
 import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.nav.RouteNavigator
@@ -46,6 +47,7 @@ class QuizInitViewModelTest {
         every { mockSharedPreferencesEditor.putBoolean(any(), any()) } returns mockSharedPreferencesEditor
         every { mockSharedPreferencesEditor.apply() } returns Unit
         every { mockRouteNavigator.navigateToRoute(any()) } returns Unit
+        every { mockSoundRepository.play(any()) } returns Unit
 
         viewModel = QuizInitViewModel(mockRouteNavigator, mockSharedPreferences, mockSoundRepository)
     }
@@ -58,10 +60,7 @@ class QuizInitViewModelTest {
     @Test
     fun `test onNavigateToQuiz`() {
         val difficulty = Difficulty.EASY
-
         viewModel.interactions.onNavigateToQuiz(difficulty)
-
-        testDispatcher.scheduler.advanceUntilIdle()
 
         verify { mockRouteNavigator.navigateToRoute("quiz?difficulty=0") }
     }
@@ -72,10 +71,17 @@ class QuizInitViewModelTest {
 
         viewModel.interactions.setHiddenDifficultyVisibility(visible)
 
-        testDispatcher.scheduler.advanceUntilIdle()
-
         verify { mockSharedPreferencesEditor.putBoolean(viewModel.PREF_HIDDEN_DIFFICULTY, visible) }
         verify { mockSharedPreferencesEditor.apply() }
         assert(viewModel.state.isSecretDifficultyVisible.value == visible)
+    }
+
+    @Test
+    fun `test setHiddenDifficultyVisibility plays sound`() {
+        val visible = true
+
+        viewModel.interactions.setHiddenDifficultyVisibility(visible)
+
+        verify { mockSoundRepository.play(Sound.HiWojtek) }
     }
 }

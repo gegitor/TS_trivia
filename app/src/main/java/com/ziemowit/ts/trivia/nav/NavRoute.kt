@@ -1,16 +1,13 @@
 package com.ziemowit.ts.trivia.nav
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import timber.log.Timber
 
 /**
@@ -111,8 +108,3 @@ interface NavRoute<T : RouteNavigator> {
         onNavigated(navigationState)
     }
 }
-
-//fun <T> SavedStateHandle.getOrThrow(key: String): T =
-//    get<T>(key) ?: throw IllegalArgumentException(
-//        "Mandatory argument $key missing in arguments."
-//    )

@@ -69,17 +69,17 @@ fun QuizSummaryScreen(
             // Buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 ActionButton(
                     text = stringResource(R.string.quiz_summary_play_again),
                     color = TSColor.Red40,
-                    onClick = interactions.onPlayAgain
+                    onClick = interactions.onPlayAgain,
                 )
                 ActionButton(
                     text = stringResource(R.string.quiz_summary_main_menu),
                     color = TSColor.Blue40,
-                    onClick = interactions.onReviewAnswers
+                    onClick = interactions.onMainMenu,
                 )
             }
         }

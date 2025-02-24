@@ -73,7 +73,7 @@ class QuizViewModel @Inject constructor(
     )
 
     init {
-        Timber.d("QuizViewModel init diff: ${difficulty.value} currentQuestionIndex: ${currentQuestionIndex.intValue}")
+        Timber.i("QuizViewModel init diff: ${difficulty.value} currentQuestionIndex: ${currentQuestionIndex.intValue} userAnswers size: ${userAnswers.size}")
         loadQuestions()
     }
 

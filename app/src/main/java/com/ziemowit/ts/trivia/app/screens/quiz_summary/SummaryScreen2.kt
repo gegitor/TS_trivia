@@ -222,7 +222,7 @@ private fun ActionButtons(interactions: QuizSummaryInteractions) {
         )
         AnimatedButton(
             text = "Main Menu",
-            onClick = { interactions.onReviewAnswers() }
+            onClick = { interactions.onMainMenu() }
         )
     }
 }
