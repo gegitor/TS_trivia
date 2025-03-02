@@ -8,6 +8,8 @@ import com.ziemowit.ts.trivia.audio.SoundRepository
 import com.ziemowit.ts.trivia.audio.SoundRepositoryImpl
 import com.ziemowit.ts.trivia.data.LeaderRepository
 import com.ziemowit.ts.trivia.data.LeaderRepositoryImpl
+import com.ziemowit.ts.trivia.data.PreferencesRepository
+import com.ziemowit.ts.trivia.data.PreferencesRepositoryImpl
 import com.ziemowit.ts.trivia.data.QuestionRepository
 import com.ziemowit.ts.trivia.data.QuestionRepositoryImpl
 import dagger.Module
@@ -47,4 +49,8 @@ class AppModule {
     @Provides
     @Singleton
     fun getLeaderRepository(context: Context): LeaderRepository = LeaderRepositoryImpl(context)
+
+    @Provides
+    @Singleton
+    fun getPreferencesRepository(sharedPreferences: SharedPreferences): PreferencesRepository = PreferencesRepositoryImpl(sharedPreferences)
 }

@@ -6,6 +6,7 @@ import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.audio.Sound
 import com.ziemowit.ts.trivia.audio.SoundRepository
+import com.ziemowit.ts.trivia.data.PreferencesRepository
 import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,18 +17,17 @@ import javax.inject.Inject
 @HiltViewModel
 class QuizInitViewModel @Inject constructor(
     routeNavigator: RouteNavigator,
-    private val sharedPreferences: SharedPreferences,
+    private val preferencesRepository: PreferencesRepository,
     private val soundRepository: SoundRepository
 ) :
     ParentViewModel(routeNavigator) {
 
-    val PREF_HIDDEN_DIFFICULTY = "PREF_HIDDEN_DIFFICULTY"
-    private val email = mutableStateOf("qinit@email")
+     private val email = mutableStateOf("qinit@email")
     private val isSecretDifficultyVisible = mutableStateOf(false)
 
 
     init {
-        isSecretDifficultyVisible.value = sharedPreferences.getBoolean(PREF_HIDDEN_DIFFICULTY, false)
+        isSecretDifficultyVisible.value = preferencesRepository.getIsSecretDifficultyVisible()
         Timber.d("QuizInitViewModel init, isSecretDifficultyVisible: ${isSecretDifficultyVisible.value}")
     }
 
@@ -53,7 +53,7 @@ class QuizInitViewModel @Inject constructor(
         }
         Timber.d("setHiddenDifficultyVisibility: $visible")
         isSecretDifficultyVisible.value = visible
-        sharedPreferences.edit().putBoolean(PREF_HIDDEN_DIFFICULTY, visible).apply()
+        preferencesRepository.setIsSecretDifficultyVisible(true)
     }
 }
 
