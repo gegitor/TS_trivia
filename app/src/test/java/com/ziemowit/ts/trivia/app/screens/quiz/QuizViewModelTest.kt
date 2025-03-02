@@ -3,11 +3,12 @@ package com.ziemowit.ts.trivia.app.screens.quiz
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
-import com.ziemowit.ts.trivia.data.QuestionRepository
 import com.ziemowit.ts.trivia.data.model.Category
 import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.data.model.PotentialAnswer
 import com.ziemowit.ts.trivia.data.model.QuestionEntry
+import com.ziemowit.ts.trivia.data.model.toQuestionInfo
+import com.ziemowit.ts.trivia.data.usecases.GetQuestionsUseCase
 import com.ziemowit.ts.trivia.dispatchers.TestDispatcherProvider
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import io.mockk.coEvery
@@ -36,7 +37,7 @@ class QuizViewModelTest {
     private val context = mockk<Context>()
     private val savedStateHandle = mockk<SavedStateHandle>()
     private val routeNavigator = mockk<RouteNavigator>()
-    private val questionRepository = mockk<QuestionRepository>()
+    private val getQuestionsUseCase = mockk<GetQuestionsUseCase>()
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testDispatcherProvider = TestDispatcherProvider(testDispatcher)
 
@@ -50,12 +51,12 @@ class QuizViewModelTest {
             "Question 1 of 2"
         }
         every { savedStateHandle.get<Int>("difficulty") } returns Difficulty.EASY.ordinal
-        coEvery { questionRepository.getQuestions(any()) } returns listOf(
-            QuestionEntry(1, Category.GAME_MECHANICS, Difficulty.EASY, "Question 1", "Answer 1", listOf("Wrong 1", "Wrong 2")),
-            QuestionEntry(2, Category.GAME_MECHANICS, Difficulty.EASY, "Question 2", "Answer 2", listOf("Wrong 3", "Wrong 4"))
+        coEvery { getQuestionsUseCase(any()) } returns listOf(
+            QuestionEntry(1, Category.GAME_MECHANICS, Difficulty.EASY, "Question 1", "Answer 1", listOf("Wrong 1", "Wrong 2")).toQuestionInfo(),
+            QuestionEntry(2, Category.GAME_MECHANICS, Difficulty.EASY, "Question 2", "Answer 2", listOf("Wrong 3", "Wrong 4")).toQuestionInfo(),
         )
         every { routeNavigator.navigateToRoute(any()) } returns Unit
-        viewModel = QuizViewModel(context, savedStateHandle, routeNavigator, questionRepository, testDispatcherProvider)
+        viewModel = QuizViewModel(context, savedStateHandle, routeNavigator, getQuestionsUseCase, testDispatcherProvider)
     }
 
     @After
@@ -67,7 +68,7 @@ class QuizViewModelTest {
     fun `loadQuestions should load questions and update state`() = runTest {
         viewModel.loadQuestions()
         advanceUntilIdle()
-        coVerify { questionRepository.getQuestions(Difficulty.EASY) }
+        coVerify { getQuestionsUseCase(Difficulty.EASY) }
         assert(viewModel.loadingState.value is QuizReady)
         assert(viewModel.state.question.value.questionText == "Question 1")
     }

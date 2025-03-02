@@ -17,4 +17,6 @@ abstract class ParentViewModel(private val routeNavigator: RouteNavigator) : Vie
         Timber.w("ParentViewModel onBack")
         navigateUp()
     }
+
+//    open suspend fun initialDataLoad() {}
 }

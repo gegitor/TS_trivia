@@ -42,7 +42,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getQuestionRepository(context: Context): QuestionRepository = QuestionRepositoryImpl(context)
+    fun getQuestionRepository(context: Context, dispatcherProvider: DispatcherProvider): QuestionRepository = QuestionRepositoryImpl(context, dispatcherProvider)
 
     @Provides
     @Singleton

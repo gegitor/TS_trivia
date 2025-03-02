@@ -5,8 +5,8 @@ import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.data.model.Category
 import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.data.model.QuestionEntry
+import com.ziemowit.ts.trivia.di.DispatcherProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.BufferedReader
@@ -20,6 +20,7 @@ interface QuestionRepository {
 
 class QuestionRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val dispatchers: DispatcherProvider,
 ) : QuestionRepository {
 
     private var allQuestionEntries: List<QuestionEntry>? = null
@@ -44,7 +45,7 @@ class QuestionRepositoryImpl @Inject constructor(
         val inputStream = context.resources.openRawResource(R.raw.questions)
         val reader = BufferedReader(InputStreamReader(inputStream))
 
-        withContext(Dispatchers.IO) {
+        withContext(dispatchers.io) {
             reader.readLine() // Skip header line
 
             var line: String?

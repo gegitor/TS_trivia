@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(private val routeNavigator: RouteNavigat
     )
 
     private fun onNavigateToQuizInit() {
-        Timber.d("ZZZ onNavigateToQuizInit")
+        Timber.d("onNavigateToQuizInit")
         navigateToRoute(QuizInitRoute.route)
     }
 }

@@ -10,13 +10,11 @@ import androidx.lifecycle.viewModelScope
 import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quiz_summary.QuizSummaryRoute
-import com.ziemowit.ts.trivia.data.QuestionRepository
 import com.ziemowit.ts.trivia.data.model.GivenAnswer
 import com.ziemowit.ts.trivia.data.model.PotentialAnswer
 import com.ziemowit.ts.trivia.data.model.QuestionInfo
 import com.ziemowit.ts.trivia.data.model.emptyQuestionInfo
-import com.ziemowit.ts.trivia.data.model.toQuestionInfo
-import com.ziemowit.ts.trivia.di.DispatcherProvider
+import com.ziemowit.ts.trivia.data.usecases.GetQuestionsUseCase
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwner
 import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwnerImpl
@@ -32,8 +30,7 @@ class QuizViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     savedStateHandle: SavedStateHandle,
     routeNavigator: RouteNavigator,
-    private val questionRepository: QuestionRepository,
-    private val dispatchers: DispatcherProvider,
+    private val getQuestionsUseCase: GetQuestionsUseCase,
 ) : ParentViewModel(routeNavigator),
     ConfirmationDialogOwner by ConfirmationDialogOwnerImpl() {
 
@@ -98,7 +95,7 @@ class QuizViewModel @Inject constructor(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun onAnswerSelected(questionIndex: Int, potentialAnswer: PotentialAnswer) {
-        viewModelScope.launch(dispatchers.main) {
+        viewModelScope.launch {
             isAnswerEnabled.value = false
             userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
             if (potentialAnswer.correct) correctAnswers++
@@ -133,12 +130,12 @@ class QuizViewModel @Inject constructor(
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal fun loadQuestions() = viewModelScope.launch(dispatchers.io) {
-        val dbQuestions = questionRepository.getQuestions(quizArgs.difficulty)
+    internal fun loadQuestions() = viewModelScope.launch {
+        val dbQuestions = getQuestionsUseCase(quizArgs.difficulty)
         Timber.w("Loaded questions: $dbQuestions")
         Timber.d("loadQuestions state: $state")
         //TODO - choose a subset of questions from the full list
-        questions = dbQuestions.map { it.toQuestionInfo() }
+        questions = dbQuestions
         nextQuestion()
         delay(500L) // just so it would look nice
         loadingState.value = QuizReady(state)
