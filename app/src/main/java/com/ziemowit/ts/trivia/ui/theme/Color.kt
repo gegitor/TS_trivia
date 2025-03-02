@@ -29,5 +29,14 @@ class TSColor {
         val Yellow = Color.Yellow
         val Blue = Color.Blue
         val Red = Color.Red
+
+        // New colors for the game ending screen
+        val Gold = Color(0xFFFFD700)
+        val Silver = Color(0xFFC0C0C0)
+        val Bronze = Color(0xFFCD7F32)
+        val Background = Color(0xFF2B2B2B)
+        val TextColor = Color(0xFFE0E0E0)
+        val CardBackground = Color(0xFF3C3F41)
+        val CardBorder = Color(0xFF5A5A5A)
     }
 }

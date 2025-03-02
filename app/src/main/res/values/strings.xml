@@ -20,7 +20,7 @@
 
     <string name="quiz_summary_title">Twilight Struggle Quiz</string>
     <string name="quiz_summary_difficulty">Difficulty: %s</string>
-    <string name="quiz_summary_score">Score: %d</string>
+    <string name="quiz_summary_score">Score: %s</string>
     <string name="quiz_summary_achieved_level">You have achieved the level of</string>
     <string name="quiz_summary_player_rank">\u2763 %s</string>
     <string name="quiz_summary_play_again">Play Again</string>

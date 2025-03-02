@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,24 +43,20 @@ fun QuizSummaryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(TSColor.DarkBlueBackground) // Dark blue background
+            .background(TSColor.Background)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-//        Text(
-//            text = "🎖 Twilight Struggle Quiz 🎖",
-//            fontSize = 24.sp,
-//            fontWeight = FontWeight.Bold
-//        )
-//
-//        Spacer(modifier = Modifier.height(16.dp))
+        // Header
 
         DifficultyChip(Modifier.padding(12.dp), state.difficulty.value)
 
         Text(
             text = stringResource(R.string.quiz_summary_score, state.score.value),
-            fontSize = 18.sp,
+            fontSize = 24.sp,
+            color = TSColor.Gold
         )
+        Spacer(modifier = Modifier.height(12.dp))
 
         Column(
             verticalArrangement = Arrangement.Bottom
@@ -68,17 +65,19 @@ fun QuizSummaryScreen(
 
             // Buttons
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 ActionButton(
                     text = stringResource(R.string.quiz_summary_play_again),
-                    color = TSColor.Red40,
+                    color = TSColor.Red,
                     onClick = interactions.onPlayAgain,
                 )
                 ActionButton(
                     text = stringResource(R.string.quiz_summary_main_menu),
-                    color = TSColor.Blue40,
+                    color = TSColor.Blue,
                     onClick = interactions.onMainMenu,
                 )
             }
@@ -97,8 +96,9 @@ fun ColumnScope.LeaderRankingsContent(state: QuizSummaryState) {
         item {
             Text(
                 text = stringResource(R.string.quiz_summary_achieved_level),
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
+                color = TSColor.TextColor
             )
         }
         item {
@@ -106,7 +106,7 @@ fun ColumnScope.LeaderRankingsContent(state: QuizSummaryState) {
             LeaderRankingCard(leaderName = state.userRank.value, isPlayer = true)
             Spacer(modifier = Modifier.height(16.dp))
         }
-        state.leaderRankings.value.drop(1).let {leaderList ->
+        state.leaderRankings.value.drop(1).let { leaderList ->
             items(leaderList.size) { index ->
                 LeaderRankingCard(leaderName = leaderList[index], isPlayer = false)
             }
@@ -117,8 +117,8 @@ fun ColumnScope.LeaderRankingsContent(state: QuizSummaryState) {
 // Reusable Card for Leader Rankings
 @Composable
 fun LeaderRankingCard(leaderName: String, isPlayer: Boolean) {
-    val backgroundColor = if (isPlayer) TSColor.Yellow else TSColor.DarkGrey
-    val textColor = if (isPlayer) Color.Black else Color.White
+    val backgroundColor = if (isPlayer) TSColor.Gold else TSColor.CardBackground
+    val textColor = if (isPlayer) Color.Black else TSColor.TextColor
 
     Box(
         modifier = Modifier
@@ -144,19 +144,22 @@ private fun DifficultyChip(modifier: Modifier = Modifier, difficulty: Difficulty
     val color = when (difficulty) {
         Difficulty.EASY -> TSColor.Green
         Difficulty.MEDIUM -> TSColor.Yellow
-        Difficulty.HARD -> TSColor.Blue
-        Difficulty.WOJTEK -> TSColor.Red
+        Difficulty.HARD -> TSColor.Red
+        Difficulty.WOJTEK -> TSColor.Bronze
     }
 
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, color),
+        border = BorderStroke(2.dp, TSColor.CardBorder),
+        colors = CardDefaults.cardColors(containerColor = TSColor.CardBackground)
     ) {
         Text(
             text = stringResource(R.string.quiz_summary_difficulty, stringResource(difficulty.displayName)),
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
             color = color,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
         )
     }
 }
@@ -171,7 +174,7 @@ fun ActionButton(text: String, color: Color, onClick: () -> Unit) {
             .height(48.dp)
             .width(160.dp)
     ) {
-        Text(text = text, fontSize = 16.sp)
+        Text(text = text, fontSize = 16.sp, color = Color.White)
     }
 }
 
