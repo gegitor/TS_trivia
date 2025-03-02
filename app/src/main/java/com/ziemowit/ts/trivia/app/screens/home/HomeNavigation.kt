@@ -4,6 +4,7 @@ import HomeScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
 import com.ziemowit.ts.trivia.app.screens.main.Screen
 import com.ziemowit.ts.trivia.nav.NavRoute
 
@@ -47,12 +48,17 @@ import com.ziemowit.ts.trivia.nav.NavRoute
 //}
 
 
+internal class HomeArgs(val userName: String) {
+    constructor(savedStateHandle: SavedStateHandle) :
+            this(savedStateHandle[userNameArg] ?: "")
+}
 
+private const val userNameArg = "userNameArg"
 
 
 object HomeRoute : NavRoute<HomeViewModel> {
 
-    override val route = Screen.Home.route
+    override val route = "${Screen.Home.route}?$userNameArg={$userNameArg}"
 
     @Composable
     override fun viewModel(): HomeViewModel = hiltViewModel()
@@ -60,4 +66,6 @@ object HomeRoute : NavRoute<HomeViewModel> {
     @Composable
     override fun Content(viewModel: HomeViewModel) =
         HomeScreen(Modifier, viewModel.state, viewModel.interactions)
+
+    fun getRoute(userName: String) = route.replace("{$userNameArg}", userName)
 }

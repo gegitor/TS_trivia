@@ -24,10 +24,10 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ziemowit.ts.trivia.app.screens.home.HomeRoute
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_summary.QuizSummaryRoute
+import com.ziemowit.ts.trivia.app.screens.welcome.WelcomeRoute
 
 
 @Composable
@@ -102,7 +102,7 @@ sealed class Screen(val route: String) {
 
 
 fun homeScreen(builder: NavGraphBuilder, navController: NavHostController) {
-    HomeRoute.composable(builder, navController)
+    WelcomeRoute.composable(builder, navController)
     QuizInitRoute.composable(builder, navController)
     QuizRoute.composable(builder, navController)
     QuizSummaryRoute.composable(builder, navController)

@@ -95,23 +95,23 @@ class QuizViewModel @Inject constructor(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun onAnswerSelected(questionIndex: Int, potentialAnswer: PotentialAnswer) {
-        viewModelScope.launch {
-            isAnswerEnabled.value = false
-            userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
-            if (potentialAnswer.correct) correctAnswers++
-            Timber.d("onAnswerSelected, questionIndex: $questionIndex, potentialAnswer: $potentialAnswer correctAnswers: $correctAnswers")
+        isAnswerEnabled.value = false
+        userAnswers.add(GivenAnswer(questionIndex, potentialAnswer.answerText, potentialAnswer.correct))
+        if (potentialAnswer.correct) correctAnswers++
+        Timber.d("onAnswerSelected, questionIndex: $questionIndex, potentialAnswer: $potentialAnswer correctAnswers: $correctAnswers")
 
-            // Update the question object with the selected answer
-            question.value = question.value.copy(
-                potentialAnswers = question.value.potentialAnswers.map {
-                    if (it.answerText == potentialAnswer.answerText) {
-                        it.copy(selected = true)
-                    } else {
-                        it
-                    }
+        // Update the question object with the selected answer
+        question.value = question.value.copy(
+            potentialAnswers = question.value.potentialAnswers.map {
+                if (it.answerText == potentialAnswer.answerText) {
+                    it.copy(selected = true)
+                } else {
+                    it
                 }
-            )
+            }
+        )
 
+        viewModelScope.launch {
             delay(500L)
             if (currentQuestionIndex.intValue < questions.lastIndex) {
                 currentQuestionIndex.intValue++

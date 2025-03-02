@@ -1,6 +1,5 @@
 package com.ziemowit.ts.trivia.app.screens.quiz_init
 
-import android.content.SharedPreferences
 import androidx.compose.runtime.mutableStateOf
 import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
@@ -22,7 +21,7 @@ class QuizInitViewModel @Inject constructor(
 ) :
     ParentViewModel(routeNavigator) {
 
-     private val email = mutableStateOf("qinit@email")
+    private val email = mutableStateOf("qinit@email")
     private val isSecretDifficultyVisible = mutableStateOf(false)
 
 
