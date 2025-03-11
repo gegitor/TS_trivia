@@ -1,3 +1,4 @@
+package com.ziemowit.ts.trivia.app.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -31,10 +32,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ziemowit.ts.trivia.app.screens.home.HomeScreenInteractions
-import com.ziemowit.ts.trivia.app.screens.home.HomeState
 
 @Composable
 internal fun HomeScreen(
@@ -42,8 +42,6 @@ internal fun HomeScreen(
     state: HomeState,
     interactions: HomeScreenInteractions
 ) {
-    val primaryColor = Color(0xFF673AB7)
-    val accentColor = Color(0xFFFF5722)
 
     Box(modifier = modifier.fillMaxSize()) {
         when {
@@ -51,8 +49,6 @@ internal fun HomeScreen(
             else -> MainContent(
                 state = state,
                 interactions = interactions,
-                primaryColor = primaryColor,
-                accentColor = accentColor
             )
         }
 
@@ -88,20 +84,21 @@ private fun ErrorDialog(errorMessage: String, onDismiss: () -> Unit) {
 
 @Composable
 private fun MainContent(
-    state: HomeState,
-    interactions: HomeScreenInteractions,
-    primaryColor: Color,
-    accentColor: Color
+    state: HomeState = HomeState.stub(),
+    interactions: HomeScreenInteractions = HomeScreenInteractions.STUB,
 ) {
+    val primaryColor = Color(0xFF673AB7)
+    val accentColor = Color(0xFFFF5722)
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
-            WelcomeSection(userName = state.userName)
+            WelcomeSection(userName = state.userName.value)
         }
 
-        state.continueQuiz?.let { continueQuiz ->
+        state.continueQuiz.value?.let { continueQuiz ->
             item {
                 ContinueQuizCard(
                     continueQuiz = continueQuiz,
@@ -128,7 +125,7 @@ private fun MainContent(
             RecentActivityHeader()
         }
 
-        items(state.recentActivities) { activity ->
+        items(state.recentActivities.value) { activity ->
             RecentActivityItem(
                 activity = activity,
                 onChallengeAcceptClick = { interactions.onChallengeAcceptClick(it) },
@@ -297,7 +294,9 @@ fun RecentActivityItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             ActivityAvatar(activity)
-            ActivityContent(activity, Modifier.weight(1f).padding(start = 16.dp))
+            ActivityContent(activity, Modifier
+                .weight(1f)
+                .padding(start = 16.dp))
             ActivityButton(
                 activity = activity,
                 accentColor = accentColor,
@@ -346,8 +345,10 @@ private fun ActivityContent(
     val description = when (activity) {
         is HomeState.ActivityItem.Challenge ->
             "${activity.categoryName} Quiz - ${activity.difficultyLevel.name}"
+
         is HomeState.ActivityItem.ScoreComparison ->
             "${activity.yourScore}% vs ${activity.theirScore}% - ${activity.categoryName} Quiz"
+
         is HomeState.ActivityItem.Achievement ->
             "${activity.quizName} - ${activity.description}"
     }
@@ -378,19 +379,18 @@ private fun ActivityButton(
     val (buttonColor, buttonText, onClick) = when (activity) {
         is HomeState.ActivityItem.Challenge -> Triple(
             accentColor,
-            "ACCEPT",
-            { onChallengeAcceptClick(activity.id) }
-        )
+            "ACCEPT"
+        ) { onChallengeAcceptClick(activity.id) }
+
         is HomeState.ActivityItem.ScoreComparison -> Triple(
             primaryColor,
-            "SHARE",
-            { onShareClick(activity.id) }
-        )
+            "SHARE"
+        ) { onShareClick(activity.id) }
+
         is HomeState.ActivityItem.Achievement -> Triple(
             primaryColor,
-            "SHARE",
-            { onShareClick(activity.id) }
-        )
+            "SHARE"
+        ) { onShareClick(activity.id) }
     }
 
     Button(
@@ -408,4 +408,11 @@ private fun ActivityButton(
             fontWeight = FontWeight.Bold
         )
     }
+}
+
+
+@Preview
+@Composable
+private fun HomeScreenPreview() {
+    MainContent()
 }

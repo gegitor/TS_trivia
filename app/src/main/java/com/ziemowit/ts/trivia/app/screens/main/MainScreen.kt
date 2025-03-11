@@ -2,6 +2,7 @@ package com.ziemowit.ts.trivia.app.screens.main
 
 //import com.ziemowit.ts.trivia.app.screens.quiz_init.quizScreenHierarchy1
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,34 +16,69 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ziemowit.ts.trivia.app.screens.home.HomeRoute
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_summary.QuizSummaryRoute
 import com.ziemowit.ts.trivia.app.screens.welcome.WelcomeRoute
-
+import com.ziemowit.ts.trivia.nav.navigateToScreen
+import timber.log.Timber
 
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+//    val navigationCoordinator = remember { NavigationCoordinator() }
+    val viewModel: MainViewModel = hiltViewModel()
+    var isCollectionStarted by rememberSaveable { mutableStateOf(false) }
+
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
+    val isInAuthFlow = currentRoute == Screen.Welcome.route
+
+    LaunchedEffect(Unit) {
+        isCollectionStarted = true
+
+        viewModel.navigationCommands.collect { navCommand ->
+            Timber.d("navigationCommands effect navCommand: $navCommand")
+            when (navCommand) {
+                is NavigateToHome -> navController.navigateToScreen(Screen.Home.route, HomeRoute.getRoute(navCommand.name))
+                NavigateToWelcome -> navController.navigateToScreen(Screen.Welcome)
+            }
+        }
+    }
+
+    LaunchedEffect(isCollectionStarted) {
+        if (isCollectionStarted) {
+            viewModel.checkInitialDestination()
+        }
+    }
 
     Scaffold(
-        bottomBar = { BottomTriviaBar(navController) },
+        bottomBar = { if (!isInAuthFlow) BottomTriviaBar(navController) },
     )
     { paddingValues ->
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(if (!isInAuthFlow) paddingValues else PaddingValues(0.dp))
         ) {
+            welcomeScreen(this@NavHost, navController)
             homeScreen(this@NavHost, navController)
             composable(Screen.Search.route) {
                 SearchScreen()
@@ -51,6 +87,7 @@ fun MainScreen() {
                 ProfileScreen()
             }
         }
+
     }
 }
 
@@ -71,46 +108,34 @@ fun BottomTriviaBar(navController: NavHostController) {
     }
 }
 
-private fun navigateToScreen(navController: NavHostController, screen: Screen) {
-    navController.navigate(
-        route = screen.route,
-        navOptions = NavOptions.Builder()
-            .setLaunchSingleTop(true)
-            .setPopUpTo(Screen.Home.route, inclusive = false, saveState = true)
-            .setRestoreState(true)
-            .build()
-    )
-}
-
 fun onHomeClick(navController: NavHostController) {
-    navigateToScreen(navController, Screen.Home)
+    navController.navigateToScreen(Screen.Home)
 }
 
 fun onSearchClick(navController: NavHostController) {
-    navigateToScreen(navController, Screen.Search)
+    navController.navigateToScreen(Screen.Search)
 }
 
 fun onProfileClick(navController: NavHostController) {
-    navigateToScreen(navController, Screen.Profile)
+    navController.navigateToScreen(Screen.Profile)
 }
 
 sealed class Screen(val route: String) {
     data object Home : Screen("home")
     data object Search : Screen("search")
     data object Profile : Screen("profile")
+    data object Welcome : Screen("welcome")
 }
 
+fun welcomeScreen(builder: NavGraphBuilder, navController: NavHostController) {
+    WelcomeRoute.composable(builder, navController)
+}
 
 fun homeScreen(builder: NavGraphBuilder, navController: NavHostController) {
-    WelcomeRoute.composable(builder, navController)
+    HomeRoute.composable(builder, navController)
     QuizInitRoute.composable(builder, navController)
     QuizRoute.composable(builder, navController)
     QuizSummaryRoute.composable(builder, navController)
-//            quizScreenHierarchy1()
-//            composable(Screen.Home.route) {
-//                HomeRoute.composable(this, navController)
-//                HomeScreen()
-//            }
 }
 
 @Composable

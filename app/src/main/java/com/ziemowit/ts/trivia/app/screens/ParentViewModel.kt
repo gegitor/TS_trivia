@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.app.screens.main
+package com.ziemowit.ts.trivia.app.screens
 
 import androidx.lifecycle.ViewModel
 import com.ziemowit.ts.trivia.nav.RouteNavigator

@@ -2,8 +2,8 @@ package com.ziemowit.ts.trivia.app.screens.quiz_summary
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
+import com.ziemowit.ts.trivia.app.screens.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.home.HomeRoute
-import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.data.LeaderRepository
 import com.ziemowit.ts.trivia.data.model.Difficulty

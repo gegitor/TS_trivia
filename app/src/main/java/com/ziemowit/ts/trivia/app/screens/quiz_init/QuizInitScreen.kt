@@ -67,7 +67,7 @@ internal fun QuizInitScreen(
                 DifficultyOption(
                     interactions, Difficulty.WOJTEK
                 )
-                HideSecretDifficultyButton({ interactions.setHiddenDifficultyVisibility(false) })
+                HideSecretDifficultyButton { interactions.setHiddenDifficultyVisibility(false) }
             }
         }
 

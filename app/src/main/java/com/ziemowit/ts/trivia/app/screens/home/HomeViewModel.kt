@@ -2,21 +2,42 @@ package com.ziemowit.ts.trivia.app.screens.home
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
+import androidx.lifecycle.SavedStateHandle
+import com.ziemowit.ts.trivia.app.screens.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
-import com.ziemowit.ts.trivia.data.model.Difficulty
+import com.ziemowit.ts.trivia.data.PreferencesRepository
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(routeNavigator: RouteNavigator) :
+class HomeViewModel @Inject constructor(
+    routeNavigator: RouteNavigator,
+    savedStateHandle: SavedStateHandle,
+    preferencesRepository: PreferencesRepository
+) :
     ParentViewModel(routeNavigator) {
 
+    private val homeArgs = HomeArgs(savedStateHandle)
+
+//    private val userName = mutableStateOf(preferencesRepository.getUserName() ?: "")
+    private val userName = mutableStateOf(preferencesRepository.getUserName() ?: "")
+    private val continueQuiz = mutableStateOf(null)
+    private val recentActivities: MutableState<List<HomeState.ActivityItem>> = mutableStateOf(
+        emptyList()
+    )
+
     init {
-        Timber.d("HomeViewModel init")
+        Timber.d("HomeViewModel init, name: ${homeArgs.userName}")
+//        userName.value = homeArgs.userName
     }
+
+    internal val state = HomeState(
+        userName = userName,
+        continueQuiz = continueQuiz,
+        recentActivities = recentActivities
+    )
 
     internal val interactions = HomeScreenInteractions(
         onBackClicked = ::onBack,
@@ -27,18 +48,6 @@ class HomeViewModel @Inject constructor(routeNavigator: RouteNavigator) :
         onChallengeAcceptClick = ::onChallengeAcceptClick,
         onShareClick = ::onShareClick,
         dismissError = ::dismissError,
-    )
-
-    private val userName = mutableStateOf("")
-    private val continueQuiz = mutableStateOf(null)
-    private val recentActivities: MutableState<List<HomeState.ActivityItem>> = mutableStateOf(
-        emptyList()
-    )
-
-    internal val state = HomeState(
-        userName = userName,
-        continueQuiz = continueQuiz,
-        recentActivities = recentActivities
     )
 
     private fun onNavigateToQuizInit() {

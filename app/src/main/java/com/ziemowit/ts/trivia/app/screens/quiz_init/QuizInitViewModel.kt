@@ -1,7 +1,7 @@
 package com.ziemowit.ts.trivia.app.screens.quiz_init
 
 import androidx.compose.runtime.mutableStateOf
-import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
+import com.ziemowit.ts.trivia.app.screens.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.audio.Sound
 import com.ziemowit.ts.trivia.audio.SoundRepository

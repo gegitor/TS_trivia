@@ -3,8 +3,8 @@ package com.ziemowit.ts.trivia.app.screens.welcome
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import com.ziemowit.ts.trivia.app.screens.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.home.HomeRoute
-import com.ziemowit.ts.trivia.app.screens.main.ParentViewModel
 import com.ziemowit.ts.trivia.data.PreferencesRepository
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +35,7 @@ class WelcomeViewModel @Inject constructor(
             _welcomeLoadingState.value = WelcomeLoadingState.AskName(false)
         } else {
             _welcomeLoadingState.value = WelcomeLoadingState.Ready(name)
-            navigateToRoute(HomeRoute.getRoute(name)) //TODO test delay
+            navigateToRoute(HomeRoute.getRoute(name)) //TODO test delay // should be screen
         }
     }
 
