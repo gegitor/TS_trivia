@@ -29,7 +29,8 @@ class HomeViewModel @Inject constructor(
     )
 
     init {
-        Timber.d("HomeViewModel init, name: ${homeArgs.userName}")
+        Timber.d("HomeViewModel init, name from args: ${homeArgs.userName}")
+        Timber.d("HomeViewModel init, name from prefs: ${userName.value}")
 //        userName.value = homeArgs.userName
     }
 

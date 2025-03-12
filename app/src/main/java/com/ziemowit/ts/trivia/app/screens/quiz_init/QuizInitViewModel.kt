@@ -12,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
-
 @HiltViewModel
 class QuizInitViewModel @Inject constructor(
     routeNavigator: RouteNavigator,
@@ -23,7 +22,6 @@ class QuizInitViewModel @Inject constructor(
 
     private val email = mutableStateOf("qinit@email")
     private val isSecretDifficultyVisible = mutableStateOf(false)
-
 
     init {
         isSecretDifficultyVisible.value = preferencesRepository.getIsSecretDifficultyVisible()
@@ -52,8 +50,6 @@ class QuizInitViewModel @Inject constructor(
         }
         Timber.d("setHiddenDifficultyVisibility: $visible")
         isSecretDifficultyVisible.value = visible
-        preferencesRepository.setIsSecretDifficultyVisible(true)
+        preferencesRepository.setIsSecretDifficultyVisible(visible)
     }
 }
-
-

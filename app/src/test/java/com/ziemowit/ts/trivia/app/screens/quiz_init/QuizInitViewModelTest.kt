@@ -3,6 +3,7 @@ package com.ziemowit.ts.trivia.app.screens.quiz_init
 import android.content.SharedPreferences
 import com.ziemowit.ts.trivia.audio.Sound
 import com.ziemowit.ts.trivia.audio.SoundRepository
+import com.ziemowit.ts.trivia.data.PreferencesRepository
 import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import io.mockk.MockKAnnotations
@@ -28,6 +29,9 @@ class QuizInitViewModelTest {
     lateinit var mockSoundRepository: SoundRepository
 
     @MockK
+    lateinit var mockPreferencesRepository: PreferencesRepository
+
+    @MockK
     lateinit var mockSharedPreferences: SharedPreferences
 
     @MockK
@@ -48,8 +52,10 @@ class QuizInitViewModelTest {
         every { mockSharedPreferencesEditor.apply() } returns Unit
         every { mockRouteNavigator.navigateToRoute(any()) } returns Unit
         every { mockSoundRepository.play(any()) } returns Unit
+        every { mockPreferencesRepository.getIsSecretDifficultyVisible() } returns false
+        every { mockPreferencesRepository.setIsSecretDifficultyVisible(any()) } returns Unit
 
-        viewModel = QuizInitViewModel(mockRouteNavigator, mockSharedPreferences, mockSoundRepository)
+        viewModel = QuizInitViewModel(mockRouteNavigator, mockPreferencesRepository, mockSoundRepository)
     }
 
     @After
@@ -71,8 +77,7 @@ class QuizInitViewModelTest {
 
         viewModel.interactions.setHiddenDifficultyVisibility(visible)
 
-        verify { mockSharedPreferencesEditor.putBoolean(viewModel.PREF_HIDDEN_DIFFICULTY, visible) }
-        verify { mockSharedPreferencesEditor.apply() }
+        verify { mockPreferencesRepository.setIsSecretDifficultyVisible(visible) }
         assert(viewModel.state.isSecretDifficultyVisible.value == visible)
     }
 

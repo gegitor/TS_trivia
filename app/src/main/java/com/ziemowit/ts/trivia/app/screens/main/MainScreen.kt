@@ -37,13 +37,14 @@ import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_init.QuizInitRoute
 import com.ziemowit.ts.trivia.app.screens.quiz_summary.QuizSummaryRoute
 import com.ziemowit.ts.trivia.app.screens.welcome.WelcomeRoute
+import com.ziemowit.ts.trivia.nav.NavigateToHome
+import com.ziemowit.ts.trivia.nav.NavigateToWelcome
 import com.ziemowit.ts.trivia.nav.navigateToScreen
 import timber.log.Timber
 
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-//    val navigationCoordinator = remember { NavigationCoordinator() }
     val viewModel: MainViewModel = hiltViewModel()
     var isCollectionStarted by rememberSaveable { mutableStateOf(false) }
 
@@ -75,11 +76,11 @@ fun MainScreen() {
     { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = Screen.Welcome.route,
             modifier = Modifier.padding(if (!isInAuthFlow) paddingValues else PaddingValues(0.dp))
         ) {
-            welcomeScreen(this@NavHost, navController)
-            homeScreen(this@NavHost, navController)
+            welcomeScreen(this, navController)
+            homeScreen(this, navController)
             composable(Screen.Search.route) {
                 SearchScreen()
             }

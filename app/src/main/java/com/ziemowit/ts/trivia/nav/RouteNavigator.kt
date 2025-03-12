@@ -1,8 +1,8 @@
 package com.ziemowit.ts.trivia.nav
 
-import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import com.ziemowit.ts.trivia.app.screens.main.Screen
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.annotations.VisibleForTesting
@@ -13,10 +13,11 @@ interface RouteNavigator {
     fun navigateUp()
     fun popToRoute(route: String)
     fun navigateToRoute(route: String)
-    fun navigateToScreen(navController: NavHostController, screen: Screen)
-    fun navigateToScreen(navController: NavHostController, route: String)
+    suspend fun navigateToWelcome()
+    suspend fun navigateToHome(userName: String)
 
     val navigationState: StateFlow<NavigationState>
+    val navigationCommands: Flow<NavigationCommand>
 }
 
 class RouteNavigatorImpl : RouteNavigator {
@@ -28,6 +29,20 @@ class RouteNavigatorImpl : RouteNavigator {
      */
     override val navigationState: MutableStateFlow<NavigationState> =
         MutableStateFlow(NavigationState.Idle)
+
+    override val navigationCommands = MutableSharedFlow<NavigationCommand>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+
+
+    override suspend fun navigateToWelcome() {
+        navigationCommands.emit(NavigateToWelcome)
+    }
+
+    override suspend fun navigateToHome(userName: String) {
+        navigationCommands.emit(NavigateToHome(userName))
+    }
 
     override fun onNavigated(state: NavigationState) {
         // clear navigation state, if state is the current state:
@@ -42,28 +57,6 @@ class RouteNavigatorImpl : RouteNavigator {
     }
 
     override fun navigateToRoute(route: String) = navigate(NavigationState.NavigateToRoute(route))
-
-    override fun navigateToScreen(navController: NavHostController, screen: Screen) {
-        navController.navigate(
-            route = screen.route,
-            navOptions = NavOptions.Builder()
-                .setLaunchSingleTop(true)
-                .setPopUpTo(screen.route, inclusive = false, saveState = true)
-                .setRestoreState(true)
-                .build()
-        )
-    }
-
-    override fun navigateToScreen(navController: NavHostController, route: String) {
-        navController.navigate(
-            route = route,
-            navOptions = NavOptions.Builder()
-                .setLaunchSingleTop(true)
-                .setPopUpTo(route, inclusive = false, saveState = true)
-                .setRestoreState(true)
-                .build()
-        )
-    }
 
     @VisibleForTesting
     fun navigate(state: NavigationState) {

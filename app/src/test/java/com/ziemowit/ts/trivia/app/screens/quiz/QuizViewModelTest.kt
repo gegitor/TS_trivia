@@ -56,7 +56,7 @@ class QuizViewModelTest {
             QuestionEntry(2, Category.GAME_MECHANICS, Difficulty.EASY, "Question 2", "Answer 2", listOf("Wrong 3", "Wrong 4")).toQuestionInfo(),
         )
         every { routeNavigator.navigateToRoute(any()) } returns Unit
-        viewModel = QuizViewModel(context, savedStateHandle, routeNavigator, getQuestionsUseCase, testDispatcherProvider)
+        viewModel = QuizViewModel(context, savedStateHandle, routeNavigator, getQuestionsUseCase/*, testDispatcherProvider*/)
     }
 
     @After
