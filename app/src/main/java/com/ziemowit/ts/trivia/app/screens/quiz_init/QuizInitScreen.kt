@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.data.model.Difficulty
-import com.ziemowit.ts.trivia.ui.theme.TSColor
+import com.ziemowit.ts.ui_common.theme.TSColor
 
 
 // choose difficulty

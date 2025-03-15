@@ -6,10 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import com.ziemowit.ts.trivia.app.screens.main.MainScreen
 import com.ziemowit.ts.trivia.app.screens.splash.SplashViewModel
 import com.ziemowit.ts.trivia.audio.SoundRepository
-import com.ziemowit.ts.trivia.app.screens.main.MainScreen
-import com.ziemowit.ts.trivia.ui.theme.TSTriviaTheme
+import com.ziemowit.ts.ui_common.theme.TSTriviaTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
-
 
         setContent {
 //            val navController = rememberNavController()

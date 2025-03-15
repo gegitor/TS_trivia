@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.ui.theme
+package com.ziemowit.ts.ui_common.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -84,7 +84,7 @@ data class HomeState(
             val title: String,
             val description: String,
             val iconResId: Int,
-            val quizName: String?,
+            val quizName: String,
             val categoryName: String?
         ) : ActivityItem(3)
     }

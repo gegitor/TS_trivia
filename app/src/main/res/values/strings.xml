@@ -25,4 +25,19 @@
     <string name="quiz_summary_player_rank">\u2763 %s</string>
     <string name="quiz_summary_play_again">Play Again</string>
     <string name="quiz_summary_main_menu">Main Menu</string>
+
+    <string name="welcome">Welcome, </string>
+    <string name="quick_play">Quick Play</string>
+    <string name="create_custom_quiz">Create Custom Quiz</string>
+    <string name="continue_quiz">Continue your %s Quiz</string>
+    <string name="questions_completed">%1$d/%2$d questions completed</string>
+    <string name="recent_activity">Recent Activity</string>
+    <string name="challenged_you">%s challenged you!</string>
+    <string name="you_beat">You beat %s\'s score!</string>
+    <string name="score">score!</string>
+    <string name="accept">ACCEPT</string>
+    <string name="share">SHARE</string>
+    <string name="challenge_description">%1$s Quiz - %2$s</string>
+    <string name="score_comparison_description">%1$d%% vs %2$d%% - %3$s Quiz</string>
+    <string name="achievement_description">%1$s - %2$s</string>
 </resources>

@@ -2,7 +2,6 @@ package com.ziemowit.ts.trivia.app.screens.home
 
 internal data class HomeScreenInteractions(
     val onBackClicked: () -> Unit,
-//    val onNavigateToQuizInit: () -> Unit,
     val onContinueQuizClick: () -> Unit,
     val onQuickPlayClick: () -> Unit,
     val onCreateCustomQuizClick: () -> Unit,
@@ -14,7 +13,6 @@ internal data class HomeScreenInteractions(
     companion object {
         val STUB = HomeScreenInteractions(
             onBackClicked = {},
-//            onNavigateToQuizInit = {},
             onContinueQuizClick = {},
             onQuickPlayClick = {},
             onCreateCustomQuizClick = {},
