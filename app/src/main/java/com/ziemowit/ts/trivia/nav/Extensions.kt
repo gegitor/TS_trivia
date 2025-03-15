@@ -15,12 +15,12 @@ fun NavHostController.navigateToScreen(screen: Screen) {
 }
 
 fun NavHostController.navigateToScreen(screenName: String, route: String) {
-    Timber.d("ZZZ navigateToScreen route: $route")
+    Timber.d("navigateToScreen route: $route screenName: $screenName")
     navigate(
         route = route,
         navOptions = NavOptions.Builder()
             .setLaunchSingleTop(true)
-            .setPopUpTo(route, inclusive = false, saveState = true)
+            .setPopUpTo(screenName, inclusive = false, saveState = true)
             .setRestoreState(true)
             .build()
     )

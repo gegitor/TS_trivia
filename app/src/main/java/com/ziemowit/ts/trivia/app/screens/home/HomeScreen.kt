@@ -163,7 +163,7 @@ private fun ContinueQuizCard(
 private fun RecentActivityHeader() {
     Text(
         text = stringResource(R.string.recent_activity),
-        modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+        modifier = Modifier.padding(top = 24.dp, bottom = 10.dp),
         fontSize = 22.sp,
         fontWeight = FontWeight.Bold
     )

@@ -88,10 +88,11 @@ interface NavRoute<T : RouteNavigator> {
 
         when (navigationState) {
             is NavigationState.NavigateToRoute -> {
-                Timber.d(
-                    "updateNavigationState navigationState route: ${navigationState.route}"
-                )
                 navHostController.navigate(navigationState.route)
+            }
+
+            is NavigationState.NavigateToRouteWithPop -> {
+                navHostController.navigate(navigationState.route) { popUpTo(navigationState.popRoute) { inclusive = true } }
             }
 
             is NavigationState.PopToRoute -> {

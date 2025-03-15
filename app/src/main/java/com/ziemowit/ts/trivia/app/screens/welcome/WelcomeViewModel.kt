@@ -35,7 +35,7 @@ class WelcomeViewModel @Inject constructor(
             _welcomeLoadingState.value = WelcomeLoadingState.AskName(false)
         } else {
             _welcomeLoadingState.value = WelcomeLoadingState.Ready(name)
-            navigateToRoute(HomeRoute.getRoute(name)) //TODO test delay // should be screen
+            navigateToRouteWithPop(HomeRoute.getRoute(name), WelcomeRoute.route) //TODO test delay // should be screen
         }
     }
 
@@ -43,7 +43,7 @@ class WelcomeViewModel @Inject constructor(
         if (isNameValid(name)) {
             preferencesRepository.setUserName(name)
             _welcomeLoadingState.value = WelcomeLoadingState.Ready(name) // on ready a launched effect to navigate home?
-            navigateToRoute(HomeRoute.getRoute(name)) //TODO test delay
+            navigateToRouteWithPop(HomeRoute.getRoute(name), WelcomeRoute.route) //TODO test delay // should be screen
         } else {
             _welcomeLoadingState.value = WelcomeLoadingState.AskName(true)
         }

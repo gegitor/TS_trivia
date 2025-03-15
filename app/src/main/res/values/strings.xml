@@ -26,7 +26,7 @@
     <string name="quiz_summary_play_again">Play Again</string>
     <string name="quiz_summary_main_menu">Main Menu</string>
 
-    <string name="welcome">Welcome, </string>
+    <string name="welcome">Welcome,\u0020</string>
     <string name="quick_play">Quick Play</string>
     <string name="create_custom_quiz">Create Custom Quiz</string>
     <string name="continue_quiz">Continue your %s Quiz</string>
