@@ -42,26 +42,21 @@ class HomeViewModel @Inject constructor(
 
     internal val interactions = HomeScreenInteractions(
         onBackClicked = ::onBack,
-        onNavigateToQuizInit = ::onNavigateToQuizInit,
         onContinueQuizClick = ::onContinueQuizClick,
-        onQuickPlayAddClick = ::onQuickPlayAddClick,
+        onQuickPlayClick = ::onQuickPlayClick,
         onCreateCustomQuizClick = ::onCreateCustomQuizClick,
         onChallengeAcceptClick = ::onChallengeAcceptClick,
         onShareClick = ::onShareClick,
         dismissError = ::dismissError,
     )
 
-    private fun onNavigateToQuizInit() {
-        Timber.d("onNavigateToQuizInit")
-        navigateToRoute(QuizInitRoute.route)
-    }
-
     private fun onContinueQuizClick() {
         Timber.d("onContinueQuizClick")
     }
 
-    private fun onQuickPlayAddClick() {
-        Timber.d("onQuickPlayAddClick")
+    private fun onQuickPlayClick() {
+        Timber.d("onQuickPlayClick")
+        navigateToRoute(QuizInitRoute.route)
     }
 
     private fun onCreateCustomQuizClick() {

@@ -109,7 +109,7 @@ private fun MainContent(
 
         item {
             QuickPlayButton(
-                onQuickPlayClick = { interactions.onQuickPlayAddClick() },
+                onQuickPlayClick = { interactions.onQuickPlayClick() },
                 primaryColor = primaryColor
             )
         }
