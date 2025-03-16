@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuizSummaryViewModel @Inject constructor(
-//    @ApplicationContext private val context: Context,
     leaderRepository: LeaderRepository,
     routeNavigator: RouteNavigator,
     savedStateHandle: SavedStateHandle,
@@ -44,7 +43,7 @@ class QuizSummaryViewModel @Inject constructor(
 
     // UI Interactions
     val interactions = QuizSummaryInteractions(
-        onPlayAgain = { popToRoute(QuizRoute.getRoute(difficulty.value)) },
+        onPlayAgain = { navigateToRouteWithPop(QuizRoute.getRoute(difficulty.value), QuizSummaryRoute.route) },
         onMainMenu = { popToRoute(HomeRoute.route) }
     )
 

@@ -38,11 +38,11 @@ class RouteNavigatorImpl : RouteNavigator {
     }
 
     override fun navigateToRoute(route: String) = navigate(NavigationState.NavigateToRoute(route))
+
     override fun navigateToRouteWithPop(route: String, popRoute: String) = navigate(NavigationState.NavigateToRouteWithPop(route, popRoute))
 
     @VisibleForTesting
     fun navigate(state: NavigationState) {
-        Exception("ZZZ").printStackTrace()
         Timber.d("RouteNavigatorImpl navigate: $state")
         navigationState.value = state
     }

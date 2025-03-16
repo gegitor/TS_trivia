@@ -84,12 +84,12 @@ class QuizViewModel @Inject constructor(
     internal fun onQuizFinished() {
         Timber.d("onQuizFinished")
         // TODO - store the answers in the database on the go ?
-        navigateToRoute(
+        navigateToRouteWithPop(
             QuizSummaryRoute.getRoute(
                 difficulty = quizArgs.difficulty,
                 correctQuestions = correctAnswers,
                 totalQuestions = questions.size
-            )
+            ), QuizRoute.route
         )
     }
 

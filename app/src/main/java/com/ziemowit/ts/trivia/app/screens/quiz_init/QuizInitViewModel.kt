@@ -41,7 +41,7 @@ class QuizInitViewModel @Inject constructor(
 
     private fun onNavigateToQuiz(difficulty: Difficulty) {
         Timber.d("onNavigateToQuiz, route: ${QuizRoute.getRoute(difficulty)}")
-        navigateToRoute(QuizRoute.getRoute(difficulty))
+        navigateToRouteWithPop(QuizRoute.getRoute(difficulty), QuizInitRoute.route)
     }
 
     private fun setHiddenDifficultyVisibility(visible: Boolean) {
