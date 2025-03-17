@@ -36,8 +36,10 @@
     <string name="you_beat">You beat %s\'s score!</string>
     <string name="score">score!</string>
     <string name="accept">ACCEPT</string>
-    <string name="share">SHARE</string>
+    <string name="share">Share</string>
     <string name="challenge_description">%1$s Quiz - %2$s</string>
     <string name="score_comparison_description">%1$d%% vs %2$d%% - %3$s Quiz</string>
     <string name="achievement_description">%1$s - %2$s</string>
+    <string name="share_score">I scored %s on the %s difficulty in TS Trivia!</string>
+    <string name="share_score_title">Share your score</string>
 </resources>

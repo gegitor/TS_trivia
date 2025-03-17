@@ -283,7 +283,7 @@ private fun ActivityButton(
         ), contentPadding = PaddingValues(horizontal = 12.dp)
     ) {
         Text(
-            text = stringResource(buttonText), fontSize = 12.sp, fontWeight = FontWeight.Bold
+            text = stringResource(buttonText).uppercase(), fontSize = 12.sp, fontWeight = FontWeight.Bold
         )
     }
 }

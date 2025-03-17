@@ -53,7 +53,7 @@ fun SummaryContent(
 ) {
     Scaffold(
         topBar = { SummaryTopBar(state) },
-        bottomBar = { ActionButtons(interactions) }
+        bottomBar = { ActionButtonsa(interactions) }
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -209,7 +209,7 @@ private fun AnimatedLeaderItem(leader: String, index: Int) {
 }
 
 @Composable
-private fun ActionButtons(interactions: QuizSummaryInteractions) {
+private fun ActionButtonsa(interactions: QuizSummaryInteractions) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

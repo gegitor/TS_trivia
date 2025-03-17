@@ -1,7 +1,11 @@
 package com.ziemowit.ts.trivia.app.screens.quiz_summary
 
+import android.content.Context
+import android.content.res.Resources
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
+import com.ziemowit.ts.core.utils.shareText
+import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.app.screens.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.home.HomeRoute
 import com.ziemowit.ts.trivia.app.screens.quiz.QuizRoute
@@ -17,6 +21,7 @@ class QuizSummaryViewModel @Inject constructor(
     leaderRepository: LeaderRepository,
     routeNavigator: RouteNavigator,
     savedStateHandle: SavedStateHandle,
+    private val resources: Resources,
 ) :
     ParentViewModel(routeNavigator) {
 
@@ -44,13 +49,21 @@ class QuizSummaryViewModel @Inject constructor(
     // UI Interactions
     val interactions = QuizSummaryInteractions(
         onPlayAgain = { navigateToRouteWithPop(QuizRoute.getRoute(difficulty.value), QuizSummaryRoute.route) },
-        onMainMenu = { popToRoute(HomeRoute.route) }
+        onMainMenu = { popToRoute(HomeRoute.route) },
+        onShareScore = ::shareScore,
     )
 
     init {
         Timber.d("QuizSummaryViewModel init diff: ${difficulty.value} correctQuestions: ${quizArgs.correctQuestions} totalQuestions: ${quizArgs.totalQuestions}")
         Timber.d("QuizSummaryViewModel init leaderRankings: ${leaderRankings.value}")
+    }
 
+    private fun shareScore(context: Context) {
+        shareText(
+            context,
+            resources.getString(R.string.share_score, score.value, difficulty.value),
+            resources.getString(R.string.share_score_title)
+        )
     }
 }
 

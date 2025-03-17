@@ -19,12 +19,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,41 +51,39 @@ fun QuizSummaryScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header
-
         DifficultyChip(Modifier.padding(12.dp), state.difficulty.value)
 
-        Text(
-            text = stringResource(R.string.quiz_summary_score, state.score.value),
-            fontSize = 24.sp,
-            color = TSColor.Gold
-        )
-        Spacer(modifier = Modifier.height(12.dp))
+        ScoreChip(state, interactions)
 
         Column(
+            modifier = Modifier.padding(top = 12.dp),
             verticalArrangement = Arrangement.Bottom
         ) {
             LeaderRankingsContent(state)
-
-            // Buttons
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-            ) {
-                ActionButton(
-                    text = stringResource(R.string.quiz_summary_play_again),
-                    color = TSColor.Red,
-                    onClick = interactions.onPlayAgain,
-                )
-                ActionButton(
-                    text = stringResource(R.string.quiz_summary_main_menu),
-                    color = TSColor.Blue,
-                    onClick = interactions.onMainMenu,
-                )
-            }
+            ActionButtons(interactions)
         }
+    }
+}
+
+@Composable
+fun ActionButtons(interactions: QuizSummaryInteractions) {
+    // Buttons
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+    ) {
+        ActionButton(
+            text = stringResource(R.string.quiz_summary_play_again),
+            color = TSColor.Red,
+            onClick = interactions.onPlayAgain,
+        )
+        ActionButton(
+            text = stringResource(R.string.quiz_summary_main_menu),
+            color = TSColor.Blue,
+            onClick = interactions.onMainMenu,
+        )
     }
 }
 
@@ -161,6 +163,32 @@ private fun DifficultyChip(modifier: Modifier = Modifier, difficulty: Difficulty
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
         )
+    }
+}
+
+@Composable
+private fun ScoreChip(state: QuizSummaryState, interactions: QuizSummaryInteractions) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(R.string.quiz_summary_score, state.score.value),
+            fontSize = 24.sp,
+            color = TSColor.Gold,
+        )
+        val context = LocalContext.current
+        IconButton(
+            onClick = { interactions.onShareScore(context) },
+            modifier = Modifier.padding(start = 8.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_share),
+                contentDescription = stringResource(R.string.share),
+                tint = TSColor.Green,
+            )
+        }
     }
 }
 
