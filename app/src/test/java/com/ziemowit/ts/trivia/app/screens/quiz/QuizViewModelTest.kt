@@ -3,6 +3,8 @@ package com.ziemowit.ts.trivia.app.screens.quiz
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
+import com.ziemowit.ts.trivia.app.screens.quizzing.quiz.QuizReady
+import com.ziemowit.ts.trivia.app.screens.quizzing.quiz.QuizViewModel
 import com.ziemowit.ts.trivia.data.model.Category
 import com.ziemowit.ts.trivia.data.model.Difficulty
 import com.ziemowit.ts.trivia.data.model.PotentialAnswer

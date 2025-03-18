@@ -2,7 +2,7 @@ package com.ziemowit.ts.trivia.nav
 
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
-import com.ziemowit.ts.trivia.app.screens.main.Screen
+import com.ziemowit.ts.trivia.app.screens.quizzing.main.Screen
 import timber.log.Timber
 
 
