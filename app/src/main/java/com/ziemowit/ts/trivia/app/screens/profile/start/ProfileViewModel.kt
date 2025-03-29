@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.app.screens.profile
+package com.ziemowit.ts.trivia.app.screens.profile.start
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -19,13 +19,15 @@ class ProfileViewModel @Inject constructor(routeNavigator: RouteNavigator, prefe
     private val userName = preferencesRepository.getUserName() ?: ""
     private val userInitials = generateInitials(userName)
 
-    private val _uiState = mutableStateOf(ProfileUiState(
+    private val _uiState = mutableStateOf(
+        ProfileUiState(
         userName = userName,
         userInitials = userInitials,
         isEditNameDialogVisible = false,
         newNameInput = "",
         isDarkMode = false,
-    ))
+    )
+    )
     val uiState: State<ProfileUiState> = _uiState
 
     val interactions = ProfileInteractions(
@@ -51,8 +53,11 @@ class ProfileViewModel @Inject constructor(routeNavigator: RouteNavigator, prefe
             _uiState.value = _uiState.value.copy(newNameInput = input)
         },
         onSettingsItemClicked = { item ->
-            // TODO Handle navigation to different settings screens
-            println("Navigate to ${item.name} settings")
+            when (item) {
+//                SettingsItem.ACCOUNT -> routeNavigator.navigateTo("account_settings")
+                // Handle other settings items
+                else -> println("Navigate to ${item.name} settings")
+            }
         },
         onLogoutClick = {
             // TODO Handle logout logic
@@ -72,8 +77,6 @@ class ProfileViewModel @Inject constructor(routeNavigator: RouteNavigator, prefe
     }
 }
 
-
-// Enum for Settings Items
 enum class SettingsItem {
     ACCOUNT, NOTIFICATIONS, APPEARANCE, PRIVACY, HELP
 }

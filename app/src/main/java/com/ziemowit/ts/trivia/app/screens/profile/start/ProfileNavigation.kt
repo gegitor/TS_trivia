@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.app.screens.profile
+package com.ziemowit.ts.trivia.app.screens.profile.start
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

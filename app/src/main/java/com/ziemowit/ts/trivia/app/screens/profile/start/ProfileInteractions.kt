@@ -1,10 +1,4 @@
-package com.ziemowit.ts.trivia.app.screens.profile
-
-
-/**
- * Created by Ziemowit Pazderski on 3/17/2025.
- * Copyright © 2025 Ziemowit Pazderski. All rights reserved.
- */
+package com.ziemowit.ts.trivia.app.screens.profile.start
 
 data class ProfileInteractions(
     val onBackClicked: () -> Unit = {},

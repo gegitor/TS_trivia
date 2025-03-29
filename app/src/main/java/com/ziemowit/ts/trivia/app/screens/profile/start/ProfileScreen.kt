@@ -1,5 +1,4 @@
-package com.ziemowit.ts.trivia.app.screens.profile
-
+package com.ziemowit.ts.trivia.app.screens.profile.start
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,7 +35,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ziemowit.ts.ui_common.theme.TSTriviaTheme
-
 
 @Composable
 fun ProfileScreen(
