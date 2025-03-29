@@ -42,4 +42,35 @@
     <string name="achievement_description">%1$s - %2$s</string>
     <string name="share_score">I scored %s on the %s difficulty in TS Trivia!</string>
     <string name="share_score_title">Share your score</string>
+
+    <string name="account_settings">Account Settings</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="email">Email</string>
+    <string name="not_verified">Not verified</string>
+    <string name="password">Password</string>
+    <string name="change">Change</string>
+    <string name="danger_zone">Danger Zone</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="change_password">Change Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_account_confirmation">Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.</string>
+    <string name="yes_delete_account">Yes, Delete My Account</string>
+
+    <string name="profile_welcome">Welcome, %s!</string>
+    <string name="profile_edit_name">Edit Name</string>
+    <string name="profile_settings">Settings</string>
+    <string name="profile_account_settings">Account Settings</string>
+    <string name="profile_notification_preferences">Notification Preferences</string>
+    <string name="profile_appearance">Appearance</string>
+    <string name="profile_privacy">Privacy</string>
+    <string name="profile_help_feedback">Help &amp; Feedback</string>
+    <string name="profile_log_out">Log Out</string>
+    <string name="profile_edit_name_dialog_title">Edit Name</string>
+    <string name="profile_edit_name_dialog_label">Name</string>
+    <string name="profile_edit_name_dialog_save">Save</string>
+    <string name="profile_edit_name_dialog_cancel">Cancel</string>
 </resources>

@@ -3,6 +3,7 @@ package com.ziemowit.ts.trivia.app.screens.profile.start
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.ziemowit.ts.trivia.app.screens.ParentViewModel
+import com.ziemowit.ts.trivia.app.screens.profile.account.AccountSettingsRoute
 import com.ziemowit.ts.trivia.data.PreferencesRepository
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,12 +22,12 @@ class ProfileViewModel @Inject constructor(routeNavigator: RouteNavigator, prefe
 
     private val _uiState = mutableStateOf(
         ProfileUiState(
-        userName = userName,
-        userInitials = userInitials,
-        isEditNameDialogVisible = false,
-        newNameInput = "",
-        isDarkMode = false,
-    )
+            userName = userName,
+            userInitials = userInitials,
+            isEditNameDialogVisible = false,
+            newNameInput = "",
+            isDarkMode = false,
+        )
     )
     val uiState: State<ProfileUiState> = _uiState
 
@@ -54,7 +55,7 @@ class ProfileViewModel @Inject constructor(routeNavigator: RouteNavigator, prefe
         },
         onSettingsItemClicked = { item ->
             when (item) {
-//                SettingsItem.ACCOUNT -> routeNavigator.navigateTo("account_settings")
+                SettingsItem.ACCOUNT -> routeNavigator.navigateToRoute(AccountSettingsRoute.route)
                 // Handle other settings items
                 else -> println("Navigate to ${item.name} settings")
             }

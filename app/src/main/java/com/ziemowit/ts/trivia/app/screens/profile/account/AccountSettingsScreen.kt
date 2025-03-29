@@ -29,10 +29,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.ui_common.theme.TSTriviaTheme
 
 @Composable
@@ -63,132 +65,158 @@ fun AccountSettingsContent(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Header
-        Text(
-            text = "Account Settings",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold
+        Header()
+        PersonalInformationCard(uiState, interactions)
+        DangerZoneCard(interactions)
+        PasswordChangeDialog(uiState, interactions)
+        DeleteAccountConfirmationDialog(uiState, interactions)
+    }
+}
+
+@Composable
+fun Header() {
+    Text(
+        text = stringResource(R.string.account_settings),
+        style = MaterialTheme.typography.headlineMedium,
+        fontWeight = FontWeight.Bold
+    )
+}
+
+@Composable
+fun PersonalInformationCard(
+    uiState: AccountSettingsUiState,
+    interactions: AccountSettingsInteractions
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.personal_information),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+
+            EmailSection(uiState)
+            HorizontalDivider()
+            PasswordSection(interactions)
+        }
+    }
+}
+
+@Composable
+fun EmailSection(uiState: AccountSettingsUiState) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Default.Email,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
         )
 
-        // Personal Information Card
-        Card(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Text(
-                    text = "Personal Information",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
+        Spacer(modifier = Modifier.width(16.dp))
 
-                // Email Section - Display Only
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            text = "Email",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                        Text(
-                            text = uiState.email,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        if (!uiState.isEmailVerified) {
-                            Text(
-                                text = "Not verified",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.error
-                            )
-                        }
-                    }
-                }
-
-                HorizontalDivider()
-
-                // Password Section
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = "Password",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                        Text(
-                            text = "••••••••",
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
-
-                    TextButton(onClick = interactions.onChangePasswordClick) {
-                        Text("Change")
-                    }
-                }
-            }
-        }
-
-        // Danger Zone Card
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.errorContainer
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = stringResource(R.string.email),
+                style = MaterialTheme.typography.bodyMedium
             )
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
+            Text(
+                text = uiState.email,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            if (!uiState.isEmailVerified) {
                 Text(
-                    text = "Danger Zone",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onErrorContainer
+                    text = stringResource(R.string.not_verified),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error
                 )
-
-                Button(
-                    onClick = interactions.onDeleteAccountClick,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Delete Account")
-                }
             }
         }
     }
+}
 
-    // Password Change Dialog
+@Composable
+fun PasswordSection(interactions: AccountSettingsInteractions) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Default.Lock,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = stringResource(R.string.password),
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                text = "••••••••",
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+
+        TextButton(onClick = interactions.onChangePasswordClick) {
+            Text(stringResource(R.string.change))
+        }
+    }
+}
+
+@Composable
+fun DangerZoneCard(interactions: AccountSettingsInteractions) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.errorContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.danger_zone),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onErrorContainer
+            )
+
+            Button(
+                onClick = interactions.onDeleteAccountClick,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.delete_account))
+            }
+        }
+    }
+}
+
+@Composable
+fun PasswordChangeDialog(
+    uiState: AccountSettingsUiState,
+    interactions: AccountSettingsInteractions
+) {
     if (uiState.isPasswordDialogVisible) {
         AlertDialog(
             onDismissRequest = interactions.onCancelDialogClick,
-            title = { Text("Change Password") },
+            title = { Text(stringResource(R.string.change_password)) },
             text = {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -196,7 +224,7 @@ fun AccountSettingsContent(
                     OutlinedTextField(
                         value = uiState.currentPasswordInput,
                         onValueChange = interactions.onCurrentPasswordInputChange,
-                        label = { Text("Current Password") },
+                        label = { Text(stringResource(R.string.current_password)) },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth()
@@ -205,7 +233,7 @@ fun AccountSettingsContent(
                     OutlinedTextField(
                         value = uiState.newPasswordInput,
                         onValueChange = interactions.onNewPasswordInputChange,
-                        label = { Text("New Password") },
+                        label = { Text(stringResource(R.string.new_password)) },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
                         isError = uiState.passwordError != null,
@@ -215,7 +243,7 @@ fun AccountSettingsContent(
                     OutlinedTextField(
                         value = uiState.confirmPasswordInput,
                         onValueChange = interactions.onConfirmPasswordInputChange,
-                        label = { Text("Confirm New Password") },
+                        label = { Text(stringResource(R.string.confirm_new_password)) },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
                         isError = uiState.passwordError != null,
@@ -234,24 +262,29 @@ fun AccountSettingsContent(
             },
             confirmButton = {
                 TextButton(onClick = interactions.onSavePasswordClick) {
-                    Text("Save")
+                    Text(stringResource(R.string.save))
                 }
             },
             dismissButton = {
                 TextButton(onClick = interactions.onCancelDialogClick) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
     }
+}
 
-    // Delete Account Confirmation Dialog
+@Composable
+fun DeleteAccountConfirmationDialog(
+    uiState: AccountSettingsUiState,
+    interactions: AccountSettingsInteractions
+) {
     if (uiState.isDeleteAccountDialogVisible) {
         AlertDialog(
             onDismissRequest = interactions.onCancelDialogClick,
-            title = { Text("Delete Account") },
+            title = { Text(stringResource(R.string.delete_account)) },
             text = {
-                Text("Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.")
+                Text(stringResource(R.string.delete_account_confirmation))
             },
             confirmButton = {
                 TextButton(
@@ -260,18 +293,17 @@ fun AccountSettingsContent(
                         contentColor = MaterialTheme.colorScheme.error
                     )
                 ) {
-                    Text("Yes, Delete My Account")
+                    Text(stringResource(R.string.yes_delete_account))
                 }
             },
             dismissButton = {
                 TextButton(onClick = interactions.onCancelDialogClick) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

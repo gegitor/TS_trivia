@@ -1,6 +1,7 @@
 package com.ziemowit.ts.trivia.app.screens.quizzing.main
 
 //import com.ziemowit.ts.trivia.app.screens.quiz_init.quizScreenHierarchy1
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -34,11 +35,18 @@ import com.ziemowit.ts.trivia.app.screens.quizzing.quiz_init.QuizInitRoute
 import com.ziemowit.ts.trivia.app.screens.quizzing.quiz_summary.QuizSummaryRoute
 import com.ziemowit.ts.trivia.app.screens.quizzing.welcome.WelcomeRoute
 import com.ziemowit.ts.trivia.nav.navigateToScreen
+import timber.log.Timber
 
+@SuppressLint("RestrictedApi")
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-
+    navController.addOnDestinationChangedListener { controller, destination, _ ->
+        val routes = controller.currentBackStack.value
+            .mapNotNull { it.destination.route }
+            .joinToString(separator = ", ")
+        Timber.d("BackStack: $routes destination: $destination")
+    }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
     val isInAuthFlow = currentRoute == Screen.Welcome.route

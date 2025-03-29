@@ -11,16 +11,12 @@ import timber.log.Timber
  * Copyright © 2025 Ziemowit Pazderski. All rights reserved.
  */
 fun NavHostController.navigateToScreen(screen: Screen) {
-    navigateToScreen(screen.route, screen.route)
-}
-
-fun NavHostController.navigateToScreen(screenName: String, route: String) {
-    Timber.d("navigateToScreen route: $route screenName: $screenName")
+    Timber.d("navigateToScreen route: ${screen.route}")
     navigate(
-        route = route,
+        route = screen.route,
         navOptions = NavOptions.Builder()
             .setLaunchSingleTop(true)
-            .setPopUpTo(screenName, inclusive = false, saveState = true)
+            .setPopUpTo(0, inclusive = false, saveState = true)
             .setRestoreState(true)
             .build()
     )
