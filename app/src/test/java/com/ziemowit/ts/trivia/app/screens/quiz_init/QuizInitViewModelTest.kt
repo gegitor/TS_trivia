@@ -2,10 +2,10 @@ package com.ziemowit.ts.trivia.app.screens.quiz_init
 
 import android.content.SharedPreferences
 import com.ziemowit.ts.trivia.app.screens.quizzing.quiz_init.QuizInitViewModel
-import com.ziemowit.ts.trivia.audio.Sound
-import com.ziemowit.ts.trivia.audio.SoundRepository
-import com.ziemowit.ts.trivia.data.PreferencesRepository
-import com.ziemowit.ts.trivia.data.model.Difficulty
+import com.ziemowit.ts.trivia.domain.model.Difficulty
+import com.ziemowit.ts.trivia.domain.model.Sound
+import com.ziemowit.ts.trivia.domain.repository.PreferencesRepository
+import com.ziemowit.ts.trivia.domain.repository.SoundRepository
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import io.mockk.MockKAnnotations
 import io.mockk.every

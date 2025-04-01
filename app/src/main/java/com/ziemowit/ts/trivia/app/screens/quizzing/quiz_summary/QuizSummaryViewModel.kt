@@ -9,8 +9,8 @@ import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.app.screens.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quizzing.home.HomeRoute
 import com.ziemowit.ts.trivia.app.screens.quizzing.quiz.QuizRoute
-import com.ziemowit.ts.trivia.data.LeaderRepository
-import com.ziemowit.ts.trivia.data.model.Difficulty
+import com.ziemowit.ts.trivia.domain.model.Difficulty
+import com.ziemowit.ts.trivia.domain.repository.LeaderRepository
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
@@ -25,7 +25,7 @@ class QuizSummaryViewModel @Inject constructor(
 ) :
     ParentViewModel(routeNavigator) {
 
-    private val quizArgs = com.ziemowit.ts.trivia.app.screens.quizzing.quiz_summary.QuizArgs(savedStateHandle)
+    private val quizArgs = QuizArgs(savedStateHandle)
 
     private val difficulty = mutableStateOf(quizArgs.difficulty)
     private val score = mutableStateOf("${quizArgs.correctQuestions} / ${quizArgs.totalQuestions}")

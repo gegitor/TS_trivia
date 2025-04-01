@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.audio
+package com.ziemowit.ts.trivia.domain.model
 
 import androidx.annotation.RawRes
 import com.ziemowit.ts.trivia.R
@@ -10,5 +10,4 @@ sealed class Sound(@RawRes val path: Int) {
     data object HiWojtek : Sound(R.raw.ok)
     data object ThatSWrong : Sound(R.raw.ok)
     data object Perfect : Sound(R.raw.ok)
-
 }

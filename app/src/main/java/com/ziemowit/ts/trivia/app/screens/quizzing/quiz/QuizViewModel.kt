@@ -9,11 +9,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.app.screens.ParentViewModel
-import com.ziemowit.ts.trivia.data.model.GivenAnswer
-import com.ziemowit.ts.trivia.data.model.PotentialAnswer
-import com.ziemowit.ts.trivia.data.model.QuestionInfo
-import com.ziemowit.ts.trivia.data.model.emptyQuestionInfo
-import com.ziemowit.ts.trivia.data.usecases.GetQuestionsUseCase
+import com.ziemowit.ts.trivia.domain.model.GivenAnswer
+import com.ziemowit.ts.trivia.domain.model.PotentialAnswer
+import com.ziemowit.ts.trivia.domain.model.Question
+import com.ziemowit.ts.trivia.domain.model.emptyQuestion
+import com.ziemowit.ts.trivia.domain.usecase.GetQuestionsUseCase
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwner
 import com.ziemowit.ts.ui_common.components.ConfirmationDialogOwnerImpl
@@ -34,7 +34,7 @@ class QuizViewModel @Inject constructor(
     ConfirmationDialogOwner by ConfirmationDialogOwnerImpl() {
 
     private val quizArgs = QuizArgs(savedStateHandle)
-    private var questions: List<QuestionInfo> = emptyList()
+    private var questions: List<Question> = emptyList()
     private val currentQuestionIndex = mutableIntStateOf(0)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -45,7 +45,7 @@ class QuizViewModel @Inject constructor(
 
     // State objects
     private val difficulty = mutableStateOf(context.getString(quizArgs.difficulty.displayName))
-    private val question = mutableStateOf(emptyQuestionInfo)
+    private val question = mutableStateOf(emptyQuestion)
     private val isAnswerEnabled = mutableStateOf(true)
     private val questionCount: MutableState<String> = mutableStateOf("")
 

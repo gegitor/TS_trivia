@@ -3,10 +3,10 @@ package com.ziemowit.ts.trivia.app.screens.quizzing.quiz_init
 import androidx.compose.runtime.mutableStateOf
 import com.ziemowit.ts.trivia.app.screens.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quizzing.quiz.QuizRoute
-import com.ziemowit.ts.trivia.audio.Sound
-import com.ziemowit.ts.trivia.audio.SoundRepository
-import com.ziemowit.ts.trivia.data.PreferencesRepository
-import com.ziemowit.ts.trivia.data.model.Difficulty
+import com.ziemowit.ts.trivia.domain.model.Difficulty
+import com.ziemowit.ts.trivia.domain.model.Sound
+import com.ziemowit.ts.trivia.domain.repository.PreferencesRepository
+import com.ziemowit.ts.trivia.domain.repository.SoundRepository
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber

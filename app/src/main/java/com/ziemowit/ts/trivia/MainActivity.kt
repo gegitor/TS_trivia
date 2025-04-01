@@ -8,7 +8,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.ziemowit.ts.trivia.app.screens.quizzing.main.MainScreen
 import com.ziemowit.ts.trivia.app.screens.quizzing.splash.SplashViewModel
-import com.ziemowit.ts.trivia.audio.SoundRepository
+import com.ziemowit.ts.trivia.domain.repository.SoundRepository
 import com.ziemowit.ts.ui_common.theme.TSTriviaTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

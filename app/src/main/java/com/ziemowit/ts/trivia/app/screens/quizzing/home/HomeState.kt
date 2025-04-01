@@ -3,7 +3,7 @@ package com.ziemowit.ts.trivia.app.screens.quizzing.home
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.ziemowit.ts.trivia.R
-import com.ziemowit.ts.trivia.data.model.Difficulty
+import com.ziemowit.ts.trivia.domain.model.Difficulty
 
 /**
  * State class representing the data displayed on the Trivia Master home screen.

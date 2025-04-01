@@ -1,4 +1,4 @@
-package com.ziemowit.ts.trivia.data
+package com.ziemowit.ts.trivia.domain.repository
 
 import android.content.SharedPreferences
 

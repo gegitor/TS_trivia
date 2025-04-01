@@ -28,6 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ziemowit.ts.trivia.app.screens.profile.account.AccountSettingsRoute
 import com.ziemowit.ts.trivia.app.screens.profile.start.ProfileRoute
 import com.ziemowit.ts.trivia.app.screens.quizzing.home.HomeRoute
 import com.ziemowit.ts.trivia.app.screens.quizzing.quiz.QuizRoute
@@ -125,6 +126,7 @@ fun SearchScreen() {
 
 fun profileScreen(builder: NavGraphBuilder, navController: NavHostController) {
     ProfileRoute.composable(builder, navController)
+    AccountSettingsRoute.composable(builder, navController)
 }
 
 

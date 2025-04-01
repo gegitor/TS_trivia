@@ -1,9 +1,17 @@
-package com.ziemowit.ts.trivia.audio
+package com.ziemowit.ts.trivia.domain.repository
 
 import android.content.Context
 import android.media.MediaPlayer
+import com.ziemowit.ts.trivia.domain.model.Sound
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+
+
+interface SoundRepository {
+    fun play(sound: Sound)
+
+    fun stopAll()
+}
 
 class SoundRepositoryImpl @Inject constructor(@ApplicationContext private val context: Context) : SoundRepository {
     private var currentMediaPlayer: MediaPlayer? = null

@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.ziemowit.ts.trivia.app.screens.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.profile.account.AccountSettingsRoute
-import com.ziemowit.ts.trivia.data.PreferencesRepository
+import com.ziemowit.ts.trivia.domain.repository.PreferencesRepository
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

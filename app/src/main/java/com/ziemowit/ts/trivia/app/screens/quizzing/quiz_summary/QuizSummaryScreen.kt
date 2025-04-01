@@ -35,7 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ziemowit.ts.trivia.R
-import com.ziemowit.ts.trivia.data.model.Difficulty
+import com.ziemowit.ts.trivia.domain.model.Difficulty
 import com.ziemowit.ts.ui_common.theme.TSColor
 import timber.log.Timber
 

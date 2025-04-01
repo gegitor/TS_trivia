@@ -5,13 +5,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import com.ziemowit.ts.trivia.app.screens.quizzing.quiz.QuizReady
 import com.ziemowit.ts.trivia.app.screens.quizzing.quiz.QuizViewModel
-import com.ziemowit.ts.trivia.data.model.Category
-import com.ziemowit.ts.trivia.data.model.Difficulty
-import com.ziemowit.ts.trivia.data.model.PotentialAnswer
-import com.ziemowit.ts.trivia.data.model.QuestionEntry
-import com.ziemowit.ts.trivia.data.model.toQuestionInfo
-import com.ziemowit.ts.trivia.data.usecases.GetQuestionsUseCase
+import com.ziemowit.ts.trivia.data.model.file.CategoryFile
+import com.ziemowit.ts.trivia.data.model.file.DifficultyFile
+import com.ziemowit.ts.trivia.data.model.file.QuestionFile
+import com.ziemowit.ts.trivia.data.model.mappers.toQuestion
 import com.ziemowit.ts.trivia.dispatchers.TestDispatcherProvider
+import com.ziemowit.ts.trivia.domain.model.Difficulty
+import com.ziemowit.ts.trivia.domain.model.PotentialAnswer
+import com.ziemowit.ts.trivia.domain.usecase.GetQuestionsUseCase
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -54,8 +55,8 @@ class QuizViewModelTest {
         }
         every { savedStateHandle.get<Int>("difficulty") } returns Difficulty.EASY.ordinal
         coEvery { getQuestionsUseCase(any()) } returns listOf(
-            QuestionEntry(1, Category.GAME_MECHANICS, Difficulty.EASY, "Question 1", "Answer 1", listOf("Wrong 1", "Wrong 2")).toQuestionInfo(),
-            QuestionEntry(2, Category.GAME_MECHANICS, Difficulty.EASY, "Question 2", "Answer 2", listOf("Wrong 3", "Wrong 4")).toQuestionInfo(),
+            QuestionFile(1, CategoryFile.GAME_MECHANICS, DifficultyFile.EASY, "Question 1", "Answer 1", listOf("Wrong 1", "Wrong 2")).toQuestion(),
+            QuestionFile(2, CategoryFile.GAME_MECHANICS, DifficultyFile.EASY, "Question 2", "Answer 2", listOf("Wrong 3", "Wrong 4")).toQuestion(),
         )
         every { routeNavigator.navigateToRoute(any()) } returns Unit
         viewModel = QuizViewModel(context, savedStateHandle, routeNavigator, getQuestionsUseCase/*, testDispatcherProvider*/)

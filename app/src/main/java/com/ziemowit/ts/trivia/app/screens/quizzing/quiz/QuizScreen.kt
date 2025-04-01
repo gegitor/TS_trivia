@@ -19,8 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ziemowit.ts.trivia.data.model.PotentialAnswer
-import com.ziemowit.ts.trivia.data.model.QuestionInfo
+import com.ziemowit.ts.trivia.domain.model.PotentialAnswer
+import com.ziemowit.ts.trivia.domain.model.Question
 import com.ziemowit.ts.ui_common.components.ConfirmationDialog
 import com.ziemowit.ts.ui_common.components.LoadingContent
 
@@ -68,7 +68,7 @@ internal fun QuizScreen(
 @Composable
 private fun QuestionContent(
     modifier: Modifier = Modifier,
-    question: QuestionInfo,
+    question: Question,
     questionCount: String,
     isAnswerEnabled: Boolean,
     interactions: QuizScreenInteractions,

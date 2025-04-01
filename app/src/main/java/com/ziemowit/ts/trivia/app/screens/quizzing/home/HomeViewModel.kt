@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import com.ziemowit.ts.trivia.app.screens.ParentViewModel
 import com.ziemowit.ts.trivia.app.screens.quizzing.quiz_init.QuizInitRoute
-import com.ziemowit.ts.trivia.data.PreferencesRepository
+import com.ziemowit.ts.trivia.domain.repository.PreferencesRepository
 import com.ziemowit.ts.trivia.nav.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
@@ -51,6 +51,7 @@ class HomeViewModel @Inject constructor(
     )
 
     private fun onContinueQuizClick() {
+        //TODO
         Timber.d("onContinueQuizClick")
     }
 
@@ -60,18 +61,22 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onCreateCustomQuizClick() {
+        //TODO
         Timber.d("onCreateCustomQuizClick")
     }
 
     private fun onChallengeAcceptClick(id: String) {
+        //TODO
         Timber.d("onChallengeAcceptClick: $id")
     }
 
     private fun onShareClick(id: String) {
+        //TODO
         Timber.d("onShareClick: $id")
     }
 
     private fun dismissError() {
+        //TODO
         Timber.d("dismissError")
     }
 }

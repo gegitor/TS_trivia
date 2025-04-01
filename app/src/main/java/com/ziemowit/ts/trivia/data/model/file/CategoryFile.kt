@@ -1,9 +1,9 @@
-package com.ziemowit.ts.trivia.data.model
+package com.ziemowit.ts.trivia.data.model.file
 
 import androidx.annotation.StringRes
 import com.ziemowit.ts.trivia.R
 
-enum class Category(val index: Int, @StringRes val displayName: Int) {
+enum class CategoryFile(val index: Int, @StringRes val displayName: Int) {
     GAME_MECHANICS(0, R.string.category_game_mechanics),
     CARDS_OPERATION(1, R.string.category_cards_operation),
     CARDS_HISTORY(2, R.string.category_cards_history),

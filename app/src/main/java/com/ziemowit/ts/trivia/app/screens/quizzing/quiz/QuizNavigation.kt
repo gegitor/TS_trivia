@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.ziemowit.ts.trivia.data.model.Difficulty
+import com.ziemowit.ts.trivia.domain.model.Difficulty
 import com.ziemowit.ts.trivia.nav.NavRoute
 
 private const val difficultyArg = "difficulty"

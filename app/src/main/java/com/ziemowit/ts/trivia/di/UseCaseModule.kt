@@ -1,8 +1,8 @@
 package com.ziemowit.ts.trivia.di
 
-import com.ziemowit.ts.trivia.data.QuestionRepository
-import com.ziemowit.ts.trivia.data.usecases.GetQuestionsUseCase
-import com.ziemowit.ts.trivia.data.usecases.GetQuestionsUseCaseImpl
+import com.ziemowit.ts.trivia.domain.repository.QuestionRepository
+import com.ziemowit.ts.trivia.domain.usecase.GetQuestionsUseCase
+import com.ziemowit.ts.trivia.domain.usecase.GetQuestionsUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
-package com.ziemowit.ts.trivia.data.model
+package com.ziemowit.ts.trivia.domain.model
 
 //Question data used to display it
-data class QuestionInfo(
+data class Question(
     val index: Int,
 //    val category: Category,
     val difficulty: Difficulty,
@@ -9,7 +9,7 @@ data class QuestionInfo(
     val potentialAnswers: List<PotentialAnswer>,
 )
 
-val emptyQuestionInfo = QuestionInfo(
+val emptyQuestion = Question(
     0,
     Difficulty.EASY,
     "q",

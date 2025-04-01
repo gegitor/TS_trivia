@@ -1,9 +1,9 @@
-package com.ziemowit.ts.trivia.data.model
+package com.ziemowit.ts.trivia.data.model.file
 
 import androidx.annotation.StringRes
 import com.ziemowit.ts.trivia.R
 
-enum class Difficulty(val index: Int, @StringRes val displayName: Int) {
+enum class DifficultyFile(val index: Int, @StringRes val displayName: Int) {
     EASY(0, R.string.diff_easy),
     MEDIUM(1, R.string.diff_medium),
     HARD(2, R.string.diff_hard),
