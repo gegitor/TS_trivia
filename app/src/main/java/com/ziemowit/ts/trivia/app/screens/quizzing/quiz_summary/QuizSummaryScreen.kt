@@ -94,6 +94,7 @@ fun ColumnScope.LeaderRankingsContent(state: QuizSummaryState) {
             .padding(8.dp)
             .weight(1.0f),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom,
     ) {
         item {
             Text(

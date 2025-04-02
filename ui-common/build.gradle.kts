@@ -1,9 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kapt)
 }
 
 android {
@@ -51,8 +49,6 @@ dependencies {
     api(libs.compose.activity)
     api(platform(libs.compose.bom))
     api(libs.lottie)
-    implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
 
 //    implementation(libs.coroutines.core)
 //    implementation(libs.core.splashscreen)
