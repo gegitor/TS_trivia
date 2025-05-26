@@ -1,18 +1,18 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.sqlDelight)
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.ziemowit.ts.core"
+    namespace = "com.ziemowit.ts.trivia.database"
     compileSdk = 35
 
     defaultConfig {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -32,38 +32,35 @@ android {
     }
 }
 
-//sqldelight {
-//    databases {
-//        create("TS_Trivia") {
-//            packageName.set("com.ziemowit.ts.core.db")
-//            srcDirs.setFrom("core/src/main/sqldelight")
-//        }
-//    }
-//}
+sqldelight {
+    databases {
+        create("TS_Trivia2") {
+            packageName.set("com.ziemowit.ts.trivia.database")
+            srcDirs.setFrom("src/main/sqldelight")
+        }
+    }
+}
 
 dependencies {
 
     api(libs.core.ktx)
     api(libs.appcompat)
     api(libs.material)
+    api(libs.sqlDelight.android)
+    api(libs.sqlDelight.coroutines)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    api(libs.ksp)
-//    ksp(libs.kotlin.inject.ksp)
-//    api(libs.kotlin.inject.runtime)
-
-    api(libs.sqlDelight.android)
-    api(libs.sqlDelight.coroutines)
-    api(libs.timber)
 }
+
 
 //androidComponents {
 //    onVariants(selector().all()) { variant ->
 //        afterEvaluate {
-//            val capName = variant.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-//            tasks.getByName<KotlinCompile>("ksp${capName}Kotlin") {
-//                setSource(tasks.getByName("generate${capName}DatabaseInterface").outputs)
+//            val variantName = variant.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+//            tasks.getByName<KotlinCompile>("ksp${variantName}Kotlin") {
+//                setSource(tasks.getByName("generate${variantName}TS_Trivia2Interface").outputs)
 //            }
 //        }
 //    }

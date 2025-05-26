@@ -9,6 +9,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.ziemowit.ts.trivia.R
 import com.ziemowit.ts.trivia.app.screens.ParentViewModel
+import com.ziemowit.ts.trivia.app.screens.quizzing.quiz_summary.QuizSummaryRoute
 import com.ziemowit.ts.trivia.domain.model.GivenAnswer
 import com.ziemowit.ts.trivia.domain.model.PotentialAnswer
 import com.ziemowit.ts.trivia.domain.model.Question
@@ -84,7 +85,7 @@ class QuizViewModel @Inject constructor(
         Timber.d("onQuizFinished")
         // TODO - store the answers in the database on the go ?
         navigateToRouteWithPop(
-            com.ziemowit.ts.trivia.app.screens.quizzing.quiz_summary.QuizSummaryRoute.getRoute(
+            QuizSummaryRoute.getRoute(
                 difficulty = quizArgs.difficulty,
                 correctQuestions = correctAnswers,
                 totalQuestions = questions.size

@@ -1,13 +1,9 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.util.Locale
-
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.sqlDelight)
 }
 
 android {
@@ -65,17 +61,9 @@ android {
     }
 }
 
-sqldelight {
-    databases {
-        create("TS_Trivia2") {
-            packageName.set("com.ziemowit.ts.core.db")
-            srcDirs.setFrom("core/src/main/sqldelight")
-        }
-    }
-}
-
 dependencies {
     implementation(project(":core"))
+    implementation(project(":database"))
     implementation(project(":ui-common"))
 
     implementation(libs.coroutines.core)
@@ -102,13 +90,3 @@ java {
     }
 }
 
-androidComponents {
-    onVariants(selector().all()) { variant ->
-        afterEvaluate {
-            val variantName = variant.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-            tasks.getByName<KotlinCompile>("ksp${variantName}Kotlin") {
-                setSource(tasks.getByName("generate${variantName}TS_Trivia2Interface").outputs)
-            }
-        }
-    }
-}
